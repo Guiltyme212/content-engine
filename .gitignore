@@ -1,0 +1,17 @@
+# secrets — never commit keys
+.env
+.env.*
+*.key
+openai.key
+
+# node
+node_modules/
+dist/
+.cache/
+
+# os
+.DS_Store
+Thumbs.db
+
+# gsd planning scratch (created by /gsd commands; keep local until useful)
+.planning/
