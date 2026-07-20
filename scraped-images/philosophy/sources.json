@@ -1,0 +1,80 @@
+{
+  "set": "Philosophy",
+  "images": [
+    {
+      "alt": "Philosophy 1",
+      "url": "https://i.pinimg.com/1200x/73/eb/83/73eb836236f6a35358461dcd2eb972f1.jpg",
+      "filename": "001.jpg"
+    },
+    {
+      "alt": "Philosophy 2",
+      "url": "https://i.pinimg.com/1200x/43/04/c7/4304c797b79523562b56ef1648b9e7f6.jpg",
+      "filename": "002.jpg"
+    },
+    {
+      "alt": "Philosophy 3",
+      "url": "https://i.pinimg.com/1200x/a3/e6/b9/a3e6b99ee84d4772ff6c622df9c3fc2a.jpg",
+      "filename": "003.jpg"
+    },
+    {
+      "alt": "Philosophy 4",
+      "url": "https://i.pinimg.com/1200x/31/33/92/313392f6e2df9e39a6e04398b62c8c36.jpg",
+      "filename": "004.jpg"
+    },
+    {
+      "alt": "Philosophy 5",
+      "url": "https://i.pinimg.com/1200x/e0/66/16/e066166f69c934b52bd461451d587701.jpg",
+      "filename": "005.jpg"
+    },
+    {
+      "alt": "Philosophy 6",
+      "url": "https://i.pinimg.com/1200x/1e/17/d2/1e17d21e4dbc59972e26b5726fd31ded.jpg",
+      "filename": "006.jpg"
+    },
+    {
+      "alt": "Philosophy 7",
+      "url": "https://i.pinimg.com/1200x/91/67/b3/9167b364868652bca9b0dbb5c32f8390.jpg",
+      "filename": "007.jpg"
+    },
+    {
+      "alt": "Philosophy 8",
+      "url": "https://i.pinimg.com/1200x/c3/b8/97/c3b897b8c6ff185718fb5a522c94d1cb.jpg",
+      "filename": "008.jpg"
+    },
+    {
+      "alt": "Philosophy 9",
+      "url": "https://i.pinimg.com/1200x/fc/39/e8/fc39e8884d5d2981061f459f456a464a.jpg",
+      "filename": "009.jpg"
+    },
+    {
+      "alt": "Philosophy 10",
+      "url": "https://i.pinimg.com/1200x/e3/31/a5/e331a5c0cbca4480709554b9283f5267.jpg",
+      "filename": "010.jpg"
+    },
+    {
+      "alt": "Philosophy 11",
+      "url": "https://i.pinimg.com/1200x/d4/f3/52/d4f352f48ab40e539a90adc1224fdfa3.jpg",
+      "filename": "011.jpg"
+    },
+    {
+      "alt": "Philosophy 12",
+      "url": "https://i.pinimg.com/1200x/71/53/42/71534272bed1723803fe85452b147ecf.jpg",
+      "filename": "012.jpg"
+    },
+    {
+      "alt": "Philosophy 13",
+      "url": "https://i.pinimg.com/1200x/dd/d2/dc/ddd2dc8b16f2d1f2c4e2c7e2644b9daa.jpg",
+      "filename": "013.jpg"
+    },
+    {
+      "alt": "Philosophy 14",
+      "url": "https://i.pinimg.com/1200x/9d/34/43/9d3443bc449cfcde1adf878305e7ac91.jpg",
+      "filename": "014.jpg"
+    },
+    {
+      "alt": "Philosophy 15",
+      "url": "https://i.pinimg.com/1200x/71/3e/fd/713efd5c0750bc7f36de023591c041b6.jpg",
+      "filename": "015.jpg"
+    }
+  ]
+}

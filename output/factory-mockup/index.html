@@ -661,8 +661,8 @@
   .photo-kicker{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--coral-ink)}
   .photo-summary{flex:0 0 auto;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;color:var(--muted);font-size:11.5px;font-weight:600}
   .library-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .library-select{display:flex;align-items:center;gap:8px;min-width:230px;padding:5px 10px 5px 12px;border:1px solid var(--line-2);background:var(--surface);border-radius:10px;color:var(--muted);font-size:11.5px;font-weight:700}.library-select select{min-width:0;flex:1;border:0;background:transparent;color:var(--ink);font:inherit;font-size:12.5px;font-weight:600;outline:0;cursor:pointer}
   .library-search{flex:1 1 190px;min-width:180px;position:relative}.library-search input{width:100%;border:1px solid var(--line-2);background:var(--surface);border-radius:10px;padding:10px 12px;font:inherit;font-size:12.5px;color:var(--ink)}.library-search input:focus{outline:none;border-color:var(--coral);box-shadow:0 0 0 3px var(--coral-soft)}
-  .library-categories{display:flex;gap:7px;flex-wrap:wrap}.library-category{border:1px solid var(--line-2);background:var(--surface);border-radius:9px;padding:8px 10px;font-size:11.5px;color:var(--ink-2);cursor:pointer;transition:.14s}.library-category:hover{border-color:var(--muted-2)}.library-category.on{background:var(--ink);border-color:var(--ink);color:#fff}.library-category small{font-size:10px;opacity:.65;margin-left:3px}
   .library-workspace{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:16px;align-items:start}.library-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px;min-height:220px;max-height:510px;overflow:auto;padding:2px}
   .library-image{position:relative;aspect-ratio:4/5;border:2px solid transparent;border-radius:10px;overflow:hidden;background:var(--surface-2);cursor:pointer;padding:0}.library-image img{width:100%;height:100%;display:block;object-fit:cover}.library-image:hover{transform:translateY(-1px);box-shadow:var(--shadow)}.library-image.selected{border-color:var(--coral);box-shadow:0 0 0 3px var(--coral-soft)}.library-image.selected::after{content:'selected';position:absolute;left:5px;bottom:5px;border-radius:5px;background:var(--ink);color:#fff;padding:3px 5px;font-size:9px;font-weight:700}
   .library-empty{grid-column:1/-1;display:grid;place-items:center;min-height:180px;border:1.5px dashed var(--line-2);border-radius:12px;color:var(--muted);font-size:12.5px;text-align:center;padding:20px}
@@ -1299,8 +1299,8 @@
               <span class="photo-summary" id="librarySummary">Loading library</span>
             </div>
             <div class="library-controls">
-              <label class="library-search"><input id="librarySearch" type="search" placeholder="Find a category" aria-label="Find a photo category"></label>
-              <div class="library-categories" id="libraryCategories" aria-label="Photo categories"></div>
+              <label class="library-select"><span>Visual lane</span><select id="libraryCategories" aria-label="Choose a photo category"></select></label>
+              <label class="library-search"><input id="librarySearch" type="search" placeholder="Search 50 categories" aria-label="Search photo categories"></label>
             </div>
             <div class="library-workspace">
               <div class="library-gallery" id="libraryGallery" aria-live="polite"></div>
@@ -2311,17 +2311,17 @@
       apply.textContent = size >= 5 ? 'Apply ' + size + ' photos to carousel' : 'Select at least 5 photos';
     }
     function renderCategories(){
+      const query = search.value.trim().toLowerCase();
+      const visibleSets = sets.filter((set) => !query || (set.label + ' ' + set.note).toLowerCase().includes(query));
       categories.replaceChildren();
-      sets.forEach((set) => {
-        const button = document.createElement('button');
-        button.type = 'button'; button.className = 'library-category' + (set.id === activeId ? ' on' : '');
-        button.setAttribute('aria-pressed', String(set.id === activeId));
-        button.textContent = set.label + ' ';
-        const count = document.createElement('small'); count.textContent = set.count;
-        button.appendChild(count);
-        button.addEventListener('click', () => { activeId = set.id; renderCategories(); renderGallery(); });
-        categories.appendChild(button);
+      visibleSets.forEach((set) => {
+        const option = document.createElement('option');
+        option.value = set.id;
+        option.textContent = set.label + ' · ' + set.count;
+        categories.appendChild(option);
       });
+      if (!visibleSets.some((set) => set.id === activeId)) activeId = visibleSets[0]?.id || '';
+      categories.value = activeId;
     }
     function renderGallery(){
       const set = activeSet();
@@ -2352,10 +2352,9 @@
       refreshSelection();
     }
     search.addEventListener('input', () => {
-      const query = search.value.trim().toLowerCase();
-      const match = sets.find((set) => (set.label + ' ' + set.note).toLowerCase().includes(query));
-      if (match && match.id !== activeId) { activeId = match.id; renderCategories(); renderGallery(); }
+      renderCategories(); renderGallery();
     });
+    categories.addEventListener('change', () => { activeId = categories.value; renderGallery(); });
     apply.addEventListener('click', () => {
       const images = [...selected.values()];
       if (images.length < 5 || !window.applyPhotoLibrary) return;

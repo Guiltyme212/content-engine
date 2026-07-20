@@ -13,15 +13,12 @@ const SITE = path.join(ROOT, 'output', 'factory-mockup');
 const IMAGE_LIBRARY = path.join(ROOT, 'scraped-images');
 const PORT = process.env.PORT || 3000;
 
-const IMAGE_SETS = [
-  { id: 'faceless-selfies', label: 'Faceless selfies', note: 'Casual mirror and everyday phone shots' },
-  { id: 'work-career', label: 'Work', note: 'Desks, workdays, and career moments' },
-  { id: 'wealth', label: 'Wealth', note: 'Money, goals, and elevated lifestyle scenes' },
-  { id: 'study-productivity', label: 'Study + productivity', note: 'Study sessions, systems, and focus' },
-  { id: 'running', label: 'Running', note: 'Movement, training, and outdoor momentum' },
-  { id: 'self-care-wellness', label: 'Self-care', note: 'Rest, routine, and quiet reset moments' },
-  { id: 'relationship-couples', label: 'Relationships', note: 'Connection, companionship, and shared moments' },
-];
+function labelFromSetId(id) {
+  return id
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
 
 // ── tiny .env loader (no dotenv dep) ────────────────────────────────────────────────────
 (function loadEnv() {
@@ -52,25 +49,43 @@ function sendJson(res, code, obj) {
 }
 
 async function imageLibrary() {
-  return Promise.all(IMAGE_SETS.map(async (set) => {
-    const setPath = path.join(IMAGE_LIBRARY, set.id);
+  let directories = [];
+  try {
+    directories = (await readdir(IMAGE_LIBRARY, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
+  } catch {
+    return [];
+  }
+
+  const sets = await Promise.all(directories.map(async (id) => {
+    const setPath = path.join(IMAGE_LIBRARY, id);
     let files = [];
+    let label = labelFromSetId(id);
     try {
       files = (await readdir(setPath))
         .filter((file) => /\.jpe?g$/i.test(file))
         .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+      const manifest = JSON.parse(await readFile(path.join(setPath, 'sources.json'), 'utf8'));
+      if (typeof manifest.set === 'string' && manifest.set.trim()) label = manifest.set.trim();
     } catch {
       // A missing set should not take the builder offline. The UI shows the available sets.
     }
     return {
-      ...set,
+      id,
+      label,
+      note: `${files.length} curated source images`,
       count: files.length,
       images: files.map((file) => ({
-        id: `${set.id}/${file}`,
-        url: `/library-images/${encodeURIComponent(set.id)}/${encodeURIComponent(file)}`,
+        id: `${id}/${file}`,
+        url: `/library-images/${encodeURIComponent(id)}/${encodeURIComponent(file)}`,
       })),
     };
   }));
+
+  return sets
+    .filter((set) => set.count > 0)
+    .sort((a, b) => a.label.localeCompare(b.label));
 }
 
 async function serveImageLibrary(req, res) {
