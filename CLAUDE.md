@@ -35,6 +35,19 @@ Kokoro as the first real brand; no TikTok monetization needed. A website will be
 **Railway** (CLI v4.44 installed, repo connected to GitHub `Guiltyme212/content-engine`) —
 task brief pending in `docs/website-brief.md`.
 
+
+## Live demo deployment (2026-07-20)
+
+The Content Factory demo is live at **https://content-engine-production-f818.up.railway.app/**.
+
+- Railway project: **content-factory**; production service: **content-engine**.
+- Railway production currently tracks the GitHub branch **agent/content-factory-demo-release** (commit `3de33ae`), not `main`. That branch is a safe release branch, not a separate app. After the demo, merge GitHub PR #1 and, if desired, change Railway's production branch to `main`.
+- Deployment is a single dependency-free Node 18+ service. Railway uses `railway.toml` and runs `npm start`; the server listens on Railway's injected `PORT`.
+- `OPENAI_API_KEY` must remain a sealed Railway variable / untracked local `.env` value. Never commit it. The Hook Lab needs it; the static dashboard can load without it.
+- This is deliberately an unprotected, hard-to-discover demo URL for one or two people. Do not describe it as secure: anyone with the URL can call the Hook Lab and incur model cost. Add authentication/rate limiting before wider sharing.
+- User work is intentionally browser-local: setup progress, Hook Lab topic/keepers, carousel-editor edits, and last-opened page persist in `localStorage` on the same browser/device. There is no database or cross-device account sync.
+- Demo limitation: Hook Lab endpoints `/api/hooks` and `/api/hooks/grade` are live. The carousel-cloning screen references `/api/clone/*` endpoints that have not been implemented server-side, so treat that flow as a visual prototype until its backend is built.
+
 ## Repo layout
 
 - `library/carousel-playbook.md` — **the copy/knowledge layer.** Format skeletons, hook bank,

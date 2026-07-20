@@ -1,7 +1,7 @@
 // server.js — serves the Content Factory site AND the /api/* endpoints the frontend calls.
 // Zero dependencies (Node 18+ built-ins only) so Railway deploy is a one-liner.
 import http from 'node:http';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -10,7 +10,18 @@ import { generateHooks, gradeHook, modelInfo } from './hook-engine.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const SITE = path.join(ROOT, 'output', 'factory-mockup');
+const IMAGE_LIBRARY = path.join(ROOT, 'scraped-images');
 const PORT = process.env.PORT || 3000;
+
+const IMAGE_SETS = [
+  { id: 'faceless-selfies', label: 'Faceless selfies', note: 'Casual mirror and everyday phone shots' },
+  { id: 'work-career', label: 'Work', note: 'Desks, workdays, and career moments' },
+  { id: 'wealth', label: 'Wealth', note: 'Money, goals, and elevated lifestyle scenes' },
+  { id: 'study-productivity', label: 'Study + productivity', note: 'Study sessions, systems, and focus' },
+  { id: 'running', label: 'Running', note: 'Movement, training, and outdoor momentum' },
+  { id: 'self-care-wellness', label: 'Self-care', note: 'Rest, routine, and quiet reset moments' },
+  { id: 'relationship-couples', label: 'Relationships', note: 'Connection, companionship, and shared moments' },
+];
 
 // ── tiny .env loader (no dotenv dep) ────────────────────────────────────────────────────
 (function loadEnv() {
@@ -38,6 +49,49 @@ function sendJson(res, code, obj) {
   const body = JSON.stringify(obj);
   res.writeHead(code, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) });
   res.end(body);
+}
+
+async function imageLibrary() {
+  return Promise.all(IMAGE_SETS.map(async (set) => {
+    const setPath = path.join(IMAGE_LIBRARY, set.id);
+    let files = [];
+    try {
+      files = (await readdir(setPath))
+        .filter((file) => /\.jpe?g$/i.test(file))
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    } catch {
+      // A missing set should not take the builder offline. The UI shows the available sets.
+    }
+    return {
+      ...set,
+      count: files.length,
+      images: files.map((file) => ({
+        id: `${set.id}/${file}`,
+        url: `/library-images/${encodeURIComponent(set.id)}/${encodeURIComponent(file)}`,
+      })),
+    };
+  }));
+}
+
+async function serveImageLibrary(req, res) {
+  const rawPath = decodeURIComponent(req.url.split('?')[0].replace(/^\/library-images\//, ''));
+  const filePath = path.resolve(IMAGE_LIBRARY, rawPath);
+  if (!filePath.startsWith(`${IMAGE_LIBRARY}${path.sep}`)) {
+    res.writeHead(403);
+    return res.end('forbidden');
+  }
+  try {
+    const buf = await readFile(filePath);
+    const ext = path.extname(filePath).toLowerCase();
+    res.writeHead(200, {
+      'Content-Type': MIME[ext] || 'application/octet-stream',
+      'Cache-Control': 'public, max-age=86400',
+    });
+    res.end(buf);
+  } catch {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('not found');
+  }
 }
 
 function readBody(req) {
@@ -75,6 +129,11 @@ const server = http.createServer(async (req, res) => {
   const url = req.url.split('?')[0];
 
   // ── API ──
+  if (url === '/api/image-library') {
+    if (req.method !== 'GET') return sendJson(res, 405, { error: 'GET only' });
+    return sendJson(res, 200, { sets: await imageLibrary() });
+  }
+
   if (url.startsWith('/api/')) {
     if (req.method !== 'POST') return sendJson(res, 405, { error: 'POST only' });
     let body;
@@ -87,6 +146,8 @@ const server = http.createServer(async (req, res) => {
           brief: body.brief || {},
           topic: body.topic || '',
           seeds: Array.isArray(body.seeds) ? body.seeds : [],
+          liked: Array.isArray(body.liked) ? body.liked : [],
+          disliked: Array.isArray(body.disliked) ? body.disliked : [],
           count: Math.min(Number(body.count) || 6, 8),
         });
         return sendJson(res, 200, { hooks });
@@ -104,6 +165,8 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ── static site ──
+  if (url.startsWith('/library-images/')) return serveImageLibrary(req, res);
+
   return serveStatic(req, res);
 });
 

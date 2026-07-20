@@ -82,8 +82,10 @@ function briefBlock(brief = {}) {
 }
 
 // ── Prompt builders ────────────────────────────────────────────────────────────────────
-function generatePrompt({ brief, topic, seeds, count = 6 }) {
+function generatePrompt({ brief, topic, seeds, liked, disliked, count = 6 }) {
   const seedList = (Array.isArray(seeds) ? seeds : []).map((s) => String(s).trim()).filter(Boolean);
+  const likedList = (Array.isArray(liked) ? liked : []).map((s) => String(s).trim()).filter(Boolean);
+  const dislikedList = (Array.isArray(disliked) ? disliked : []).map((s) => String(s).trim()).filter(Boolean);
   const system = `You are a world-class short-form hook writer. You write the FIRST SLIDE of
 image carousels — the one line that decides whether someone stops scrolling. You write in the
 loaded brand's exact voice and never break it.
@@ -110,6 +112,18 @@ ${seedList.map((s) => '• ' + s).join('\n')}\n\n`;
     user += `TOPIC for this batch: ${topic && topic.trim() ? topic.trim() : "(no topic given — write on-brand hooks about the audience's core pain, drawn from the brand profile above)"}\n\n`;
     user += `Write hooks about this topic, in the brand's voice, applying the principles. Screen
 out any pattern that doesn't fit. Grade honestly. Return JSON only.`;
+  }
+
+  // TASTE LEARNING — steer this batch by what the user has already kept vs passed on.
+  if (likedList.length || dislikedList.length) {
+    user += `\n\n── THE USER'S TASTE SO FAR (learn from this — make THIS batch land better) ──`;
+    if (likedList.length) {
+      user += `\nHooks they KEPT (they like this vibe, angle, rhythm — lean toward these qualities):\n${likedList.map((s) => '✓ ' + s).join('\n')}`;
+    }
+    if (dislikedList.length) {
+      user += `\nHooks they PASSED on (do NOT repeat these vibes/angles/openers — move away from them):\n${dislikedList.map((s) => '✗ ' + s).join('\n')}`;
+    }
+    user += `\nDo NOT reuse any hook listed above (kept or passed) — every hook must be new.`;
   }
 
   return { system, user };
@@ -217,8 +231,8 @@ function parseJson(raw) {
 }
 
 // ── Public API ─────────────────────────────────────────────────────────────────────────
-export async function generateHooks({ brief, topic, seeds, count = 6 }) {
-  const raw = await callModel(generatePrompt({ brief, topic, seeds, count }));
+export async function generateHooks({ brief, topic, seeds, liked, disliked, count = 6 }) {
+  const raw = await callModel(generatePrompt({ brief, topic, seeds, liked, disliked, count }));
   const out = parseJson(raw);
   const hooks = Array.isArray(out.hooks) ? out.hooks : [];
   // safety net: only surface A/B even if the model slips
