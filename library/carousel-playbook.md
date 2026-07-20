@@ -67,7 +67,47 @@ It will grow over time: a future **analyzer** will scrape top-performing carouse
 - Don't: "fix yourself", productivity framing, clinical terms, hard sells, emoji spam.
 - CTA phrasing: "i vent to kokoro. it listens — then makes a meditation from my own words." + free on iOS.
 
-## 6. Learning loop (placeholder)
+## 6. Learning loop
 
-The analyzer will append here per niche: winning hooks with view/save/share stats, format win-rates,
-best posting slots, and screenshots of reference carousels worth cloning. Nothing yet — engine not live.
+The analyzer appends here per niche: winning hooks with view/save/share stats, format win-rates,
+best posting slots, and reference carousels worth cloning. Sources live in `examples/`.
+
+### 2026-07-20 · Reference analysis: two viral app-plug carousels (added by Dan + Claude)
+
+**Example 1 — `examples/example1/` · "how to shrink your waist this summer:" (@liyah, fitness)**
+397.1K likes · 145.8K saves · 10.7K shares · 474 comments · 7 slides.
+- Every slide is an AUTHENTIC casual phone photo (mirror selfie, Stanley cup, treadmill POV,
+  gym mirror, bed POV). Zero designed graphics — reads as a friend's camera roll, not an ad.
+- Text: TikTok-native bold white sans with black outline, short, centered-low.
+- Tip formula: `N. claim (benefit)` — "1. No sugar after 6pm (lighter stomach)".
+- **App plug is MID-carousel** (tip 3 of 6, slide 4/7): "(I track mine in HealthMeter)" and the
+  photo itself is the app open on a phone. Not the last slide.
+- One absurd comment-bait tip ("5. Sleep in a plank position") — people search it verbatim;
+  the screenshot's own search bar reads "plank position sleep tutorial". Comments = distribution.
+
+**Example 2 — `examples/example2/` · "5 physical things you didn't realize were symptoms of
+serious burnout" (@jade, wellness — a direct Kokoro-format neighbor)**
+105.4K likes · 16.2K saves · 2.5K shares · 6 slides.
+- Hook over a HAPPY real photo (girl on a boat) — emotional contrast with the heavy topic.
+- Slides 2–6: text-only on real dusk-sky photos; the sky palette SHIFTS across the set
+  (warm gold → orange → lavender → blue → purple → red last-light). Near-black lowercase
+  sans, centered, blank-line gaps between short paragraphs.
+- Slide structure: `N) symptom` → felt description → mechanism ("chronic stress actually
+  reduces fine motor coordination because your brain is overloaded"). Validation + authority.
+- **App plug MID-carousel** (tip 3, slide 4/6), framed through authority + affection:
+  "my therapist has me consistently check in… i use the vent now app to process what i'm
+  feeling so it doesn't silently pile up <3 it's genuinely been life changing."
+- Caption drives swipe-back: "buying a mouth guard to sleep in and exercise in helps with #1 <3"
+  — references a numbered tip, so readers re-open the carousel.
+
+**Rule updates adopted from this analysis:**
+1. **Mid-carousel plug beats last-slide plug.** Weave the app into tip #3 (± middle slide) as a
+   personal habit inside a numbered item. Last slide becomes a soft closer / save trigger instead.
+2. Two proven visual recipes: (A) authentic casual photos + white outlined text (needs real
+   user photos); (B) text-on-dusk-sky gradient set with shifting palette (fully generatable,
+   native fit for Kokoro).
+3. Include one surprising/absurd tip as comment bait.
+4. Caption must reference a numbered tip ("#1 helps me most <3") to trigger re-swipes.
+5. Slide dots (position indicator) are part of the native format — preview UI must show them.
+6. Last slide = meta/emotional closer ("you're reading this instead of sleeping. that's the
+   sign.") — doubles as save trigger.

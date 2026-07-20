@@ -4,24 +4,42 @@ Read this first. It is the handoff document for any agent working in this repo.
 
 ## What this project is
 
-An automated content engine whose end goal is **AI UGC creators promoting Kokoro** —
-Dan's iOS app ([kokoromind.com](https://kokoromind.com), 4.9★): you vent by voice after a hard
-day, it listens like a supportive friend, then makes a personalized 3–7 min meditation from
-your own words. Audience: mostly women / "quiet humans". Brand voice: lowercase, intimate,
-no toxic positivity ("i won't try to fix you. i'll just listen — and make you something").
-Aesthetic: Japanese minimalism (sakura, lanterns, dusk, kanji 心).
+**This is a multi-tenant content-generation SERVICE ("Content Factory"), NOT a Kokoro-only
+tool.** It generates on-brand TikTok/IG content (carousels now, AI video later) for **any
+brand**, driven by that brand's own profile. This is the thing new agents get wrong most
+often — do not hardcode any single brand into the engine.
+
+- **Kokoro is tenant #1** — Dan's own iOS app and his first real test case, not the design
+  center. Dan's partner **Nazar will run the same product for completely different brands**
+  (other niches, voices, aesthetics).
+- **Brand identity (name, voice, audience, aesthetic, niche) is DATA, never hardcoded.** It
+  comes from a per-tenant company profile captured by the Home onboarding when a user pastes
+  their startup link (site → brand brief), then read by every generator. In the mockup that's
+  the `window.COMPANY` object. If you're about to write "lowercase intimate" or "dusk sakura"
+  as a constant in engine logic — stop; that belongs to the Kokoro tenant's profile, supplied
+  at runtime.
+- **Demo/sample assets should span many niches** (fitness, finance, food, skincare, plants…)
+  to prove universality. Dan explicitly rejected all-Kokoro-styled demo output.
+
+**The Kokoro tenant brief** (one example of per-brand data, scoped to that tenant — NOT a
+global default): Kokoro ([kokoromind.com](https://kokoromind.com), 4.9★) — you vent by voice
+after a hard day, it listens like a supportive friend, then makes a personalized 3–7 min
+meditation from your own words. Audience: mostly women / "quiet humans". Voice: lowercase,
+intimate, no toxic positivity ("i won't try to fix you. i'll just listen — and make you
+something"). Aesthetic: Japanese minimalism (sakura, lanterns, dusk).
 
 Roadmap: image carousels first (proven cheapest format), AI video later. A learning loop
 (post → pull metrics → learn which hooks/formats win → generate better) comes after the
-basics work. Currently in **test mode**: prove the pipeline on Dan's own accounts; no TikTok
-monetization needed. A website will be hosted on **Railway** (CLI v4.44 installed, repo
-connected to GitHub `Guiltyme212/content-engine`) — task brief pending in
-`docs/website-brief.md`.
+basics work. Currently in **test mode**: prove the pipeline on Dan's own accounts, adapting to
+Kokoro as the first real brand; no TikTok monetization needed. A website will be hosted on
+**Railway** (CLI v4.44 installed, repo connected to GitHub `Guiltyme212/content-engine`) —
+task brief pending in `docs/website-brief.md`.
 
 ## Repo layout
 
 - `library/carousel-playbook.md` — **the copy/knowledge layer.** Format skeletons, hook bank,
-  slide craft rules, visual rules, Kokoro brand brief. Generators write FROM this file.
+  slide craft rules, visual rules — brand-agnostic craft that applies to any tenant. Per-brand
+  briefs (e.g. Kokoro's) are examples/inputs, not the point. Generators write FROM this file.
   A future analyzer will scrape winning hooks/carousels and append to it (section 6).
 - `output/post-XXX-*/` — finished ready-to-post carousels (JPEG slides + caption.txt).
   post-001: nature-psychology test. post-002: first Kokoro post.
@@ -33,13 +51,18 @@ connected to GitHub `Guiltyme212/content-engine`) — task brief pending in
 
 1. **Image generation: OpenAI `gpt-image-2`** (1024x1536 portrait). `high` quality for slides
    with text (~$0.17/img), `medium` for drafts (~$0.04). Batch API halves costs at volume.
-2. **Typography is rendered INSIDE the image by the model** — describe the font as design
-   direction in the prompt (post-002 used: elegant thin serif, warm cream-white, lowercase,
-   generous letter spacing) and demand EXACT spelling. Dan explicitly rejected programmatic
-   text overlay (ugly system fonts); the GDI+ renderer from post-001 is fallback only.
-   Review EVERY slide for typos; regenerate failures.
+2. **Typography: real-font OVERLAY on textless backgrounds** (REVERSED 2026-07-20). The winning
+   TikTok carousels don't bake text into images — creators type it in TikTok's editor (font =
+   Proxima Nova). So the engine now generates a **clean textless background** (gpt-image-2) and
+   overlays **real Montserrat text** on top — white fill + thin black outline, TikTok-native look,
+   draggable position. This is the current builder architecture. (Earlier note said "render text
+   INSIDE the image" and "Dan rejected overlay" — that was about ugly SYSTEM fonts / the GDI+
+   renderer; the fix was a good web font, not baking letters. Old baked-text covers in
+   `output/` are superseded.) Still demand exact spelling and review every slide.
 3. **Copy comes from the playbook**, not improvised — hooks from the hook bank, structure
-   from a skeleton (Kokoro default: validation ×4 → warmup → soft app push on last slide only).
+   from a skeleton, adapted to the loaded tenant's brand profile (not a fixed brand). Example
+   skeleton (as used for the Kokoro tenant): validation ×4 → warmup → mid-carousel app plug
+   (~tip 3; updated from "last slide only" per the 2026-07-20 reference analysis).
 4. **Posting layer: SocialClaw preferred** (getsocialclaw.com — CLI/API/MCP, TikTok photo
    carousels up to 35 imgs, per-post analytics command; 7-day trial then from $15/mo; an API
    key alone is NOT enough, needs active plan). Alternatives researched: upload-post.com,

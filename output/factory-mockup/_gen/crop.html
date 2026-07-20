@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8">
+<style>html,body{margin:0;background:#fff}canvas{display:block}</style>
+<canvas id="c"></canvas>
+<script>
+const img=new Image();
+img.onload=()=>{
+  // crop region + zoom passed via hash: #sx,sy,sw,sh,zoom
+  const [sx,sy,sw,sh,z]=location.hash.slice(1).split(',').map(Number);
+  const c=document.getElementById('c'), g=c.getContext('2d');
+  c.width=sw*z; c.height=sh*z;
+  g.imageSmoothingEnabled=true;
+  g.drawImage(img, sx,sy,sw,sh, 0,0, sw*z, sh*z);
+  document.title='ready';
+};
+img.src=new URLSearchParams(location.search).get('img');
+</script>
