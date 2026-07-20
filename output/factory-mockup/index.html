@@ -1269,13 +1269,13 @@
     <div class="builder">
       <div class="b-card">
         <div class="b-top">
-          <span class="bt-title">Builder</span>
-          <button class="tmpl on" id="tmplDusk"><span class="sw" style="background:linear-gradient(160deg,#e8b27a,#8a6f9a 55%,#4a3f66)"></span>text on dusk sky</button>
-          <button class="tmpl" id="tmplPhoto"><span class="sw" style="background:linear-gradient(160deg,#8a8f96,#3a3f45);position:relative"><span style="position:absolute;left:3px;right:3px;bottom:5px;height:5px;border-radius:2px;background:rgba(255,255,255,.85)"></span></span>authentic photos</button>
+          <span class="bt-title">Carousel builder</span>
+          <button class="tmpl" id="tmplDusk"><span class="sw" style="background:linear-gradient(160deg,#e8b27a,#8a6f9a 55%,#4a3f66)"></span>generated scenes</button>
+          <button class="tmpl on" id="tmplPhoto"><span class="sw" style="background:linear-gradient(160deg,#8a8f96,#3a3f45);position:relative"><span style="position:absolute;left:3px;right:3px;bottom:5px;height:5px;border-radius:2px;background:rgba(255,255,255,.85)"></span></span>photo library</button>
           <button class="btn coral" id="bSend" style="margin-left:6px">Send to calendar</button>
         </div>
 
-        <div id="bDuskBody">
+        <div id="bDuskBody" style="display:none">
           <div class="slide-rail" id="bRail"><!-- thumbs injected --></div>
           <div class="b-editor">
             <div class="lab"><b id="bLabel">Slide 1 · hook</b><span class="pill" id="bPlugPill" style="display:none">app plug · mid-carousel</span><span class="regen-hint" id="bHint">edited — regenerate to apply</span></div>
@@ -1288,7 +1288,7 @@
           </div>
         </div>
 
-        <div id="bPhotoBody" style="display:none">
+        <div id="bPhotoBody">
           <section class="photo-library" aria-label="Photo library">
             <div class="photo-library-head">
               <div>
