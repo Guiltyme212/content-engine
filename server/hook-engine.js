@@ -20,6 +20,11 @@ const cfg = () => ({
   // used only if wired to a provider later. OPENAI_API_KEY is the live default.
   openaiKey: process.env.OPENAI_API_KEY,
   anthropicKey: process.env.ANTHROPIC_API_KEY || process.env.HOOK_MODEL_KEY,
+  // 'proxy' provider: an OpenAI-compatible endpoint at a custom base URL (e.g. a Claude proxy
+  // that speaks /v1/chat/completions). Base URL + key come from env — never hardcoded.
+  proxyBase: process.env.PROXY_BASE_URL,
+  proxyKey: process.env.PROXY_API_KEY || process.env.HOOK_MODEL_KEY,
+  reasoningEffort: process.env.MODEL_REASONING_EFFORT, // e.g. "medium"
 });
 
 // ── Universal principles (brand-agnostic) ──────────────────────────────────────────────
@@ -134,9 +139,12 @@ function gradePrompt({ brief, hook }) {
 rubric below and rewrite it stronger — in the loaded brand's exact voice.
 ${PRINCIPLES}
 ${GRADING}
-Return ONLY JSON: {"grade":"A".."F","breakdown": string (2-3 short lines: what works, what's
-weak, referencing the principles), "rewrites":[{"text": string, "why": string}]}. Provide 3
-rewrites, each a genuine improvement, each on brand voice. Match the brand's casing exactly.`;
+Return ONLY a JSON object with EXACTLY these keys — do not rename, add, or nest them:
+{"grade": "A"|"B"|"C"|"D"|"F", "breakdown": string (2-3 short lines: what works, what's weak,
+referencing the principles), "rewrites": [{"text": string, "why": string}, ...]}.
+Use the key "text" (not "hook"/"line"), "breakdown" (not "assessment"/"analysis"), and
+"rewrites" (not "suggestions"/"reframes"). Provide exactly 3 rewrites, each a genuine
+improvement, each on brand voice. Match the brand's casing exactly.`;
 
   const user = `${briefBlock(brief)}
 
@@ -151,15 +159,24 @@ Grade it, explain briefly, and give 3 stronger rewrites in the brand voice. JSON
 // ── Model call ─────────────────────────────────────────────────────────────────────────
 async function callModel({ system, user }) {
   const c = cfg();
+  if (c.provider === 'proxy') {
+    if (!c.proxyBase) throw new Error('No proxy base URL set (PROXY_BASE_URL).');
+    if (!c.proxyKey) throw new Error('No proxy key set (PROXY_API_KEY).');
+    return callOpenAICompatible({ system, user }, c, c.proxyBase, c.proxyKey);
+  }
   if (c.provider === 'anthropic') {
     if (!c.anthropicKey) throw new Error('No Anthropic key set (ANTHROPIC_API_KEY).');
     return callAnthropic({ system, user }, c);
   }
   if (!c.openaiKey) throw new Error('No OpenAI key set (OPENAI_API_KEY).');
-  return callOpenAI({ system, user }, c);
+  return callOpenAICompatible({ system, user }, c, 'https://api.openai.com', c.openaiKey);
 }
 
-async function callOpenAI({ system, user }, c) {
+// Works for OpenAI and any OpenAI-compatible endpoint (e.g. a Claude proxy that exposes
+// /v1/chat/completions). baseUrl has NO trailing /v1 — we append the path here.
+async function callOpenAICompatible({ system, user }, c, baseUrl, key) {
+  const url = baseUrl.replace(/\/+$/, '') + '/v1/chat/completions';
+  const isClaude = /claude/i.test(c.model);
   const payload = {
     model: c.model,
     response_format: { type: 'json_object' },
@@ -171,24 +188,27 @@ async function callOpenAI({ system, user }, c) {
   // gpt-5.x and o-series only accept the DEFAULT temperature; older models take a custom one.
   const supportsTemp = !/^(gpt-5|o\d)/i.test(c.model);
   if (supportsTemp) payload.temperature = 0.9;
+  if (c.reasoningEffort) payload.reasoning_effort = c.reasoningEffort;
 
-  const call = () => fetch('https://api.openai.com/v1/chat/completions', {
+  const call = () => fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${c.openaiKey}` },
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
     body: JSON.stringify(payload),
   });
 
   let res = await call();
   if (!res.ok) {
     let txt = await res.text().catch(() => '');
-    // one retry: drop temperature if the model rejects a custom value
-    if (payload.temperature !== undefined && /temperature/i.test(txt)) {
-      delete payload.temperature;
+    // Retry once, stripping whichever param the endpoint rejected. Claude-via-proxy often
+    // rejects response_format and/or reasoning_effort — drop them and rely on prompt+parseJson.
+    let retried = false;
+    if (payload.temperature !== undefined && /temperature/i.test(txt)) { delete payload.temperature; retried = true; }
+    if (/response_format/i.test(txt)) { delete payload.response_format; retried = true; }
+    if (payload.reasoning_effort !== undefined && /reasoning_effort|reasoning|effort/i.test(txt)) { delete payload.reasoning_effort; retried = true; }
+    if (retried) {
       res = await call();
-      if (!res.ok) { txt = await res.text().catch(() => ''); throw new Error(`OpenAI ${res.status}: ${txt.slice(0, 300)}`); }
-    } else {
-      throw new Error(`OpenAI ${res.status}: ${txt.slice(0, 300)}`);
     }
+    if (!res.ok) { txt = await res.text().catch(() => ''); throw new Error(`Model ${res.status}: ${txt.slice(0, 300)}`); }
   }
   const data = await res.json();
   return data.choices?.[0]?.message?.content || '{}';
@@ -231,23 +251,69 @@ function parseJson(raw) {
 }
 
 // ── Public API ─────────────────────────────────────────────────────────────────────────
+// Normalize one hook object. Different models label the fields differently — Claude tends to
+// emit "hook" for the line, some emit "copy"/"line". Map any of them to our canonical shape so
+// the A/B filter and the frontend always see `text`.
+function normalizeHook(h) {
+  // Some models return each hook as a bare string instead of an object.
+  if (typeof h === 'string') {
+    const t = h.trim();
+    return t ? { text: t, pattern: '', why: '', grade: 'A' } : null;
+  }
+  if (!h || typeof h !== 'object') return null;
+  const text = h.text || h.hook || h.line || h.copy || h.headline;
+  if (!text) return null;
+  return {
+    text: String(text).trim(),
+    pattern: h.pattern || h.structure || '',
+    why: h.why || h.reason || h.rationale || '',
+    grade: String(h.grade || h.rating || 'A').trim().charAt(0).toUpperCase(),
+  };
+}
+
+// Models (esp. Claude via proxy) rename the array key — "suggestedReframes", "suggestions" —
+// and sometimes make it an array of strings. Find the first array whose items normalize,
+// wherever it lands. Skip arrays that are clearly not hooks (issues/scores lists) by requiring
+// most items to normalize.
+function findHookArray(out) {
+  if (!out || typeof out !== 'object') return [];
+  for (const key of ['hooks', 'rewrites', 'results', 'items', 'suggestions']) {
+    if (Array.isArray(out[key]) && out[key].some((x) => normalizeHook(x))) return out[key];
+  }
+  let best = [];
+  for (const v of Object.values(out)) {
+    if (!Array.isArray(v) || !v.length) continue;
+    const hits = v.filter((x) => normalizeHook(x)).length;
+    if (hits > best.length && hits >= Math.ceil(v.length / 2)) best = v;
+  }
+  return best;
+}
+
 export async function generateHooks({ brief, topic, seeds, liked, disliked, count = 6 }) {
   const raw = await callModel(generatePrompt({ brief, topic, seeds, liked, disliked, count }));
   const out = parseJson(raw);
-  const hooks = Array.isArray(out.hooks) ? out.hooks : [];
   // safety net: only surface A/B even if the model slips
-  return hooks
-    .filter((h) => h && h.text && /^[AB]/i.test(String(h.grade || 'A')))
+  return findHookArray(out)
+    .map(normalizeHook)
+    .filter((h) => h && h.text && /^[AB]/.test(h.grade))
     .slice(0, count);
 }
 
 export async function gradeHook({ brief, hook }) {
   const raw = await callModel(gradePrompt({ brief, hook }));
   const out = parseJson(raw);
+  const rewrites = findHookArray(out)
+    .map((r) => {
+      const n = normalizeHook(r);
+      return n ? { text: n.text, why: n.why } : null;
+    })
+    .filter(Boolean)
+    .slice(0, 3);
+  const gradeRaw = String(out.grade || out.rating || out.score || '?').trim();
   return {
-    grade: out.grade || '?',
-    breakdown: out.breakdown || '',
-    rewrites: Array.isArray(out.rewrites) ? out.rewrites.slice(0, 3) : [],
+    grade: /^[A-F]/i.test(gradeRaw) ? gradeRaw.charAt(0).toUpperCase() : '?',
+    breakdown: out.breakdown || out.explanation || out.assessment || out.analysis || out.feedback || '',
+    rewrites,
   };
 }
 
