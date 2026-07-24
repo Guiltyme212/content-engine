@@ -54,6 +54,12 @@ The Content Factory demo is live at **https://content-engine-production-f818.up.
   slide craft rules, visual rules — brand-agnostic craft that applies to any tenant. Per-brand
   briefs (e.g. Kokoro's) are examples/inputs, not the point. Generators write FROM this file.
   A future analyzer will scrape winning hooks/carousels and append to it (section 6).
+  Production injects a short brand-agnostic excerpt (`CONTENT_FIRST_REFERENCE` in
+  `server/hook-engine.js`) — keep it in sync when transferable strategy changes.
+- `examples/` — the reference carousels we cloned from proven winners, photos renamed to slide
+  order (`exampleN/1.jpg` = cover). `examples/analysis/` holds the slide-by-slide teardowns,
+  the 8 shared conversion laws (`00-what-makes-these-convert.md`), and the generator system
+  prompt (`carousel-system-prompt.md`). The playbook's §1 body shapes A1/A2/A3 come from these.
 - `output/post-XXX-*/` — finished ready-to-post carousels (JPEG slides + caption.txt).
   post-001: nature-psychology test. post-002: first Kokoro post.
 - `docs/website-brief.md` — template awaiting Dan's description of the website task.
