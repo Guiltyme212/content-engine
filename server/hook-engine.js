@@ -30,13 +30,19 @@ const cfg = () => ({
 // ── Universal principles (brand-agnostic) ──────────────────────────────────────────────
 const PRINCIPLES = `
 UNIVERSAL HOOK PRINCIPLES (apply to every brand, every niche):
-1. SPECIFIC beats abstract. Concrete outcome, number, or exact moment — never a vague label.
-   ("the magic number is one honest sentence" > "how to feel better")
-2. FRONT-LOAD the payoff. The value lands in the first few words. No throat-clearing
+1. SPECIFIC beats abstract. Never name a concept when you can name where it lives: a body
+   part, a clock time, a scene the reader has stood in. ("crying in the car after work" >
+   "emotional exhaustion"; "your paycheck is gone by the 12th" > "bad budgeting"; "your skin
+   at 3pm" > "skincare mistakes").
+2. FRONT-LOAD VALUE OR TENSION. The concrete promise or recognizable problem lands in the first
+   few words. A carousel cover keeps enough of the answer unpaid to earn slide two. No throat-clearing
    ("here's how to…", "let me tell you about…", "in this post…").
 3. CONFIDENT DECLARATIVES beat hedged questions. State it as true. Avoid "do you ever…?".
-4. TWO-SENTENCE AMPLIFIER. A strong hook is often a claim + a second line that reframes,
-   contrasts, or raises the stakes. The second line earns the swipe.
+4. TWO-SENTENCE AMPLIFIER. A strong hook is often a claim + a short second line (often a
+   parenthetical) doing ONE precise job: read the reader's mind ("yes, that one"), kill their
+   top objection ("without ______ for an hour"), add a twist that makes the answer unguessable
+   ("it wasn't about sleep"), or tease one numbered item ("#3 is why ______"). The second
+   line earns the swipe.
 5. NAME THE PERSON OR MOMENT. Speak to the exact human scrolling and the exact moment they're
    in — recognition is what stops the thumb.
 6. ONE SAVE / SHARE TRIGGER where it's natural (a reframe worth keeping, a line worth sending
@@ -46,6 +52,14 @@ UNIVERSAL HOOK PRINCIPLES (apply to every brand, every niche):
 8. FORMAT FIT. Only use a pattern that suits THIS topic. Do not force a stat/case-study
    pattern onto a conceptual or emotional topic (that cross-format forcing is the #1 way AI
    hooks fail). If a pattern doesn't fit, don't use it.
+9. BLUNT BEATS POETIC — within the brand's voice. Visceral verbs, severity words, and real
+   timeframes ("for years", "every single night", "after 6 years of") over soft phrasing.
+   Soft abstractions whisper; winners state the dramatic concrete thing plainly.
+10. ADJACENT TERRITORY IS FAIR GAME. The hook may live in ANY true, recognizable moment of
+   the audience's life — not only the brand's core subject. The carousel body pivots later
+   through one mid-list personal-tool cameo tied to one item, so judge the hook as pure
+   editorial; it only needs a list or story shape that can host that one cameo slide
+   naturally.
 `;
 
 // Brand-agnostic structural patterns. These are shapes, not brand copy — the model fills
@@ -62,16 +76,186 @@ HOOK PATTERNS (structures — fill in the brand's voice, use only those that fit
 - curiosity gap: "things nobody tells you about ______"
 - contrarian: "everyone thinks ______. the truth is ______."
 - reframe-of-insult: reclaim a label the audience has been called
+- objection-killer how-to: "how to ______: (without ______)"
+- mind-reader: "how to stop ______ (yes, that one)"
+- secret scene story: "how i stopped ______ (nobody knew)"
+- body/scene blind-spot count: "N things your ______ does when you ______"
+- timeframe transformation: "how i ______ after ______ of ______" + a twist stake
 `;
 
 const GRADING = `
 GRADE every hook A–F:
-A = stops the scroll cold; specific; perfectly on brand voice; has save/share pull.
-B = strong and on-voice; one small softness (slightly long, slightly less specific).
-C = generic, or voice is a bit off, or the pattern is a loose fit.
+A = stops the scroll cold; names a concrete scene, time, or body detail; perfectly on brand
+    voice; second line does a real job (mind-read, objection-kill, twist, or tease).
+B = strong and on-voice; one small softness (slightly long, slightly less specific, or the
+    second line merely restates instead of adding).
+C = generic, or names an abstract concept where a scene should be ("emotions", "wellness",
+    "productivity"), or voice is a bit off, or the pattern is a loose fit.
 D–F = vague, wrong voice, forced/mismatched pattern, or throat-clearing.
 Only hooks graded A or B are worth showing. Be a harsh grader — most first drafts are C.
 `;
+
+// Executable, brand-agnostic excerpt of library/carousel-playbook.md. Keep this free of
+// tenant names, product facts, copied hooks, statistics, and unsupported claims.
+export const CONTENT_FIRST_REFERENCE = `
+TRUSTED CONTENT-FIRST REFERENCE STRATEGY:
+
+COVER ANATOMY - a winning first slide carries all three, readable in under two seconds:
+1) a concrete desired outcome OR a curiosity gap; 2) a reason to care right now - often a
+soft parenthetical stake; 3) an open loop that cannot close on slide one (a colon, a bounded
+count, a first-person "how i"). If a screenshot of slide one alone satisfies the reader, the
+hook fails.
+
+CONCRETENESS RULE: name the place the problem lives - a body part, a clock time, a scene the
+reader has stood in - never the abstract concept for it. Severity words and real timeframes
+raise the stakes. The parenthetical does ONE precise job: mind-read, objection-kill, twist,
+or numbered tease.
+
+TERRITORY RULE: the hook may live in any true moment of the audience's life, not only the
+brand's core subject. It only needs to open a list or story with one later slide where a
+personal tool naturally solves one item - that single cameo slide is the only bridge to the
+product, so purely editorial hooks in adjacent territory are as valuable as on-topic ones.
+
+- SEARCHABLE HOW-TO LIST: a desired outcome plus a real constraint or timeframe, followed by
+  numbered, specific actions. Each action earns its slide with a short, truthful reason.
+- BLIND-SPOT DIAGNOSTIC: a bounded number of concrete things the reader did not realize point
+  to a hidden tension. Later slides repay the debt one recognizable item at a time.
+- FIRST-PERSON RECOVERY STORY: how I [specific change] after [specific low point], plus one
+  unresolved stake. Later slides reveal surprising but ordinary actions in sequence.
+- IDENTITY / BEING-SEEN STORY: name an exact behavior or moment that makes the reader feel
+  recognized, then leave the explanation or reframe for following slides.
+- CONTRARIAN REFRAME: challenge the surface explanation, but withhold enough of the new
+  explanation that the reader still needs the next slide.
+
+BODY CONTRACT the hook must set up: the later slides repeat ONE slide shape for the whole
+carousel (numbered action + short benefit, symptom + honest why, or first-person step +
+reason). Every slide pays out a WHAT and a WHY; specifics are concrete nouns and real
+numbers, never vague quantities. A product may appear later as one small, truthful
+personal-tool cameo on a middle slide - never slide one, never the last slide, never a call
+to action.
+
+These are structures, not copy templates. Never carry a reference brand, app, statistic,
+medical claim, audience fact, or product behavior into another tenant. Details may be
+surprising, but they must be truthful and defensible. The editorial content earns attention
+first.
+`;
+
+const PRODUCT_LANGUAGE = /\b(?:app|platform|software|subscription|course|dashboard|assistant|generator|tool|solution|download|sign[\s-]?up|free trial|link in bio|available (?:on|now)|get started|book a call)\b|\b(?:our|this|the) (?:service|product|feature)\b/i;
+const PROPOSITION_LANGUAGE = /\b(?:turn|transform|convert)\b.{0,55}\binto\b|\b(?:made|designed|built|created|personalized|customi[sz]ed)\b.{0,35}\bfor you\b|\bso you can\b|\b(?:all|everything) you need\b/i;
+const MARKETING_IMPERATIVE = /^(?:say|share|tell|discover|unlock|experience|transform|create|try|download|join|meet|introducing|get started)\b/i;
+const AMBIGUOUS_BRAND_WORDS = new Set(['one', 'every', 'calm']);
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function protectedBrandPhrases(brief = {}) {
+  const host = String(brief?.domain || '')
+    .replace(/^https?:\/\//i, '')
+    .replace(/^www\./i, '')
+    .split(/[/:?#]/)[0];
+  const domain = host.split('.')[0];
+  return [...new Set([brief?.name, domain]
+    .map((value) => String(value || '').replace(/\s+/g, ' ').trim())
+    .filter((value) => value.length >= 3 && !AMBIGUOUS_BRAND_WORDS.has(value.toLowerCase())))];
+}
+
+function hasProductHelpProposition(value, brief = {}) {
+  const productSubject = /\b(?:(?:our|this|the)\s+)?(?:app|platform|software|subscription|course|dashboard|assistant|generator|tool|solution|service|product|feature)\b.{0,28}\bhelps?\s+(?:you|people|teams)\b/i;
+  if (productSubject.test(value)) return true;
+  return protectedBrandPhrases(brief).some((phrase) => (
+    new RegExp(`\\b${escapeRegExp(phrase)}\\b.{0,28}\\bhelps?\\s+(?:you|people|teams)\\b`, 'i').test(value)
+  ));
+}
+
+export function hasRepayableDebt(text) {
+  const value = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!value) return false;
+
+  const boundedList = /\b(?:\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b(?:\s+[\w'\u2019-]+){0,4}\s+\b(?:signs?|symptoms?|things?|reasons?|mistakes?|ways?|habits?|steps?|rules?|lessons?|questions?|changes?|clues?|patterns?)\b/i.test(value);
+  const howJourney = /^(?:how to|how i)\b.{5,}/i.test(value);
+  const recognitionDebt = /\bnobody (?:ever )?(?:asked|noticed|warned|told)\b|\bdidn['\u2019]?t realize\b|\bwithout realizing\b|\bwhat (?:would|actually|really|happened|changed)\b|\bwhy (?:you|your|this|that|it)\b/i.test(value);
+  const directQuestion = /^(?:who|what|why|how)\b[^?]{4,}\?$/i.test(value);
+  const clauses = value.split(/[.!?;]|\s(?:but|yet|instead|while|except|rather than)\s/i)
+    .map((part) => part.trim()).filter((part) => part.split(/\s+/).length >= 2);
+  const actualContrast = clauses.length >= 2 && (
+    (/\b(?:isn['\u2019]?t|aren['\u2019]?t|wasn['\u2019]?t|weren['\u2019]?t|don['\u2019]?t|doesn['\u2019]?t|didn['\u2019]?t|not|never|nobody|nothing)\b/i.test(value)
+      && /\b(?:but|yet|instead|while|except|rather than|actually|still|only|just|the truth|the problem|didn['\u2019]?t get the memo)\b/i.test(value))
+    || /\beveryone thinks\b.{0,100}\b(?:truth|problem|actually|but|wrong)\b/i.test(value)
+    || /\b(?:quiet|stopped|finished|ended|left|gone)\b.{0,90}\b(?:still|didn['\u2019]?t|doesn['\u2019]?t|keeps?|starts?)\b/i.test(value)
+  );
+  const timeMarker = '(?:\\d{1,2}(?::\\d{2})?\\s?(?:a\\.?m\\.?|p\\.?m\\.?)|today|tonight|this morning|this evening|before bed|after work|by midnight|sunday night)';
+  const reversal = '(?:still|already|only|but|yet|instead|before|after|doesn[\'\\u2019]?t|didn[\'\\u2019]?t|isn[\'\\u2019]?t|not)';
+  const specificTimeReversal = new RegExp(`\\b${timeMarker}\\b.{0,90}\\b${reversal}\\b|\\b${reversal}\\b.{0,90}\\b${timeMarker}\\b`, 'i').test(value);
+
+  return boundedList || howJourney || recognitionDebt || actualContrast || specificTimeReversal || directQuestion;
+}
+
+export function promisedListCount(text) {
+  const value = String(text || '').replace(/\s+/g, ' ').trim();
+  const match = value.match(/\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\b(?:\s+[\w'\u2019-]+){0,4}\s+\b(?:signs?|symptoms?|things?|reasons?|mistakes?|ways?|habits?|steps?|rules?|lessons?|questions?|changes?|clues?|patterns?)\b/i);
+  if (!match) return 0;
+  const words = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
+  return Number(match[1]) || words[match[1].toLowerCase()] || 0;
+}
+
+function hasFirstPersonSource(brief = {}) {
+  const context = String(brief?.context || '');
+  return /\b(?:i|i['\u2019](?:m|ve|d|ll)|me|my|mine)\b/i.test(context);
+}
+
+export function lintHook(text, { brief = {}, mode = 'general' } = {}) {
+  const value = String(text || '').replace(/\s+/g, ' ').trim();
+  const reasons = [];
+  if (!value) return ['missing hook text'];
+  if (mode !== 'contentFirst') return reasons;
+
+  const words = value.split(/\s+/).filter(Boolean);
+  if (words.length < 5) reasons.push('too little concrete editorial information');
+  if (words.length > 30) reasons.push('too long for a first slide');
+  for (const phrase of protectedBrandPhrases(brief)) {
+    if (new RegExp(`\\b${escapeRegExp(phrase)}\\b`, 'i').test(value)) {
+      reasons.push('names the brand on slide one');
+      break;
+    }
+  }
+  if (/\b(?:we|we['\u2019](?:ll|re|ve|d)|our|ours|us)\b/i.test(value)) {
+    reasons.push('uses first-person brand language');
+  }
+  if (PRODUCT_LANGUAGE.test(value)) reasons.push('names a product, feature, or call to action');
+  if (PROPOSITION_LANGUAGE.test(value) || hasProductHelpProposition(value, brief)) {
+    reasons.push('reads like a product proposition');
+  }
+  if (MARKETING_IMPERATIVE.test(value)) reasons.push('opens like a marketing tagline');
+  if (!hasRepayableDebt(value)) reasons.push('does not create a concrete, repayable curiosity debt');
+  if (promisedListCount(value) > 5) reasons.push('promises more list items than this carousel can repay');
+  if (/\b(?:how i|i|i['\u2019](?:m|ve|d|ll)|me|my|mine)\b/i.test(value) && !hasFirstPersonSource(brief)) {
+    reasons.push('uses a first-person story that is not supplied in the brand context');
+  }
+  return [...new Set(reasons)];
+}
+
+export function inferHookPattern(text) {
+  const value = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!value) return '';
+  if (/^(?:\d+|one|two|three|four|five|six|seven)\b/i.test(value)
+    && /\b(?:signs?|symptoms?|things?|reasons?|mistakes?|ways?|habits?|steps?|rules?|lessons?)\b/i.test(value)) {
+    return 'blind-spot list';
+  }
+  if (/^how to\b/i.test(value)) return 'searchable how-to';
+  if (/^how i\b/i.test(value) || /^i\b.{0,90}\b(?:after|before|when)\b/i.test(value)) {
+    return 'first-person story';
+  }
+  if (/^(?:pov\s*:|for (?:the ones|anyone)\b)/i.test(value)
+    || /\bnobody (?:noticed|asked|saw|warned)\b/i.test(value)) {
+    return 'identity recognition';
+  }
+  if (/\b(?:isn['\u2019]?t|aren['\u2019]?t|wasn['\u2019]?t|doesn['\u2019]?t mean|everyone thinks|the truth is)\b/i.test(value)
+    || /\bnot\b.{0,45}\b(?:it['\u2019]?s|it is|instead)\b/i.test(value)) {
+    return 'contrarian reframe';
+  }
+  return 'editorial story';
+}
 
 export function briefBlock(brief = {}) {
   const b = brief || {};
@@ -94,19 +278,42 @@ export function briefBlock(brief = {}) {
 }
 
 // ── Prompt builders ────────────────────────────────────────────────────────────────────
-function generatePrompt({ brief, topic, seeds, liked, disliked, count = 6 }) {
+export function generatePrompt({ brief, topic, seeds, liked, disliked, count = 6, mode = 'general' }) {
   const seedList = (Array.isArray(seeds) ? seeds : []).map((s) => String(s).trim()).filter(Boolean);
   const likedList = (Array.isArray(liked) ? liked : []).map((s) => String(s).trim()).filter(Boolean);
   const dislikedList = (Array.isArray(disliked) ? disliked : []).map((s) => String(s).trim()).filter(Boolean);
+  const contentFirst = mode === 'contentFirst';
+  const requestedCount = contentFirst
+    ? Math.min(12, Math.max((Number(count) || 0) * 3, 8))
+    : count;
   const system = `You are a world-class short-form hook writer. You write the FIRST SLIDE of
 image carousels — the one line that decides whether someone stops scrolling. You write in the
 loaded brand's exact voice and never break it.
 ${PRINCIPLES}
 ${PATTERNS}
 ${GRADING}
+${contentFirst ? `${CONTENT_FIRST_REFERENCE}
+
+CONTENT-FIRST EDITORIAL MODE - HARD RULES:
+- Slide one is editorial, not an ad. Never name the brand, app, product, feature, tool, CTA,
+  first-person brand language, a solution, or a product outcome.
+- Do not explain what the company does. Do not write a tagline, value proposition, generic
+  imperative, complete answer, or promise made for the reader.
+- Every hook must create CONCRETE CURIOSITY DEBT: identify the precise question the reader
+  needs the next slides to answer. The debt must be repayable by a coherent 5-to-7-slide
+  diagnostic list, practical list, or story - never vague inspiration.
+- Start from a recognizable human moment, behavior, contradiction, or bounded promise. The
+  line should become weaker, not remain equally valid, if transplanted to 100 unrelated brands.
+- BATCH MIX QUOTA: return at least 2 bounded-count list hooks promising 3 to 5 items, at least
+  2 HOW TO hooks, and at least 2 identity-recognition or contrarian hooks whose exact unresolved
+  question is clear. Use HOW I only when current content context explicitly supplies that true
+  first-person experience. Never invent a founder, customer, or narrator anecdote. Do not return
+  several paraphrases of the same emotional claim.
+- In the why field, name both the withheld answer and the later list or story that repays it.
+` : ''}
 Return ONLY JSON: {"hooks":[{"text": string, "pattern": string, "why": string (one short line
-on why it stops the scroll), "grade": "A"|"B"|"C"|"D"|"F"}]}. Provide up to ${count} hooks,
-but ONLY grade-A or grade-B ones — if fewer than ${count} are that good, return fewer. Never
+on why it stops the scroll), "grade": "A"|"B"|"C"|"D"|"F"}]}. Provide up to ${requestedCount} hooks,
+but ONLY grade-A or grade-B ones — if fewer than ${requestedCount} are that good, return fewer. Never
 pad with weak hooks. Match the brand's casing exactly (if the voice is lowercase, write
 lowercase).`;
 
@@ -119,11 +326,15 @@ write MORE hooks with the same feel in the brand's voice. You may riff on these 
 fresh angles in the same vein. Do NOT just copy them.
 ${seedList.map((s) => '• ' + s).join('\n')}\n\n`;
     if (topic && topic.trim()) user += `Keep them roughly about: ${topic.trim()}\n\n`;
-    user += `Write up to ${count} new hooks in that style. Grade honestly (A/B only). JSON only.`;
+    user += `Write up to ${requestedCount} new hooks in that style. Grade honestly (A/B only). JSON only.`;
   } else {
     user += `TOPIC for this batch: ${topic && topic.trim() ? topic.trim() : "(no topic given — write on-brand hooks about the audience's core pain, drawn from the brand profile above)"}\n\n`;
     user += `Write hooks about this topic, in the brand's voice, applying the principles. Screen
 out any pattern that doesn't fit. Grade honestly. Return JSON only.`;
+  }
+  if (contentFirst) {
+    user += `\n\nThis topic is editorial audience tension, not permission to advertise the product.
+Build a useful list or story the carousel can actually deliver. Keep slide one product-free.`;
   }
 
   // TASTE LEARNING — steer this batch by what the user has already kept vs passed on.
@@ -182,16 +393,26 @@ export async function callModel({ system, user, maxTokens, provider, model }) {
 
 // Works for OpenAI and any OpenAI-compatible endpoint (e.g. a Claude proxy that exposes
 // /v1/chat/completions). baseUrl has NO trailing /v1 — we append the path here.
+export function compatibleMessages({ system, user }, { provider, model } = {}) {
+  const isClaudeProxy = provider === 'proxy' && /claude/i.test(model || '');
+  // Some OpenAI-compatible Claude proxies silently discard `system` role messages. In that
+  // case the writer never sees the schema or quality rules. Put the trusted instructions in
+  // the visible request as well, ahead of the clearly delimited untrusted runtime packet.
+  return isClaudeProxy
+    ? [{ role: 'user', content: `TRUSTED SYSTEM INSTRUCTIONS:\n${system}\n\nUSER REQUEST:\n${user}` }]
+    : [
+      { role: 'system', content: system },
+      { role: 'user', content: user },
+    ];
+}
+
 async function callOpenAICompatible({ system, user, maxTokens }, c, baseUrl, key) {
   const url = baseUrl.replace(/\/+$/, '') + '/v1/chat/completions';
   const isClaude = /claude/i.test(c.model);
   const payload = {
     model: c.model,
     response_format: { type: 'json_object' },
-    messages: [
-      { role: 'system', content: system },
-      { role: 'user', content: user },
-    ],
+    messages: compatibleMessages({ system, user }, c),
   };
   // gpt-5.x and o-series only accept the DEFAULT temperature; older models take a custom one.
   const supportsTemp = !/^(gpt-5|o\d)/i.test(c.model);
@@ -290,20 +511,22 @@ export function parseJson(raw) {
 // Normalize one hook object. Different models label the fields differently — Claude tends to
 // emit "hook" for the line, some emit "copy"/"line". Map any of them to our canonical shape so
 // the A/B filter and the frontend always see `text`.
-function normalizeHook(h) {
+export function normalizeHook(h) {
   // Some models return each hook as a bare string instead of an object.
   if (typeof h === 'string') {
     const t = h.trim();
-    return t ? { text: t, pattern: '', why: '', grade: 'A' } : null;
+    return t ? { text: t, pattern: inferHookPattern(t), why: '', grade: '' } : null;
   }
   if (!h || typeof h !== 'object') return null;
   const text = h.text || h.hook || h.line || h.copy || h.headline;
   if (!text) return null;
+  const normalizedText = String(text).trim();
+  const suppliedPattern = String(h.pattern || h.structure || '').trim();
   return {
-    text: String(text).trim(),
-    pattern: h.pattern || h.structure || '',
+    text: normalizedText,
+    pattern: suppliedPattern || inferHookPattern(normalizedText),
     why: h.why || h.reason || h.rationale || '',
-    grade: String(h.grade || h.rating || 'A').trim().charAt(0).toUpperCase(),
+    grade: String(h.grade || h.rating || '').trim().charAt(0).toUpperCase(),
   };
 }
 
@@ -325,13 +548,20 @@ function findHookArray(out) {
   return best;
 }
 
-export async function generateHooks({ brief, topic, seeds, liked, disliked, count = 6 }) {
-  const raw = await callModel(generatePrompt({ brief, topic, seeds, liked, disliked, count }));
+export async function generateHooks({ brief, topic, seeds, liked, disliked, count = 6, mode = 'general' }) {
+  const contentFirst = mode === 'contentFirst';
+  const raw = await callModel({
+    ...generatePrompt({ brief, topic, seeds, liked, disliked, count, mode }),
+    ...(contentFirst ? { maxTokens: 2800 } : {}),
+  });
   const out = parseJson(raw);
   // safety net: only surface A/B even if the model slips
   return findHookArray(out)
     .map(normalizeHook)
-    .filter((h) => h && h.text && /^[AB]/.test(h.grade))
+    .filter((h) => h
+      && h.text
+      && /^[AB]/.test(h.grade)
+      && (!contentFirst || (h.pattern && h.why && lintHook(h.text, { brief, mode }).length === 0)))
     .slice(0, count);
 }
 

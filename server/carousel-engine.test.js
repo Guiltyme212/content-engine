@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeCarouselOutput, normalizeTasteList } from './carousel-engine.js';
+import { carouselPrompt, editorialTopic, normalizeCarouselOutput, normalizeTasteList } from './carousel-engine.js';
 
 const themes = [
   { id: 'real-life', label: 'Real Life' },
@@ -9,11 +9,25 @@ const themes = [
   { id: 'generic-lifestyle', label: 'Generic Lifestyle' },
 ];
 
+const brief = {
+  name: 'Northstar',
+  domain: 'northstar.example',
+  product: 'A private journaling app that turns a voice note into a saved reflection.',
+  audience: 'busy people who keep carrying unfinished thoughts into the evening',
+  niche: 'reflective wellbeing',
+};
+
+const options = (extra = {}) => ({ themes, brief, ...extra });
+
 function slide(role, index, overrides = {}) {
   return {
     role,
-    text: `Clear slide ${index + 1} copy`,
-    alt: `Alternate slide ${index + 1} copy`,
+    text: index === 3
+      ? 'I use Northstar to record one voice note about the thought.'
+      : `This concrete story beat continues the promised list clearly ${index + 1}.`,
+    alt: index === 3
+      ? 'I open Northstar and record one voice note about the thought.'
+      : `This alternate story beat continues the promised list clearly ${index + 1}.`,
     themeId: index % 2 ? 'work-scenes' : 'real-life',
     visualKeywords: ['person', 'natural light'],
     visualReason: 'The scene directly reflects this story beat.',
@@ -22,7 +36,7 @@ function slide(role, index, overrides = {}) {
   };
 }
 
-function candidate(hook = 'A specific hook people understand immediately') {
+function candidate(hook = 'How to stop carrying unfinished thoughts into the evening') {
   return {
     label: 'Story concept',
     hook,
@@ -42,7 +56,7 @@ function candidate(hook = 'A specific hook people understand immediately') {
 }
 
 test('normalizes a valid carousel to the frontend contract', () => {
-  const [carousel] = normalizeCarouselOutput({ carousels: [candidate()] }, { themes, count: 5 });
+  const [carousel] = normalizeCarouselOutput({ carousels: [candidate()] }, options({ count: 5 }));
   assert.ok(carousel.id.startsWith('carousel-'));
   assert.equal(carousel.hook, carousel.slides[0].text);
   assert.equal(carousel.slides[0].role, 'Hook');
@@ -60,33 +74,182 @@ test('rejects invalid product placement and unknown visual themes', () => {
   wrongPlacement.slides[2].userAsset = true;
   wrongPlacement.slides[3].role = 'Story';
   wrongPlacement.slides[3].userAsset = false;
-  assert.deepEqual(normalizeCarouselOutput({ carousels: [wrongPlacement] }, { themes }), []);
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [wrongPlacement] }, options()), []);
 
   const unknownTheme = candidate();
   unknownTheme.slides[1].themeId = 'not-in-library';
-  assert.deepEqual(normalizeCarouselOutput({ carousels: [unknownTheme] }, { themes }), []);
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [unknownTheme] }, options()), []);
 
   const ordinarySolutionRole = candidate();
   ordinarySolutionRole.slides[4].role = 'Solution';
-  assert.equal(normalizeCarouselOutput({ carousels: [ordinarySolutionRole] }, { themes }).length, 1);
+  assert.equal(normalizeCarouselOutput({ carousels: [ordinarySolutionRole] }, options()).length, 1);
 
   const brochureCopy = candidate();
   brochureCopy.slides[4].text = 'Feel the difference and embrace your calm.';
-  assert.deepEqual(normalizeCarouselOutput({ carousels: [brochureCopy] }, { themes }), []);
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [brochureCopy] }, options()), []);
 
   const metaphorOnlySunset = candidate();
   metaphorOnlySunset.slides[4].themeId = 'sunsets';
-  const [fixedVisual] = normalizeCarouselOutput({ carousels: [metaphorOnlySunset] }, { themes });
+  const [fixedVisual] = normalizeCarouselOutput({ carousels: [metaphorOnlySunset] }, options());
   assert.equal(fixedVisual.slides[4].themeId, 'generic-lifestyle');
 });
 
 test('deduplicates generated hooks and excludes prior taste hooks', () => {
-  const repeated = candidate('A new exact hook');
-  const output = { carousels: [repeated, candidate('A new exact hook'), candidate('Another exact hook')] };
-  const result = normalizeCarouselOutput(output, { themes, excludedHooks: ['A prior hook'] });
-  assert.deepEqual(result.map((item) => item.hook), ['A new exact hook', 'Another exact hook']);
-  assert.deepEqual(normalizeCarouselOutput({ carousels: [candidate('A prior hook')] }, { themes, excludedHooks: ['A prior hook'] }), []);
-  assert.deepEqual(normalizeCarouselOutput(output, { themes, allowedHooks: ['Another exact hook'] }).map((item) => item.hook), ['Another exact hook']);
+  const repeatedHook = 'How to spot the moment your focus starts slipping before lunch';
+  const otherHook = `How to make Sunday night feel lighter before work:`;
+  const priorHook = `3 quiet habits nobody tells you are draining your focus`;
+  const repeated = candidate(repeatedHook);
+  const output = { carousels: [repeated, candidate(repeatedHook), candidate(otherHook)] };
+  const result = normalizeCarouselOutput(output, options({ excludedHooks: [priorHook] }));
+  assert.deepEqual(result.map((item) => item.hook), [repeatedHook, otherHook]);
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [candidate(priorHook)] }, options({ excludedHooks: [priorHook] })), []);
+  assert.deepEqual(normalizeCarouselOutput(output, options({ allowedHooks: [otherHook] })).map((item) => item.hook), [otherHook]);
+  assert.equal(normalizeCarouselOutput({ batch: [candidate(otherHook)] }, options()).length, 1);
+});
+
+test('editorial topic defaults to audience tension, never the product description', () => {
+  const topic = editorialTopic({
+    audience: 'night-shift workers who cannot switch off after work',
+    product: 'A payroll automation dashboard with instant reporting',
+    niche: 'workplace wellbeing',
+  });
+  assert.match(topic, /night-shift workers/i);
+  assert.match(topic, /workplace wellbeing/i);
+  assert.doesNotMatch(topic, /payroll automation|instant reporting/i);
+});
+
+test('rejects vanilla hooks and promotional language outside the product cameo', () => {
+  const vanilla = candidate(`Say what's on your mind. We'll turn it into meditation made only for you.`);
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [vanilla] }, options()), []);
+
+  const earlyBrand = candidate();
+  earlyBrand.slides[1].text = 'Northstar turns the thought into a private reflection for you.';
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [earlyBrand] }, options()), []);
+
+  const lateApp = candidate();
+  lateApp.slides[4].text = 'Download the app now so you can finally feel calm.';
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [lateApp] }, options()), []);
+
+  const promotionalAlt = candidate();
+  promotionalAlt.slides[2].alt = 'Use the Northstar app to turn the whole day around.';
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [promotionalAlt] }, options()), []);
+
+  const promotionalCaption = candidate();
+  promotionalCaption.caption = 'Download Northstar now and get started today. #reflection';
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [promotionalCaption] }, options()), []);
+});
+
+test('requires a subtle personal-tool cameo and useful content after it', () => {
+  const hardSell = candidate();
+  hardSell.slides[3].text = 'Download Northstar now and start your life-changing journey.';
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [hardSell] }, options()), []);
+
+  const impersonal = candidate();
+  impersonal.slides[3].text = 'Northstar is a private tool for writing thoughts down.';
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [impersonal] }, options()), []);
+
+  const repeatedBrand = candidate();
+  repeatedBrand.slides[3].text = 'I use Northstar to write a thought down. Northstar keeps the note private.';
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [repeatedBrand] }, options()), []);
+
+  const noValueAfter = candidate();
+  noValueAfter.slides[4].text = 'You are enough.';
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [noValueAfter] }, options()), []);
+
+  assert.equal(normalizeCarouselOutput({ carousels: [candidate()] }, options()).length, 1);
+});
+
+test('a bounded-list carousel must deliver every numbered item it promises', () => {
+  const hook = `5 quiet signs you didn't realize were draining your focus`;
+  const complete = candidate(hook);
+  complete.slides = [
+    slide('Hook', 0, { text: hook }),
+    slide('Story beat', 1, { text: '1. You reopen the same message before breakfast.' }),
+    slide('Story beat', 2, { text: '2. You move one unfinished task onto three new lists.' }),
+    slide('Product moment', 3),
+    slide('Story beat', 4, { text: '3. You check the clock before you check how you feel.' }),
+    slide('Story beat', 5, { text: '4. You reread the note after the decision is already made.' }),
+    slide('Story beat', 6, { text: '5. You close the laptop but leave the inbox open on your phone.' }),
+  ];
+  assert.equal(normalizeCarouselOutput({ carousels: [complete] }, options()).length, 1);
+
+  const incomplete = structuredClone(complete);
+  incomplete.slides[6].text = 'You close the laptop but leave the inbox open on your phone.';
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [incomplete] }, options()), []);
+});
+
+test('rejects personal-sounding product pitches, outcome claims, and abstract body copy', () => {
+  const personalPitch = candidate();
+  personalPitch.slides[3].text = 'I use Northstar because it turns whatever I say into meditation made only for me.';
+  personalPitch.slides[3].alt = personalPitch.slides[3].text;
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [personalPitch] }, options()), []);
+
+  const outcomeClaim = candidate();
+  outcomeClaim.slides[3].text = 'I open Northstar and it calms my mind before bed.';
+  outcomeClaim.slides[3].alt = outcomeClaim.slides[3].text;
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [outcomeClaim] }, options()), []);
+
+  const inventedBehavior = candidate();
+  inventedBehavior.slides[3].text = 'I use Northstar to reshape whatever I am thinking before bed.';
+  inventedBehavior.slides[3].alt = inventedBehavior.slides[3].text;
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [inventedBehavior] }, options()), []);
+
+  const kokoroBrief = {
+    ...brief,
+    name: 'Kokoro',
+    domain: 'kokoro.app',
+    product: 'An app where people speak what is on their mind and receive a meditation for that moment.',
+  };
+  const supportedParaphrase = candidate();
+  supportedParaphrase.slides[3].text = 'I open Kokoro and say the thought out loud.';
+  supportedParaphrase.slides[3].alt = 'I say the thought out loud into Kokoro.';
+  assert.equal(normalizeCarouselOutput({ carousels: [supportedParaphrase] }, options({ brief: kokoroBrief })).length, 1);
+
+  const vagueOutput = structuredClone(supportedParaphrase);
+  vagueOutput.slides[3].text = 'I speak into Kokoro and it hands the thought back shaped differently.';
+  vagueOutput.slides[3].alt = vagueOutput.slides[3].text;
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [vagueOutput] }, options({ brief: kokoroBrief })), []);
+
+  const abstractBody = candidate();
+  abstractBody.slides[2].text = 'Each worry becomes an emotional storm in the silence.';
+  abstractBody.slides[2].alt = abstractBody.slides[2].text;
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [abstractBody] }, options()), []);
+
+  const genericCaption = candidate();
+  genericCaption.caption = 'Let us explore the burdens we carry. Ever feel this way?';
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [genericCaption] }, options()), []);
+});
+
+test('allows natural editorial help language and common-word brand vocabulary', () => {
+  const naturalQuestion = candidate();
+  naturalQuestion.caption = 'What helps you notice this before bed? #reflection';
+  assert.equal(normalizeCarouselOutput({ carousels: [naturalQuestion] }, options()).length, 1);
+
+  for (const name of ['One', 'Every', 'Calm']) {
+    const commonWord = candidate('How to stay calm when every unfinished task feels like one more job');
+    commonWord.slides[3].text = 'I use this private tool to record one voice note.';
+    commonWord.slides[3].alt = 'I keep this private tool for recording one voice note.';
+    const commonBrief = { ...brief, name, domain: `https://www.${name.toLowerCase()}.example` };
+    assert.equal(normalizeCarouselOutput({ carousels: [commonWord] }, options({ brief: commonBrief })).length, 1);
+  }
+});
+
+test('carousel prompt demands observable receipts and a neutral product cameo', () => {
+  const prompt = carouselPrompt({
+    brand: brief,
+    themes,
+    liked: [],
+    disliked: [],
+    approvedHooks: [{ text: '5 quiet signs nobody warned you about', grade: 'A' }],
+    count: 1,
+  });
+  assert.match(prompt.system, /BODY SLIDES ARE RECEIPTS/i);
+  assert.match(prompt.system, /observable\s+action, object, time, place, message, quote, or decision/i);
+  assert.match(prompt.system, /BAD COPY: Each worry grows larger/i);
+  assert.match(prompt.system, /Never use because, so I can, made for me/i);
+  assert.match(prompt.system, /Reuse at least one capability noun, verb, or direct grammatical form/i);
+  assert.match(prompt.system, /Ask one exact, answerable question/i);
+  assert.match(prompt.system, /slide four is an unnumbered product interruption/i);
 });
 
 test('taste summaries accept both compact objects and strings', () => {
