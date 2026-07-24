@@ -73,17 +73,24 @@ D–F = vague, wrong voice, forced/mismatched pattern, or throat-clearing.
 Only hooks graded A or B are worth showing. Be a harsh grader — most first drafts are C.
 `;
 
-function briefBlock(brief = {}) {
+export function briefBlock(brief = {}) {
   const b = brief || {};
+  const voice = Array.isArray(b.voice)
+    ? b.voice.join(', ')
+    : b.voice || (Array.isArray(b.voiceTags) ? b.voiceTags.join(', ') : b.voiceTags);
+  const aesthetic = Array.isArray(b.look)
+    ? b.look.join(', ')
+    : b.aesthetic || b.look || (Array.isArray(b.lookTags) ? b.lookTags.join(', ') : b.lookTags);
   return `BRAND PROFILE (this is the tenant — write in THIS voice, for THIS audience):
 - name: ${b.name || '(unnamed brand)'}
-- what it is: ${b.oneLiner || b.whatItIs || '(not specified)'}
+- what it is: ${b.oneLiner || b.whatItIs || b.product || '(not specified)'}
 - audience: ${b.audience || '(not specified)'}
-- voice: ${b.voice || (Array.isArray(b.voiceTags) ? b.voiceTags.join(', ') : '(not specified)')}
-- aesthetic: ${b.aesthetic || '(not specified)'}
+- voice: ${voice || '(not specified)'}
+- aesthetic: ${aesthetic || '(not specified)'}
 - niche: ${b.niche || '(not specified)'}
 - do: ${b.do || 'validate the audience; speak to their real moment; stay in the voice above'}
-- don't: ${b.dont || 'clichés, hype, anything that breaks the brand voice'}`;
+- don't: ${b.dont || 'clichés, hype, anything that breaks the brand voice'}
+- current content context: ${b.context || '(not specified)'}`;
 }
 
 // ── Prompt builders ────────────────────────────────────────────────────────────────────
@@ -157,24 +164,25 @@ Grade it, explain briefly, and give 3 stronger rewrites in the brand voice. JSON
 }
 
 // ── Model call ─────────────────────────────────────────────────────────────────────────
-async function callModel({ system, user }) {
-  const c = cfg();
+export async function callModel({ system, user, maxTokens, provider, model }) {
+  const configured = cfg();
+  const c = { ...configured, provider: provider || configured.provider, model: model || configured.model };
   if (c.provider === 'proxy') {
     if (!c.proxyBase) throw new Error('No proxy base URL set (PROXY_BASE_URL).');
     if (!c.proxyKey) throw new Error('No proxy key set (PROXY_API_KEY).');
-    return callOpenAICompatible({ system, user }, c, c.proxyBase, c.proxyKey);
+    return callOpenAICompatible({ system, user, maxTokens }, c, c.proxyBase, c.proxyKey);
   }
   if (c.provider === 'anthropic') {
     if (!c.anthropicKey) throw new Error('No Anthropic key set (ANTHROPIC_API_KEY).');
-    return callAnthropic({ system, user }, c);
+    return callAnthropic({ system, user, maxTokens }, c);
   }
   if (!c.openaiKey) throw new Error('No OpenAI key set (OPENAI_API_KEY).');
-  return callOpenAICompatible({ system, user }, c, 'https://api.openai.com', c.openaiKey);
+  return callOpenAICompatible({ system, user, maxTokens }, c, 'https://api.openai.com', c.openaiKey);
 }
 
 // Works for OpenAI and any OpenAI-compatible endpoint (e.g. a Claude proxy that exposes
 // /v1/chat/completions). baseUrl has NO trailing /v1 — we append the path here.
-async function callOpenAICompatible({ system, user }, c, baseUrl, key) {
+async function callOpenAICompatible({ system, user, maxTokens }, c, baseUrl, key) {
   const url = baseUrl.replace(/\/+$/, '') + '/v1/chat/completions';
   const isClaude = /claude/i.test(c.model);
   const payload = {
@@ -188,12 +196,18 @@ async function callOpenAICompatible({ system, user }, c, baseUrl, key) {
   // gpt-5.x and o-series only accept the DEFAULT temperature; older models take a custom one.
   const supportsTemp = !/^(gpt-5|o\d)/i.test(c.model);
   if (supportsTemp) payload.temperature = 0.9;
+  if (maxTokens) {
+    const tokenLimit = Math.max(256, Math.min(Number(maxTokens) || 1500, 8000));
+    if (supportsTemp || isClaude) payload.max_tokens = tokenLimit;
+    else payload.max_completion_tokens = tokenLimit;
+  }
   if (c.reasoningEffort) payload.reasoning_effort = c.reasoningEffort;
 
   const call = () => fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
     body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(60_000),
   });
 
   let res = await call();
@@ -205,6 +219,9 @@ async function callOpenAICompatible({ system, user }, c, baseUrl, key) {
     if (payload.temperature !== undefined && /temperature/i.test(txt)) { delete payload.temperature; retried = true; }
     if (/response_format/i.test(txt)) { delete payload.response_format; retried = true; }
     if (payload.reasoning_effort !== undefined && /reasoning_effort|reasoning|effort/i.test(txt)) { delete payload.reasoning_effort; retried = true; }
+    if ((payload.max_tokens !== undefined || payload.max_completion_tokens !== undefined) && /max[_ ]?(completion[_ ]?)?tokens/i.test(txt)) {
+      delete payload.max_tokens; delete payload.max_completion_tokens; retried = true;
+    }
     if (retried) {
       res = await call();
     }
@@ -214,7 +231,7 @@ async function callOpenAICompatible({ system, user }, c, baseUrl, key) {
   return data.choices?.[0]?.message?.content || '{}';
 }
 
-async function callAnthropic({ system, user }, c) {
+async function callAnthropic({ system, user, maxTokens }, c) {
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -224,11 +241,12 @@ async function callAnthropic({ system, user }, c) {
     },
     body: JSON.stringify({
       model: c.model.startsWith('claude') ? c.model : 'claude-sonnet-5',
-      max_tokens: 1500,
+      max_tokens: Math.max(256, Math.min(Number(maxTokens) || 1500, 8000)),
       temperature: 0.9,
       system: system + '\nReturn ONLY the JSON object, no prose, no code fences.',
       messages: [{ role: 'user', content: user }],
     }),
+    signal: AbortSignal.timeout(60_000),
   });
   if (!res.ok) {
     const txt = await res.text().catch(() => '');
@@ -238,13 +256,31 @@ async function callAnthropic({ system, user }, c) {
   return data.content?.[0]?.text || '{}';
 }
 
-function parseJson(raw) {
+export function parseJson(raw) {
+  const source = String(raw || '').trim();
   try {
-    return JSON.parse(raw);
+    return JSON.parse(source);
   } catch {
-    const m = raw.match(/\{[\s\S]*\}/);
-    if (m) {
-      try { return JSON.parse(m[0]); } catch { /* fall through */ }
+    for (let start = source.indexOf('{'); start >= 0; start = source.indexOf('{', start + 1)) {
+      let depth = 0;
+      let inString = false;
+      let escaped = false;
+      for (let index = start; index < source.length; index += 1) {
+        const char = source[index];
+        if (inString) {
+          if (escaped) escaped = false;
+          else if (char === '\\') escaped = true;
+          else if (char === String.fromCharCode(34)) inString = false;
+          continue;
+        }
+        if (char === String.fromCharCode(34)) { inString = true; continue; }
+        if (char === '{') depth += 1;
+        if (char === '}') depth -= 1;
+        if (depth === 0) {
+          try { return JSON.parse(source.slice(start, index + 1)); }
+          catch { break; }
+        }
+      }
     }
     throw new Error('Model did not return valid JSON.');
   }
@@ -320,4 +356,11 @@ export async function gradeHook({ brief, hook }) {
 export function modelInfo() {
   const c = cfg();
   return { provider: c.provider, model: c.model, openaiKey: !!c.openaiKey };
+}
+
+export function structuredModelOptions() {
+  const c = cfg();
+  const provider = process.env.STRUCTURED_MODEL_PROVIDER || (c.openaiKey ? 'openai' : c.provider);
+  const model = process.env.STRUCTURED_MODEL_NAME || (provider === 'openai' ? 'gpt-4o' : c.model);
+  return { provider, model };
 }

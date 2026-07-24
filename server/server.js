@@ -6,12 +6,54 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { generateHooks, gradeHook, modelInfo } from './hook-engine.js';
+import { extractCompany } from './company-engine.js';
+import { generateCarousels } from './carousel-engine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const SITE = path.join(ROOT, 'output', 'factory-mockup');
 const IMAGE_LIBRARY = path.join(ROOT, 'scraped-images');
 const PORT = process.env.PORT || 3000;
+const MODEL_ENDPOINTS = new Set(['/api/company/extract', '/api/carousels', '/api/hooks', '/api/hooks/grade']);
+const RATE_WINDOW_MS = 15 * 60 * 1000;
+const RATE_LIMIT = 30;
+const MAX_ACTIVE_MODEL_REQUESTS = 4;
+const rateBuckets = new Map();
+let activeModelRequests = 0;
+
+function clientAddress(req) {
+  const forwarded = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
+  return (forwarded || req.socket.remoteAddress || 'unknown').slice(0, 120);
+}
+
+function allowModelRequest(req, res) {
+  const now = Date.now();
+  if (rateBuckets.size > 2000) {
+    for (const [key, bucket] of rateBuckets) if (bucket.resetAt <= now) rateBuckets.delete(key);
+  }
+  const key = clientAddress(req);
+  let bucket = rateBuckets.get(key);
+  if (!bucket || bucket.resetAt <= now) bucket = { count: 0, resetAt: now + RATE_WINDOW_MS };
+  if (bucket.count >= RATE_LIMIT) {
+    res.setHeader('Retry-After', String(Math.max(1, Math.ceil((bucket.resetAt - now) / 1000))));
+    sendJson(res, 429, { error: 'Generation limit reached. Wait a few minutes, then try again.' });
+    return false;
+  }
+  bucket.count += 1;
+  rateBuckets.set(key, bucket);
+  return true;
+}
+
+async function withModelSlot(task) {
+  if (activeModelRequests >= MAX_ACTIVE_MODEL_REQUESTS) {
+    const error = new Error('The generator is busy. Try again in a moment.');
+    error.statusCode = 503;
+    throw error;
+  }
+  activeModelRequests += 1;
+  try { return await task(); }
+  finally { activeModelRequests -= 1; }
+}
 
 function labelFromSetId(id) {
   return id
@@ -89,7 +131,9 @@ async function imageLibrary() {
 }
 
 async function serveImageLibrary(req, res) {
-  const rawPath = decodeURIComponent(req.url.split('?')[0].replace(/^\/library-images\//, ''));
+  let rawPath;
+  try { rawPath = decodeURIComponent(req.url.split('?')[0].replace(/^\/library-images\//, '')); }
+  catch { res.writeHead(400, { 'Content-Type': 'text/plain' }); return res.end('bad request'); }
   const filePath = path.resolve(IMAGE_LIBRARY, rawPath);
   if (!filePath.startsWith(`${IMAGE_LIBRARY}${path.sep}`)) {
     res.writeHead(403);
@@ -112,11 +156,25 @@ async function serveImageLibrary(req, res) {
 function readBody(req) {
   return new Promise((resolve, reject) => {
     let data = '';
+    let size = 0;
+    let tooLarge = false;
+    const declared = Number(req.headers['content-length']) || 0;
+    if (declared > 1e6) {
+      const error = new Error('body too large'); error.statusCode = 413;
+      req.resume(); reject(error); return;
+    }
     req.on('data', (c) => {
+      if (tooLarge) return;
+      size += c.length;
+      if (size > 1e6) {
+        tooLarge = true; data = '';
+        const error = new Error('body too large'); error.statusCode = 413;
+        reject(error); return;
+      }
       data += c;
-      if (data.length > 1e6) reject(new Error('body too large'));
     });
     req.on('end', () => {
+      if (tooLarge) return;
       try { resolve(data ? JSON.parse(data) : {}); }
       catch { reject(new Error('invalid JSON body')); }
     });
@@ -125,10 +183,12 @@ function readBody(req) {
 }
 
 async function serveStatic(req, res) {
-  let urlPath = decodeURIComponent(req.url.split('?')[0]);
+  let urlPath;
+  try { urlPath = decodeURIComponent(req.url.split('?')[0]); }
+  catch { res.writeHead(400, { 'Content-Type': 'text/plain' }); return res.end('bad request'); }
   if (urlPath === '/') urlPath = '/index.html';
   const filePath = path.join(SITE, path.normalize(urlPath));
-  if (!filePath.startsWith(SITE)) { res.writeHead(403); return res.end('forbidden'); }
+  if (filePath !== SITE && !filePath.startsWith(`${SITE}${path.sep}`)) { res.writeHead(403); return res.end('forbidden'); }
   try {
     const buf = await readFile(filePath);
     const ext = path.extname(filePath).toLowerCase();
@@ -151,31 +211,49 @@ const server = http.createServer(async (req, res) => {
 
   if (url.startsWith('/api/')) {
     if (req.method !== 'POST') return sendJson(res, 405, { error: 'POST only' });
+    if (MODEL_ENDPOINTS.has(url) && !allowModelRequest(req, res)) return;
     let body;
     try { body = await readBody(req); }
-    catch (e) { return sendJson(res, 400, { error: e.message }); }
+    catch (e) { return sendJson(res, e.statusCode || 400, { error: e.message }); }
 
     try {
+      if (url === '/api/company/extract') {
+        if (!body.url) return sendJson(res, 400, { error: 'Add a company website URL.' });
+        const company = await withModelSlot(() => extractCompany({ url: body.url, context: body.context || '' }));
+        return sendJson(res, 200, { company });
+      }
+      if (url === '/api/carousels') {
+        const themes = (await imageLibrary()).map(({ id, label }) => ({ id, label }));
+        const carousels = await withModelSlot(() => generateCarousels({
+          brief: body.brief || {},
+          liked: Array.isArray(body.liked) ? body.liked : [],
+          disliked: Array.isArray(body.disliked) ? body.disliked : [],
+          themes,
+          count: body.count,
+        }));
+        return sendJson(res, 200, { carousels });
+      }
       if (url === '/api/hooks') {
-        const hooks = await generateHooks({
+        const hooks = await withModelSlot(() => generateHooks({
           brief: body.brief || {},
           topic: body.topic || '',
           seeds: Array.isArray(body.seeds) ? body.seeds : [],
           liked: Array.isArray(body.liked) ? body.liked : [],
           disliked: Array.isArray(body.disliked) ? body.disliked : [],
           count: Math.min(Number(body.count) || 6, 8),
-        });
+        }));
         return sendJson(res, 200, { hooks });
       }
       if (url === '/api/hooks/grade') {
         if (!body.hook) return sendJson(res, 400, { error: 'no hook to grade' });
-        const result = await gradeHook({ brief: body.brief || {}, hook: body.hook });
+        const result = await withModelSlot(() => gradeHook({ brief: body.brief || {}, hook: body.hook }));
         return sendJson(res, 200, result);
       }
       return sendJson(res, 404, { error: 'unknown endpoint' });
     } catch (e) {
       console.error('[api]', url, e.message);
-      return sendJson(res, 500, { error: e.message || 'server error' });
+      const status = Number.isInteger(e.statusCode) && e.statusCode >= 400 && e.statusCode <= 599 ? e.statusCode : 500;
+      return sendJson(res, status, { error: e.message || 'server error' });
     }
   }
 
