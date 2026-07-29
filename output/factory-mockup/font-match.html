@@ -30,9 +30,9 @@
   .stage.diff .ours{color:#ff2ea6;-webkit-text-stroke:0 !important;mix-blend-mode:screen}
   .stage.hide-ours .ours{display:none}
 
-  .zoomwrap{width:400px;overflow:hidden;border:1px solid #2e2e2a;border-radius:6px}
-  .zoom{width:400px;height:132px;transform:scale(2);transform-origin:22px 30px;
-        image-rendering:pixelated}
+  /* shown 1:1 — the reference crop is native resolution, and magnifying it here
+     only clipped the line. Compare at true size. */
+  .zoomwrap{width:400px;border:1px solid #2e2e2a;border-radius:6px}
 
   /* ── controls ── */
   .panel{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
@@ -60,22 +60,25 @@
                  letter-spacing:0;font-size:10px;margin-top:2px}
   .vcard.good .tag{color:#8fd98f}
   .vcard.bad  .tag{color:#ff6b83}
-  .vcard .sample{padding:16px 13px 22px;background:#3a3733;
-    font-size:36px;line-height:1.27;color:#fff;white-space:pre;
-    -webkit-text-stroke:.155em #000;paint-order:stroke fill}
+  .vcard .sample{padding:16px 13px 22px;background:#3a3733;overflow-x:auto;
+    font-size:26px;line-height:1.23;color:#fff;white-space:pre;
+    -webkit-text-stroke:.15em #000;paint-order:stroke fill}
   .v-mont   .sample{font-family:Montserrat,sans-serif;font-weight:700;letter-spacing:0;-webkit-text-stroke:.13em #000}
   .v-auto   .sample{font-family:'TikTok Sans',Montserrat,sans-serif;font-weight:700;letter-spacing:0;
                     font-optical-sizing:auto;-webkit-text-stroke:.13em #000}
   .v-fixed  .sample{font-family:'TikTok Sans',Montserrat,sans-serif;font-optical-sizing:none;
-                    font-variation-settings:'opsz' 36,'wght' 700;letter-spacing:-.012em}
+                    font-variation-settings:'opsz' 36,'wght' 700;letter-spacing:0;
+                    -webkit-text-stroke:.15em #000}
   .v-tight  .sample{font-family:'TikTok Sans',Montserrat,sans-serif;font-optical-sizing:none;
-                    font-variation-settings:'opsz' 36,'wght' 750;letter-spacing:-.022em}
+                    font-variation-settings:'opsz' 36,'wght' 700;letter-spacing:-.012em;
+                    -webkit-text-stroke:.155em #000}
   /* the small-optical cut as the previews actually rendered it: opsz follows px size,
      so at 18px it picks the loose text cut, then gets scaled up for display */
   .v-small  .sample{font-family:'TikTok Sans',Montserrat,sans-serif;font-weight:700;
-                    font-optical-sizing:auto;font-size:18px;line-height:1.27;letter-spacing:0;
+                    font-optical-sizing:auto;font-size:13px;line-height:1.23;letter-spacing:0;
                     -webkit-text-stroke:.13em #000;
-                    transform:scale(2);transform-origin:0 0;height:96px}
+                    transform:scale(2);transform-origin:0 0;width:50%;height:48px;
+                    overflow:hidden}
 
   .note{max-width:620px;color:#8b8880;font-size:12px;margin-top:10px}
   .warn{display:none;max-width:620px;margin:16px 0 0;padding:11px 14px;border-radius:9px;
@@ -90,7 +93,11 @@
   Background strip is the real thing: a native-resolution crop of
   <code>examples/example1/1.jpg</code> (letters only). Our overlay renders the same words on
   top of it at the same size, so any mismatch in weight, letterfit or tracking shows up
-  directly. Reference measures out at <b>em ≈ 36px</b>, <b>line-height ≈ 1.27</b>.
+  directly. The reference's own numbers, measured rather than guessed: its line
+  "waist this summer:" is <b>321px</b> wide and splits at the word spaces into
+  <b>91 / 60 / 147px</b>; line advance is <b>47px</b>. This stack reproduces that at
+  <b>em 38.12px</b> and <b>line-height 1.23</b> (47 ÷ 38.12), giving
+  <b>91 / 61 / 147px</b> — within 1px per word.
 </p>
 
 <div class="warn">
@@ -133,26 +140,35 @@ waist this summer:</div></div>
     <div class="sample">how to shrink your
 waist this summer:</div></div>
 
-  <div class="vcard good v-fixed"><span class="tag">3 · TikTok Sans, opsz 36 pinned · wght 700 · −.012em
-    <em>shipped in slide-type.css</em></span>
+  <div class="vcard good v-fixed"><span class="tag">3 · opsz 36 pinned · wght 700 · tracking 0 · stroke .15em
+    <em>shipped in slide-type.css — measured match (ink IoU .651, words within 1px)</em></span>
     <div class="sample">how to shrink your
 waist this summer:</div></div>
 
-  <div class="vcard v-tight"><span class="tag">4 · same, but wght 750 · −.022em
-    <em>alternative if 3 still reads a touch light or loose</em></span>
+  <div class="vcard bad v-tight"><span class="tag">4 · same but −.012em tracking
+    <em>a previous revision — measured worse (IoU .636) and 26px too narrow</em></span>
     <div class="sample">how to shrink your
 waist this summer:</div></div>
 </div>
 
 <script>
-document.fonts.ready.then(function () {
-  var ok = document.fonts.check('700 18px "TikTok Sans"');
-  document.documentElement.dataset.tiktokSans = ok ? 'ok' : 'missing';
-  if (!ok) console.error('[font-match] TikTok Sans did NOT load — falling back to Montserrat.');
-});
+// load() before checking — fonts.ready alone false-negatives before the glyphs in
+// this page's text have been requested
+document.fonts.load('700 18px "TikTok Sans"', 'abcdefghijklmnopqrstuvwxyz')
+  .then(function (faces) {
+    var ok = faces.length > 0;
+    document.documentElement.dataset.tiktokSans = ok ? 'ok' : 'missing';
+    if (!ok) console.error('[font-match] TikTok Sans did NOT load — falling back to Montserrat.');
+  })
+  .catch(function () {});
 
-// shipped defaults mirror slide-type.css; x/y are eyeball alignment onto the crop
-var SHIPPED = { size:36, lh:1.27, track:-12, wght:700, opsz:36, stroke:155, x:22, y:14 };
+// shipped defaults mirror slide-type.css; x/y are eyeball alignment onto the crop.
+// size 38 / lh 1.23 are the reference's own measured values: its line is 321px wide,
+// which this stack reproduces at 38.12px, and its line advance is 47px (47/38.12).
+// x/y place our line on top of the reference's own ink origin (x 34, ink top 23);
+// the element sits 2px left and 7px above that because of side bearing and the
+// gap between the line box top and the ascender
+var SHIPPED = { size:38, lh:1.23, track:0, wght:700, opsz:36, stroke:150, x:32, y:16 };
 var CTLS = [
   { k:'size',   label:'font-size',      min:24, max:52,  step:.5, unit:'px'  },
   { k:'lh',     label:'line-height',    min:1,  max:1.6, step:.01,unit:''    },

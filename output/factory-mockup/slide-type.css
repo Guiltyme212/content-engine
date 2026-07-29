@@ -3,26 +3,51 @@
    Loaded by index.html and tools.html AFTER fonts/tiktok-sans.css.
 
    Every rule that draws text onto a slide must appear in the selector list below
-   and must NOT re-declare font-family / weight / tracking / stroke locally, or it
-   will silently drift out of sync again. Per-element rules keep GEOMETRY only
-   (position, font-size, line-height, padding, shadow).
+   and must NOT re-declare font-family / weight / tracking / leading / stroke
+   locally, or it will silently drift out of sync again. Per-element rules keep
+   POSITION and FONT-SIZE only.
 
-   WHY font-optical-sizing:none + a pinned opsz
-   ───────────────────────────────────────────
-   TikTok Sans is a 2-axis variable font: opsz 12→36 (default 36) and wght
-   300→900 (default 300). CSS defaults to `font-optical-sizing: auto`, which sets
-   opsz to the RENDERED PIXEL SIZE. Our previews render at 15–28px, so the browser
-   was selecting opsz≈15–28 — the small-text cut, which is drawn wider with looser
-   tracking on purpose. TikTok's editor draws cover text at display size and gets
-   opsz 36: narrower, tighter, punchier. Pinning opsz to 36 keeps the display cut
-   at every preview scale, which is what makes the letterfit match the reference.
+   ── How these numbers were derived ───────────────────────────────────────────
+   Not by eye. Every value below was measured against a native-resolution crop of
+   the real reference cover (examples/example1/1.jpg -> assets/ref-example1-text.png)
+   by rendering candidates in headless Chrome and comparing ink masks.
 
-   Because font-variation-settings overrides font-weight, any weight change must
-   go through 'wght' here — see .bslide-text .n below.
+   The reference line "waist this summer:" measures 321px wide, split by its two
+   word spaces into 91 / 60 / 147px. The settings below reproduce that as
+   91 / 61 / 147px at a total of 320px — within 1px on every word.
 
-   Stroke measured off examples/example1/1.jpg: em ≈ 36px, visible black halo
-   ≈ 4px → ~.155em centred stroke (paint-order draws it under the fill, so half
-   the width shows). Stem width measured .125em → weight 700 is correct.
+   opsz 36 + wght 700 + letter-spacing 0
+     Ink-mask IoU against the reference, each candidate scaled to the same 321px
+     line width:  opsz36 .651 | opsz24 .622 | opsz20 .608 | opsz16 .519 | opsz12 .443
+     So the reference matches the DISPLAY optical cut, and tracking must stay at 0.
+     An earlier revision shipped letter-spacing:-.012em on the theory that TikTok's
+     text looked tighter; that measured WORSE (IoU .636) and made the line 26px too
+     narrow. Do not reintroduce negative tracking.
+
+   font-optical-sizing:none is what makes the pin hold. TikTok Sans is a 2-axis
+   variable font (opsz 12-36 default 36, wght 300-900 default 300) and CSS defaults
+   to font-optical-sizing:auto, which ties opsz to the RENDERED PIXEL SIZE. Our
+   surfaces render at 5-28px, so each one silently picked a different, looser
+   optical cut (opsz 16 scores .519 against the reference's .651). Pinning gives
+   every surface the same letterfit at any size.
+
+   -webkit-text-stroke: .15em
+     Judged on a rendered ladder (.10/.12/.14/.16/.20em) against the reference:
+     .10-.12 read thin, .14-.16 match, .20 is clearly too heavy — outlines start
+     merging between adjacent letters. Note a halo-width measurement on the
+     reference suggests .21em; that is an artefact. The reference is a downscaled
+     JPEG, and blur spreads a thin dark outline over more sub-threshold pixels than
+     it truly occupies. Trust the ladder, not the halo count.
+
+   line-height: 1.23
+     Reference line advance measured 47px top-of-ink to top-of-ink, at the em of
+     38.12px that reproduces its 321px line width. 47/38.12 = 1.233. The previous
+     1.28 added ~1.8px of extra leading per line.
+
+   Weight 700 is confirmed independently: stem width measured .125em on the
+   reference, which is Bold for a grotesque of this class.
+
+   Re-check any change with output/factory-mockup/font-match.html.
    ───────────────────────────────────────────────────────────────────────────── */
 
 .post-hook,
@@ -34,9 +59,10 @@
   font-weight: 700;
   font-optical-sizing: none;
   font-variation-settings: 'opsz' 36, 'wght' 700;
-  letter-spacing: -.012em;
+  letter-spacing: 0;
+  line-height: 1.23;
   color: #fff;
-  -webkit-text-stroke: .155em #000;
+  -webkit-text-stroke: .15em #000;
   paint-order: stroke fill;
 }
 
@@ -47,12 +73,9 @@
   font-variation-settings: 'opsz' 36, 'wght' 800;
 }
 
-/* Fail loudly instead of silently falling back to Montserrat. The guard script
-   in each page sets this attribute when TikTok Sans did not load. */
-html[data-tiktok-sans="missing"] .post-hook,
-html[data-tiktok-sans="missing"] .phone-text,
-html[data-tiktok-sans="missing"] .final-hook,
-html[data-tiktok-sans="missing"] .bslide-text {
-  outline: 2px dashed #ff3b5c;
-  outline-offset: 3px;
-}
+/* NO visual guard here. An earlier version drew a dashed outline when the font
+   looked missing; it fired constantly as a false positive (document.fonts.ready
+   resolves at page load, long before the studio builds slide text, so the
+   unicode-range subset has not been requested yet and check() returns false) and
+   it leaked a debug artefact into the product. The guard is console-only, and it
+   now forces the load before checking — see the script in each page. */
