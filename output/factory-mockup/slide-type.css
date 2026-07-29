@@ -1,0 +1,58 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   SLIDE OVERLAY TYPE — the single source of truth for TikTok-native slide text.
+   Loaded by index.html and tools.html AFTER fonts/tiktok-sans.css.
+
+   Every rule that draws text onto a slide must appear in the selector list below
+   and must NOT re-declare font-family / weight / tracking / stroke locally, or it
+   will silently drift out of sync again. Per-element rules keep GEOMETRY only
+   (position, font-size, line-height, padding, shadow).
+
+   WHY font-optical-sizing:none + a pinned opsz
+   ───────────────────────────────────────────
+   TikTok Sans is a 2-axis variable font: opsz 12→36 (default 36) and wght
+   300→900 (default 300). CSS defaults to `font-optical-sizing: auto`, which sets
+   opsz to the RENDERED PIXEL SIZE. Our previews render at 15–28px, so the browser
+   was selecting opsz≈15–28 — the small-text cut, which is drawn wider with looser
+   tracking on purpose. TikTok's editor draws cover text at display size and gets
+   opsz 36: narrower, tighter, punchier. Pinning opsz to 36 keeps the display cut
+   at every preview scale, which is what makes the letterfit match the reference.
+
+   Because font-variation-settings overrides font-weight, any weight change must
+   go through 'wght' here — see .bslide-text .n below.
+
+   Stroke measured off examples/example1/1.jpg: em ≈ 36px, visible black halo
+   ≈ 4px → ~.155em centred stroke (paint-order draws it under the fill, so half
+   the width shows). Stem width measured .125em → weight 700 is correct.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.post-hook,
+.phone-text,
+.final-hook,
+.bslide-text,
+.srail-thumb .im .tt {
+  font-family: 'TikTok Sans', Montserrat, 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' 36, 'wght' 700;
+  letter-spacing: -.012em;
+  color: #fff;
+  -webkit-text-stroke: .155em #000;
+  paint-order: stroke fill;
+}
+
+/* numbered lead-ins inside a body slide ("1." / "2.") sit one step heavier —
+   must go through 'wght', since font-variation-settings beats font-weight */
+.bslide-text .n {
+  font-weight: 800;
+  font-variation-settings: 'opsz' 36, 'wght' 800;
+}
+
+/* Fail loudly instead of silently falling back to Montserrat. The guard script
+   in each page sets this attribute when TikTok Sans did not load. */
+html[data-tiktok-sans="missing"] .post-hook,
+html[data-tiktok-sans="missing"] .phone-text,
+html[data-tiktok-sans="missing"] .final-hook,
+html[data-tiktok-sans="missing"] .bslide-text {
+  outline: 2px dashed #ff3b5c;
+  outline-offset: 3px;
+}

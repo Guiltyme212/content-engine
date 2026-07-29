@@ -7,6 +7,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="fonts/tiktok-sans.css" rel="stylesheet">
+  <link href="slide-type.css" rel="stylesheet">
+  <script>
+    /* Slide text must be real TikTok Sans. If the woff2 fails to load (missing from
+       the deploy, bad MIME, cache miss) the browser falls back to Montserrat and the
+       slides look wrong in a way that is easy to miss. Flag it loudly instead. */
+    document.fonts.ready.then(function () {
+      var ok = document.fonts.check('700 18px "TikTok Sans"');
+      document.documentElement.dataset.tiktokSans = ok ? 'ok' : 'missing';
+      if (!ok) console.error('[slide-type] TikTok Sans did NOT load — slide text is falling back to Montserrat. Check that output/factory-mockup/fonts/ is deployed.');
+    });
+  </script>
   <style>
     :root{
       --chalk:#fafaf8;
@@ -148,7 +160,8 @@
     .post-content{position:absolute;z-index:2;inset:0;padding:22px;display:flex;flex-direction:column;justify-content:space-between;color:#fff}
     .post-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
     .post-top span{padding:6px 9px;border-radius:20px;background:rgba(18,18,16,.5);backdrop-filter:blur(8px);font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
-    .post-hook{margin:auto 0;padding:0 8px;text-align:center;text-shadow:0 2px 10px rgba(0,0,0,.42);font-family:var(--display);font-size:28px;font-weight:800;line-height:1.12;letter-spacing:-.04em}
+    /* type comes from slide-type.css — geometry only here */
+    .post-hook{margin:auto 0;padding:0 8px;text-align:center;text-shadow:0 2px 10px rgba(0,0,0,.42);font-size:28px;line-height:1.2}
     .post-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}.post-foot b{display:block;font-size:11.5px}.post-foot p{color:rgba(255,255,255,.65);font-size:10px;margin-top:3px}.post-foot .slide-count{font-size:10.5px;font-weight:800}
     .stamp{position:absolute;z-index:4;top:34px;padding:7px 11px;border:3px solid;border-radius:10px;opacity:0;font-family:var(--display);font-size:19px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
     .stamp.keep{left:24px;color:#c9f3d4;border-color:#c9f3d4;transform:rotate(-8deg)}.stamp.pass{right:24px;color:#ffd1cc;border-color:#ffd1cc;transform:rotate(8deg)}
@@ -182,7 +195,7 @@
     .phone{position:relative;width:min(350px,100%);aspect-ratio:9/16;overflow:hidden;border:10px solid #191919;border-radius:40px;background:#111;box-shadow:0 34px 72px -40px rgba(0,0,0,.72)}
     .phone>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
     .phone::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.03) 55%,rgba(0,0,0,.55));pointer-events:none}
-    .phone-text{position:absolute;z-index:3;left:9%;right:9%;top:40%;transform:translateY(-50%);padding:7px;border-radius:8px;color:#fff;text-align:center;white-space:pre-wrap;cursor:grab;user-select:none;font-family:var(--display);font-size:18px;font-weight:800;line-height:1.28;letter-spacing:-.025em;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:0 2px 4px rgba(0,0,0,.28)}
+    .phone-text{position:absolute;z-index:3;left:9%;right:9%;top:40%;transform:translateY(-50%);padding:7px;border-radius:8px;text-align:center;white-space:pre-wrap;cursor:grab;user-select:none;font-size:18px;line-height:1.28;text-shadow:0 2px 4px rgba(0,0,0,.28)}
     .phone-text:hover,.phone-text.dragging{background:rgba(0,0,0,.12);box-shadow:0 0 0 1px rgba(255,255,255,.3)}
     .phone-count{position:absolute;z-index:4;right:13px;top:14px;padding:4px 9px;border-radius:20px;background:rgba(0,0,0,.54);color:#fff;font-size:10px;font-weight:800}
     .phone-dots{position:absolute;z-index:4;left:0;right:0;bottom:65px;display:flex;justify-content:center;gap:5px}.phone-dots i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.48)}.phone-dots i.active{background:#fff;transform:scale(1.35)}
@@ -242,7 +255,6 @@
     .shortlist-item{grid-template-columns:44px minmax(0,1fr);align-items:center;padding:10px}
     .shortlist-grade{width:44px;height:54px;border-radius:10px;background:var(--ink);color:#fff;display:grid!important;place-items:center;font-size:17px!important;font-weight:850;margin:0!important}
     .photo-source{display:block;color:var(--muted);font-size:9.5px;line-height:1.4;margin-top:8px}
-    .phone-text{font-family:Montserrat,var(--sans)}
 
     .photo-drawer{width:min(760px,100%)}
     .photo-theme-rail{display:flex;gap:9px;padding:14px 18px;overflow-x:auto;border-bottom:1px solid var(--line)}
@@ -263,7 +275,7 @@
     .final-carousel{position:relative;aspect-ratio:9/16;overflow:hidden;border:9px solid #191919;border-radius:32px;background:#111;box-shadow:var(--shadow-lg)}
     .final-carousel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
     .final-carousel::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(0,0,0,.5));pointer-events:none}
-    .final-hook{position:absolute;z-index:2;left:9%;right:9%;top:40%;transform:translateY(-50%);color:#fff;text-align:center;white-space:pre-wrap;font-family:Montserrat,var(--sans);font-size:15px;font-weight:800;line-height:1.3;-webkit-text-stroke:1.5px #000;paint-order:stroke fill}
+    .final-hook{position:absolute;z-index:2;left:9%;right:9%;top:40%;transform:translateY(-50%);text-align:center;white-space:pre-wrap;font-size:15px;line-height:1.3}
     .final-count{position:absolute;z-index:3;right:12px;top:12px;padding:4px 8px;border-radius:18px;background:rgba(0,0,0,.52);color:#fff;font-size:9px;font-weight:800}
     .final-nav{position:absolute;z-index:4;top:50%;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.88);box-shadow:var(--shadow);font-size:19px;transform:translateY(-50%)}
     .final-nav.prev{left:9px}.final-nav.next{right:9px}
@@ -286,7 +298,7 @@
     .post-card::after{background:linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,.04) 30%,rgba(0,0,0,.08) 55%,rgba(0,0,0,.72) 100%)}
     .post-content{padding:18px 17px 19px}
     .post-top span{background:rgba(20,20,18,.52);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px);letter-spacing:0;text-transform:none;font-size:9px}
-    .post-hook{max-width:295px;margin:auto;padding:12px 8px;text-shadow:0 2px 5px rgba(0,0,0,.22);font-family:Montserrat,var(--sans);font-size:20px;line-height:1.28;letter-spacing:-.025em;white-space:pre-wrap;-webkit-text-stroke:1.7px #000;paint-order:stroke fill}
+    .post-hook{max-width:295px;margin:auto;padding:12px 8px;text-shadow:0 2px 5px rgba(0,0,0,.22);font-size:20px;line-height:1.28;white-space:pre-wrap}
     .post-foot{display:block;padding-top:13px;border-top:1px solid rgba(255,255,255,.22)}
     .preview-role{display:block;color:rgba(255,255,255,.74);font-size:9.5px;font-weight:700;text-align:center;margin-bottom:9px}
     .preview-controls{display:grid;grid-template-columns:38px minmax(0,1fr) 38px;align-items:center;gap:8px}
@@ -750,7 +762,7 @@
         {title:'Turning each hook into a story',detail:'Every slide has to earn the next swipe before the product appears.'},
         {title:'Keeping the product moment subtle',detail:'The app enters once, inside the story, instead of taking it over.'},
         {title:'Matching every beat to a visual world',detail:'Pairing slide themes with concrete photos from the library.'},
-        {title:'Removing the generic lines',detail:'Checking the batch for vague copy, repetition, and weak endings.'}
+        {title:'Running the five publish checks',detail:'Testing the cover, repeated story shape, double payout, specificity, and product cameo.'}
       ];
       let toastTimer,imageLibraryReady,generationPhaseTimer,generationPhaseIndex=0;
       function toast(message){

@@ -7,6 +7,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="fonts/tiktok-sans.css" rel="stylesheet">
+<link href="slide-type.css" rel="stylesheet">
+<script>
+  /* see index.html — fail loudly if TikTok Sans is missing rather than silently
+     falling back to Montserrat */
+  document.fonts.ready.then(function () {
+    var ok = document.fonts.check('700 18px "TikTok Sans"');
+    document.documentElement.dataset.tiktokSans = ok ? 'ok' : 'missing';
+    if (!ok) console.error('[slide-type] TikTok Sans did NOT load — slide text is falling back to Montserrat. Check that output/factory-mockup/fonts/ is deployed.');
+  });
+</script>
 <style>
   :root{
     --bg:#FAFAF8;          /* warm near-white */
@@ -634,7 +645,7 @@
   .srail-thumb .im{aspect-ratio:2/3;border-radius:10px;overflow:hidden;border:2px solid transparent;transition:.13s;background:var(--surface-2);position:relative}
   .srail-thumb.on .im{border-color:var(--coral);box-shadow:0 0 0 3px var(--coral-soft)}
   .srail-thumb .im img{width:100%;height:100%;object-fit:cover}
-  .srail-thumb .im .tt{position:absolute;left:6%;right:6%;text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;-webkit-text-stroke:.7px #000;paint-order:stroke fill;font-size:5px;line-height:1.25;white-space:pre-wrap;overflow:hidden;transform:translateY(-2px)}
+  .srail-thumb .im .tt{position:absolute;left:6%;right:6%;text-align:center;font-size:5px;line-height:1.25;white-space:pre-wrap;overflow:hidden;transform:translateY(-2px)}
   .srail-thumb .im .tt .n{font-weight:800}
   .srail-thumb .lb{font-size:9.5px;font-weight:700;color:var(--muted);text-align:center;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.03em;text-transform:uppercase}
   .srail-thumb.plug .lb{color:var(--coral-ink)}
@@ -673,15 +684,12 @@
   .bphone{width:100%;max-width:300px;background:#0b0b0d;border-radius:42px;padding:10px;box-shadow:0 8px 24px rgba(26,26,26,.14),0 40px 80px -30px rgba(26,26,26,.4),inset 0 0 0 2px #2a2a2e;position:sticky;top:82px;margin:0 auto}
   .bscreen{border-radius:33px;overflow:hidden;position:relative;aspect-ratio:9/19;background:#000}
   .bscreen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity .18s}
-  /* draggable real-text layer (Montserrat, overlaid — not baked into the image)
-     TikTok-native look: white fill + thin black outline, on every slide */
+  /* draggable real-text layer (TikTok Sans, overlaid — not baked into the image).
+     Typeface, weight, tracking and outline all live in slide-type.css — geometry only here. */
   .bslide-text{position:absolute;left:8%;right:8%;top:38%;z-index:2;text-align:center;
-    font-family:'Montserrat',sans-serif;font-weight:700;
-    color:#fff;-webkit-text-stroke:3px #000;paint-order:stroke fill;
     text-shadow:0 1px 3px rgba(0,0,0,.28);
     font-size:15px;line-height:1.34;white-space:pre-wrap;cursor:grab;user-select:none;
     padding:6px;border-radius:8px;transition:background .12s,box-shadow .12s}
-  .bslide-text .n{font-weight:800}
   .bslide-text:hover{background:rgba(0,0,0,.10);box-shadow:0 0 0 1px rgba(255,255,255,.28)}
   .bslide-text.dragging{cursor:grabbing;background:rgba(0,0,0,.16);box-shadow:0 0 0 1px rgba(255,255,255,.45)}
   .bcount{position:absolute;top:16px;right:14px;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;z-index:4}
@@ -2019,7 +2027,7 @@
   (function(){
     const rail = document.getElementById('bRail');
     if(!rail) return;
-    // slides = clean background + text overlaid live in Montserrat (ty = vertical text position %)
+    // slides = clean background + text overlaid live in TikTok Sans (ty = vertical text position %)
     const DEFAULT_SLIDES = [
       {bg:'assets/bg/sky-amber.png', label:'hook', ty:40, text:'5 signs your body is begging you to slow down\n\n(you’re not just tired)'},
       {bg:'assets/bg/sky-amber.png', label:'tip 1', ty:36, text:'1) you sigh without noticing\n\nyour body keeps taking big random breaths.\n\nit’s trying to reset a nervous system that’s been on all day.'},
@@ -2076,7 +2084,7 @@
       pImg.style.opacity=0;
       clearTimeout(imgTimer);
       imgTimer=setTimeout(()=>{ pImg.src=s.bg; pImg.style.opacity=1; }, 90);
-      pText.innerHTML=fmtText(s.text);        // real Montserrat text overlaid
+      pText.innerHTML=fmtText(s.text);        // real TikTok Sans text overlaid
       pText.style.top=s.ty+'%';               // vertical position (draggable)
       pCount.textContent=`${idx+1} / ${slides.length}`;
       bLabel.textContent=`Slide ${idx+1} · ${s.label}`;
