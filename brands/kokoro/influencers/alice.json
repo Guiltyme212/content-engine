@@ -1,0 +1,26 @@
+{
+  "slug": "alice",
+  "name": "Alice",
+  "role": "Kokoro's first-person narrator",
+  "status": "identity-ready",
+  "summary": "A capable working woman who holds everything together during the day and runs out of space for herself at night.",
+  "facts": [
+    "Works a full-time office or creative job and is usually the reliable one.",
+    "Answers everyone else before checking what she needs.",
+    "Looks composed at work, then feels the accumulated day when she gets home.",
+    "Overthinks at night and feels guilty when rest is not productive.",
+    "Uses Kokoro after hard days to say things out loud before receiving a short meditation."
+  ],
+  "referenceImages": [
+    "/pool-images/kokoro/alice-lifestyle/01.jpg",
+    "/pool-images/kokoro/alice-lifestyle/05.jpg",
+    "/pool-images/kokoro/alice-lifestyle/08.jpg",
+    "/pool-images/kokoro/alice-crying/03.jpg"
+  ],
+  "identity": {
+    "face": "Preserve facial proportions, green-grey eyes, young-adult appearance, and realistic skin texture.",
+    "hair": "Natural blonde hair, straight to softly tousled.",
+    "camera": "Believable phone-camera photography with ordinary light and imperfect framing.",
+    "avoid": "Studio polish, glamour poses, beauty-ad retouching, melodramatic acting, logos, and typography."
+  }
+}

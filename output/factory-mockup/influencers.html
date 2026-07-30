@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Alice | Content Factory</title>
+  <link rel="stylesheet" href="./workspace.css">
+  <style>
+    .creator-page {
+      width: min(1180px, calc(100% - 44px));
+      margin: 0 auto;
+      padding: 34px 0 70px;
+    }
+
+    .creator-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .portrait-composition {
+      min-height: 585px;
+      display: grid;
+      grid-template-columns: 1.16fr 0.84fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 8px;
+      overflow: hidden;
+      padding: 8px;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .portrait-composition figure {
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+      margin: 0;
+      border-radius: 13px;
+      background: #d7dcd7;
+    }
+
+    .portrait-composition figure:first-child {
+      grid-row: 1 / -1;
+    }
+
+    .portrait-composition img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .portrait-composition figure:first-child img {
+      object-position: 50% 34%;
+    }
+
+    .portrait-composition figure:nth-child(2) img {
+      object-position: 50% 38%;
+    }
+
+    .portrait-composition figure:nth-child(3) img {
+      object-position: 50% 24%;
+    }
+
+    .identity-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 2;
+      min-height: 29px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 10px;
+      border-radius: 9px;
+      color: #fff;
+      background: rgba(20, 24, 21, 0.72);
+      backdrop-filter: blur(8px);
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .identity-badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #6bd293;
+    }
+
+    .creator-intro {
+      display: flex;
+      flex-direction: column;
+      padding: 13px 0 7px;
+    }
+
+    .creator-intro h1 {
+      max-width: 8ch;
+      margin: 13px 0 13px;
+      font-size: clamp(54px, 7vw, 92px);
+      line-height: 0.86;
+      letter-spacing: -0.075em;
+    }
+
+    .creator-intro .lede {
+      max-width: 49ch;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .creator-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 24px;
+    }
+
+    .creator-actions .btn {
+      min-height: 46px;
+      padding: 0 18px;
+    }
+
+    .truth-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: auto;
+      padding-top: 35px;
+      background: var(--line);
+    }
+
+    .truth-grid div {
+      min-height: 84px;
+      padding: 16px 13px;
+      background: var(--canvas);
+    }
+
+    .truth-grid b,
+    .truth-grid span {
+      display: block;
+    }
+
+    .truth-grid b {
+      font-size: 23px;
+      letter-spacing: -0.04em;
+    }
+
+    .truth-grid span {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.35;
+    }
+
+    .creator-section {
+      margin-top: 56px;
+    }
+
+    .section-head {
+      max-width: 720px;
+      margin-bottom: 21px;
+    }
+
+    .section-head h2 {
+      margin: 7px 0 7px;
+      font-size: 28px;
+      letter-spacing: -0.045em;
+    }
+
+    .section-head p {
+      max-width: 62ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: 11.5px;
+      line-height: 1.55;
+    }
+
+    .contract {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      overflow: hidden;
+    }
+
+    .contract-main {
+      padding: 27px;
+    }
+
+    .contract-main h3 {
+      max-width: 18ch;
+      margin: 0 0 18px;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+    }
+
+    .rule-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px 18px;
+    }
+
+    .rule {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 9px;
+      align-items: start;
+      padding: 10px 0;
+    }
+
+    .rule-mark {
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--good);
+      background: var(--good-soft);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .rule strong,
+    .rule span {
+      display: block;
+    }
+
+    .rule strong {
+      font-size: 10.5px;
+    }
+
+    .rule span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.45;
+    }
+
+    .contract-side {
+      padding: 27px;
+      color: #fff;
+      background: #1b201c;
+    }
+
+    .contract-side h3 {
+      margin: 0 0 14px;
+      font-size: 16px;
+    }
+
+    .contract-side p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.67);
+      font-size: 10.5px;
+      line-height: 1.65;
+    }
+
+    .contract-side .pill {
+      color: rgba(255, 255, 255, 0.85);
+      border-color: rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .bank-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .bank-toolbar button {
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--muted);
+      background: transparent;
+      font-size: 9.5px;
+      font-weight: 780;
+      cursor: pointer;
+    }
+
+    .bank-toolbar button.active {
+      color: var(--ink);
+      border-color: var(--line-strong);
+      background: var(--paper);
+      box-shadow: var(--shadow-small);
+    }
+
+    .bank-count {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .image-bank {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .bank-image {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      padding: 0;
+      border: 0;
+      border-radius: 12px;
+      background: #d8ddd8;
+      cursor: pointer;
+    }
+
+    .bank-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 220ms ease;
+    }
+
+    .bank-image:hover img {
+      transform: scale(1.025);
+    }
+
+    .bank-image span {
+      position: absolute;
+      right: 7px;
+      bottom: 7px;
+      left: 7px;
+      min-height: 25px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 8px;
+      color: #fff;
+      background: rgba(20, 24, 21, 0.66);
+      backdrop-filter: blur(7px);
+      font-size: 8px;
+      font-weight: 760;
+    }
+
+    .reference-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 13px 0 2px;
+    }
+
+    .reference {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      border: 2px solid var(--accent);
+      border-radius: 11px;
+      background: #d8ddd8;
+    }
+
+    .reference img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .reference::after {
+      content: "Reference";
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      left: 5px;
+      padding: 5px;
+      border-radius: 7px;
+      color: #fff;
+      background: rgba(20, 24, 21, 0.7);
+      font-size: 7px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .prompt-option {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--paper-soft);
+    }
+
+    .prompt-option label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 9.5px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .prompt-option input {
+      accent-color: var(--accent);
+    }
+
+    .lightbox-sheet {
+      width: min(560px, 100%);
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      overflow: hidden;
+      border-radius: 18px;
+      background: var(--paper);
+      box-shadow: 0 35px 100px rgba(19, 24, 21, 0.28);
+    }
+
+    .lightbox-sheet > img {
+      width: 100%;
+      height: min(78dvh, 720px);
+      object-fit: cover;
+      background: #d7dcd7;
+    }
+
+    .lightbox-meta {
+      display: flex;
+      flex-direction: column;
+      padding: 19px;
+    }
+
+    .lightbox-meta h2 {
+      margin: 8px 0 5px;
+      font-size: 17px;
+    }
+
+    .lightbox-meta p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 9.5px;
+      line-height: 1.5;
+    }
+
+    .lightbox-meta .btn {
+      width: 100%;
+      margin-top: auto;
+    }
+
+    @media (max-width: 980px) {
+      .creator-hero {
+        grid-template-columns: 1fr;
+      }
+
+      .creator-intro h1 {
+        max-width: none;
+      }
+
+      .creator-intro .lede {
+        max-width: 62ch;
+      }
+
+      .truth-grid {
+        margin-top: 30px;
+      }
+
+      .image-bank {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .creator-page {
+        width: min(100% - 28px, 1180px);
+        padding-top: 20px;
+      }
+
+      .portrait-composition {
+        min-height: 470px;
+      }
+
+      .creator-intro h1 {
+        font-size: 58px;
+      }
+
+      .contract {
+        grid-template-columns: 1fr;
+      }
+
+      .rule-list {
+        grid-template-columns: 1fr;
+      }
+
+      .image-bank {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .bank-toolbar {
+        flex-wrap: wrap;
+      }
+
+      .bank-count {
+        width: 100%;
+        margin: 3px 0 0;
+      }
+
+      .lightbox-sheet {
+        width: min(440px, 100%);
+        grid-template-columns: 1fr;
+      }
+
+      .lightbox-sheet > img {
+        height: 62dvh;
+      }
+    }
+
+    @media (max-width: 470px) {
+      .portrait-composition {
+        min-height: 420px;
+        grid-template-columns: 1fr 0.72fr;
+      }
+
+      .truth-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .image-bank {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .prompt-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .creator-page { padding-bottom: 72px; }
+    .creator-hero { min-height: 560px; }
+    .creator-intro .lede { max-width: 610px; }
+    .creator-actions { flex-wrap: wrap; }
+    .btn.lucky { color: #fff; border-color: #29382f; background: #29382f; }
+    .truth-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .truth-grid div { min-width: 0; }
+    .persona-grid { display: grid; grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr); gap: 16px; }
+    .day-card { padding: 26px; border-radius: 18px; color: #f8fbf8; background: #29382f; }
+    .day-card h3 { margin: 12px 0 10px; font-size: clamp(24px, 3vw, 36px); line-height: 1.02; letter-spacing: -.045em; }
+    .day-card p { margin: 0; color: rgba(248, 251, 248, .72); line-height: 1.65; }
+    .day-line { display: grid; grid-template-columns: 56px 1fr; gap: 12px; align-items: start; padding: 13px 0; border-bottom: 1px solid rgba(248, 251, 248, .12); font-size: 11px; }
+    .day-line:last-child { border: 0; }
+    .day-line time { color: #b7c5bb; font-weight: 800; }
+    .fact-list { display: grid; gap: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); }
+    .fact { display: grid; grid-template-columns: 28px 1fr; gap: 11px; padding: 13px; border-radius: 12px; background: #f7f9f7; }
+    .fact span:first-child { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 9px; color: var(--accent-dark); background: var(--accent-soft); font-size: 10px; font-weight: 900; }
+    .fact strong, .fact small { display: block; }
+    .fact strong { margin-bottom: 4px; font-size: 12px; }
+    .fact small { color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .bank-toolbar { display: flex; align-items: center; gap: 10px; }
+    .bank-toolbar .bank-count { margin-left: 0; }
+    .bank-toolbar .btn { margin-left: auto; }
+    .bank-image span { background: linear-gradient(transparent, rgba(15, 21, 17, .76)); }
+    .cast-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .cast-card { min-height: 260px; display: grid; grid-template-columns: 190px minmax(0, 1fr); overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); }
+    .cast-card img { width: 100%; height: 100%; object-fit: cover; }
+    .cast-copy { align-self: center; padding: 24px; }
+    .cast-copy h3 { margin: 8px 0; font-size: 25px; letter-spacing: -.04em; }
+    .cast-copy p { margin: 0 0 18px; color: var(--muted); font-size: 11px; line-height: 1.6; }
+    .cast-card.new { display: grid; place-items: center; padding: 28px; text-align: center; border-style: dashed; background: #f7f9f7; cursor: pointer; }
+    .cast-card.new small { display: block; max-width: 270px; margin: 8px auto 0; color: var(--muted); line-height: 1.5; }
+    .cast-card.new .plus { width: 44px; height: 44px; display: grid; place-items: center; margin: 0 auto 14px; border-radius: 14px; color: #fff; background: #29382f; font-size: 24px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .field input, .field select { width: 100%; min-height: 42px; padding: 0 11px; border: 1px solid var(--line-strong); border-radius: 10px; color: var(--ink); background: var(--paper); }
+    .generation-state { display: none; align-items: center; gap: 10px; padding: 12px; border-radius: 11px; color: var(--ink-soft); background: var(--accent-soft); font-size: 10px; line-height: 1.5; }
+    .generation-state.show { display: flex; }
+    .generation-state i { width: 16px; height: 16px; flex: 0 0 auto; border: 2px solid rgba(51, 117, 83, .25); border-top-color: var(--accent-dark); border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 860px) {
+      .persona-grid, .cast-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 620px) {
+      .truth-grid, .form-grid { grid-template-columns: 1fr; }
+      .cast-card { grid-template-columns: 120px 1fr; }
+      .bank-toolbar { align-items: flex-start; flex-wrap: wrap; }
+      .bank-toolbar .btn { width: 100%; margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="side" id="side">
+      <a class="wordmark" href="./index.html">
+        <span class="wordmark-mark">CF</span>
+        <span class="wordmark-copy"><strong>Content Factory</strong><span>production workspace</span></span>
+      </a>
+      <div class="nav-label">Workspace</div>
+      <nav class="side-nav" aria-label="Primary">
+        <a href="./index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V8l8-5 8 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M9 21v-7h6v7"/></svg>Studio</a>
+        <a class="active" href="./influencers.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>Influencers</a>
+        <a href="./story-lab.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 6.5v7a5.5 5.5 0 0 1-11 0v-2"/><path d="m3 14 2.5-2.5L8 14"/><circle cx="16.5" cy="4.5" r="1.6"/></svg>Story Lab</a>
+        <a href="./carousels-new.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M4 7v10M20 7v10"/></svg>Carousels</a>
+        <a href="./tools.html#ugc"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3Z"/></svg>UGC content</a>
+        <a href="./tools.html#calendar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg>Calendar</a>
+        <a href="./tools.html#analytics"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg>Analytics</a>
+      </nav>
+      <div class="side-footer">
+        <div class="brand-mini">
+          <span class="brand-avatar">K</span>
+          <span><strong>Kokoro</strong><span>test account</span></span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
+        <div class="page-identity"><strong>Influencers</strong><span class="crumb">/ Alice</span></div>
+        <div class="topbar-spacer"></div>
+        <span class="status">Identity references ready</span>
+        <a class="btn" href="./carousels-new.html">Open campaign</a>
+      </header>
+
+      <div class="creator-page">
+        <section class="creator-hero" aria-labelledby="aliceTitle">
+          <div class="portrait-composition" aria-label="Alice identity references">
+            <figure><img src="/pool-images/kokoro/alice-lifestyle/01.jpg" alt="Alice sitting outdoors"><span class="identity-badge">Identity ready</span></figure>
+            <figure><img src="/pool-images/kokoro/alice-lifestyle/08.jpg" alt="Alice in an everyday setting"></figure>
+            <figure><img src="/pool-images/kokoro/alice-crying/03.jpg" alt="Alice in a quiet private moment"></figure>
+          </div>
+          <div class="creator-intro">
+            <span class="eyebrow">Kokoro's first-person narrator</span>
+            <h1 id="aliceTitle">Alice has a life, not a content category.</h1>
+            <p class="lede">She is capable at work, available to everyone, and out of room for herself by evening. We can meet her at the gym, at lunch, on a train, in a restaurant, at home, or anywhere her real day happens.</p>
+            <div class="creator-actions">
+              <button class="btn lucky" id="feelingLucky">✦ I’m feeling lucky</button>
+              <button class="btn primary" id="createVariation">Choose a scene</button>
+              <button class="btn" id="newInfluencer">Create another influencer</button>
+            </div>
+            <div class="truth-grid">
+              <div><b id="alicePhotoCount">20</b><span>Alice photos ready now</span></div>
+              <div><b>9–6</b><span>she keeps it together at work</span></div>
+              <div><b>evening</b><span>when the held-in day catches up</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="creator-section" aria-labelledby="personaTitle">
+          <div class="section-head">
+            <span class="eyebrow">Character facts</span>
+            <h2 id="personaTitle">The woman behind the posts</h2>
+            <p>This is the continuity brief for copy and images. It keeps Alice human without forcing every post into the same emotional pose.</p>
+          </div>
+          <div class="persona-grid">
+            <article class="day-card">
+              <span class="eyebrow" style="color:#b7c5bb">A normal difficult day</span>
+              <h3>Reliable all day.<br>Finally honest at night.</h3>
+              <div class="day-line"><time>08:34</time><span>Commute, unread messages, already thinking about everyone else.</span></div>
+              <div class="day-line"><time>13:10</time><span>Lunch at her desk or alone nearby because the day never really paused.</span></div>
+              <div class="day-line"><time>18:42</time><span>Gym, groceries, a restaurant, or the train home — still looking completely fine.</span></div>
+              <div class="day-line"><time>22:17</time><span>The noise arrives. She opens Kokoro and says the messy version out loud.</span></div>
+            </article>
+            <div class="fact-list">
+              <div class="fact"><span>01</span><span><strong>She works a full-time job.</strong><small>Office or creative work; competent, useful, and usually the dependable person in the room.</small></span></div>
+              <div class="fact"><span>02</span><span><strong>She answers everyone before herself.</strong><small>She does not need discipline. She needs somewhere she does not have to perform being okay.</small></span></div>
+              <div class="fact"><span>03</span><span><strong>She looks fine before she feels fine.</strong><small>The story can happen in public — café, gym, restaurant, train — without turning into theatrical sadness.</small></span></div>
+              <div class="fact"><span>04</span><span><strong>Rest makes her feel guilty.</strong><small>At night she overthinks conversations and wonders why meditation never seems built for a mind like hers.</small></span></div>
+              <div class="fact"><span>05</span><span><strong>Kokoro listens before it guides.</strong><small>She vents first. Her short meditation is made from what she actually said, not generic wellness advice.</small></span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="creator-section" id="imageBank" aria-labelledby="bankTitle">
+          <div class="section-head">
+            <span class="eyebrow">Alice’s photo bank</span>
+            <h2 id="bankTitle">One person, many real environments</h2>
+            <p>No product-phone shots and no forced emotional buckets. Approved references and new generated scenes live together here.</p>
+          </div>
+          <div class="bank-toolbar">
+            <span class="bank-count" id="bankCount">20 Alice photos</span>
+            <button class="btn lucky" id="bankLucky">✦ Surprise me with another scene</button>
+          </div>
+          <div class="image-bank" id="imageGrid"></div>
+        </section>
+
+        <section class="creator-section" aria-labelledby="castTitle">
+          <div class="section-head">
+            <span class="eyebrow">Influencer cast</span>
+            <h2 id="castTitle">Alice can be the first, not the only one.</h2>
+            <p>A new person starts as a deliberate character brief and one identity draft. Nothing enters the approved cast automatically.</p>
+          </div>
+          <div class="cast-grid" id="castGrid">
+            <article class="cast-card">
+              <img src="/pool-images/kokoro/alice-lifestyle/01.jpg" alt="Alice">
+              <div class="cast-copy"><span class="pill">primary · identity ready</span><h3>Alice</h3><p>Working woman, quiet human, first-person narrator for the current campaign.</p><button class="btn" id="editAlice">Create another Alice scene</button></div>
+            </article>
+            <button class="cast-card new" id="newInfluencerCard">
+              <span><span class="plus">+</span><strong>Create another influencer</strong><small>Define the person first, then generate one identity draft for review.</small></span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal" id="variationModal" hidden>
+    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="variationTitle">
+      <div class="modal-head">
+        <div class="modal-head-copy"><h2 id="variationTitle">Put Alice somewhere new</h2><p>Change her day, not her identity.</p></div>
+        <button class="icon-btn" data-close="variationModal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label>Reference identity</label>
+          <div class="reference-row">
+            <div class="reference"><img src="/pool-images/kokoro/alice-lifestyle/01.jpg" alt="Alice reference one"></div>
+            <div class="reference"><img src="/pool-images/kokoro/alice-lifestyle/05.jpg" alt="Alice reference two"></div>
+            <div class="reference"><img src="/pool-images/kokoro/alice-lifestyle/08.jpg" alt="Alice reference three"></div>
+            <div class="reference"><img src="/pool-images/kokoro/alice-crying/03.jpg" alt="Alice reference four"></div>
+          </div>
+          <small>These references stay attached. Change the scene, not the identity.</small>
+        </div>
+        <div class="field">
+          <label for="scenePrompt">Situation</label>
+          <textarea id="scenePrompt">Alice leaving a small neighbourhood gym after work, sitting on a bench tying her shoes, candid phone photo, lightly tired but composed, ordinary fluorescent and evening light.</textarea>
+        </div>
+        <div class="field">
+          <label for="finalPrompt">Final prompt</label>
+          <textarea id="finalPrompt" readonly></textarea>
+          <small>The finished image stays textless so carousel copy remains editable.</small>
+        </div>
+        <div class="generation-state" id="aliceGenerationState"><i></i><span>GPT Image 2 is creating one medium-quality identity-preserving draft. This can take up to two minutes.</span></div>
+        <div class="asset-note">This creates one paid GPT Image 2 draft and saves it to Alice’s generated bank. Nothing is approved automatically.</div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" id="surpriseAgain">Another scene</button>
+        <button class="btn" id="copyVariationPrompt">Copy prompt</button>
+        <button class="btn primary" id="generateAlice">Generate one draft</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="newInfluencerModal" hidden>
+    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="newInfluencerTitle">
+      <div class="modal-head">
+        <div class="modal-head-copy"><h2 id="newInfluencerTitle">Create a second person</h2><p>Start from audience truth, then make the face.</p></div>
+        <button class="icon-btn" data-close="newInfluencerModal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="field"><label for="influencerName">Name</label><input id="influencerName" value="Maya" maxlength="40"></div>
+          <div class="field"><label for="influencerAge">Life stage</label><select id="influencerAge"><option>late 20s</option><option>early 30s</option><option>late 30s</option><option>early 40s</option></select></div>
+        </div>
+        <div class="field"><label for="influencerLife">Work and daily life</label><textarea id="influencerLife">Works in hospitality with changing shifts, lives with a flatmate, often eats late after work and looks energetic even when she is emotionally spent.</textarea></div>
+        <div class="field"><label for="influencerTension">The thing she holds in</label><textarea id="influencerTension">She is warm and socially capable, but after taking care of customers and coworkers all day she has no language left for what she feels.</textarea></div>
+        <div class="field"><label for="identityPrompt">Identity draft prompt</label><textarea id="identityPrompt" readonly></textarea><small>This first image establishes a candidate identity. Future scenes should use accepted references from this person.</small></div>
+        <div class="generation-state" id="identityGenerationState"><i></i><span>Creating one medium-quality identity draft for review.</span></div>
+        <div class="asset-note">The draft is not added to the approved cast until you choose it. A consistent character needs multiple accepted reference angles after this first image.</div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" id="surpriseIdentity">Surprise me</button>
+        <button class="btn primary" id="generateIdentity">Create identity draft</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="imageModal" hidden>
+    <div class="lightbox-sheet" role="dialog" aria-modal="true" aria-labelledby="imageTitle">
+      <img id="lightboxImage" src="" alt="">
+      <div class="lightbox-meta">
+        <button class="icon-btn" data-close="imageModal" aria-label="Close" style="align-self:flex-end">×</button>
+        <span class="eyebrow" id="imageType">Alice photo</span>
+        <h2 id="imageTitle">Alice image</h2>
+        <p id="imageDescription"></p>
+        <a class="btn primary" href="./carousels-new.html">Use in carousel</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack"></div>
+  <script src="./influencers.js" type="module"></script>
+</body>
+</html>

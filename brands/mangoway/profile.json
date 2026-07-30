@@ -1,0 +1,72 @@
+{
+  "status": "draft",
+  "_note": "Positioning taken from the live App Store listing (fetched 2026-07-30). Still marked draft: the listing tells us what the app does, not how Nazar wants it sold. Confirm _confirm before generating client-facing hooks.",
+  "_confirm": [
+    "Symptom-first or allergy-first? The listing leads with bloating/breakouts/low energy, which is a much bigger hook territory than allergen avoidance. Confirm which one fronts the content.",
+    "Is there a first-person narrator persona like Kokoro has Alice? No persona = no first-person story hooks for this tenant.",
+    "How the scan works technically: barcode lookup, OCR of the ingredient list, or product photo.",
+    "The safety-claim standard: dont currently forbids ever calling a product safe or allergen-free. Confirm that conservative line holds - it matters more here than anywhere, because a wrong call is a medical event.",
+    "At $14.99/mo with no ratings yet, content carries all the trust. Confirm hooks should lean on symptom recognition rather than authority."
+  ],
+  "name": "Mangoway",
+  "domain": "apps.apple.com/no/app/food-safety-scanner-mangoway/id6770260981",
+  "product": "Mangoway is a personalized food scanner. You answer a quiz about your diet, allergies and the things you react to, and it checks scanned products against YOUR rules instead of giving a generic health score - so you stop guessing what to buy.",
+  "oneLiner": "Mangoway is a personalized food scanner. You answer a quiz about your diet, allergies and the things you react to, and it checks scanned products against YOUR rules instead of giving a generic health score - so you stop guessing what to buy.",
+  "whatItIs": "Mangoway is a personalized food scanner. You answer a quiz about your diet, allergies and the things you react to, and it checks scanned products against YOUR rules instead of giving a generic health score - so you stop guessing what to buy.",
+  "audience": "People who feel bad after eating and do not know which ingredient is doing it - bloating, breakouts, low energy - plus adults with allergies or intolerances (gluten, lactose, dairy, peanuts), parents shopping for an allergic child, and anyone cutting additives or added sugar. The recurring pain is label anxiety: small print in the aisle, hidden names for the same ingredient, recipes changing on products you have bought for years.",
+  "voice": [
+    "plain and direct",
+    "calm, never alarmist",
+    "practical",
+    "respects what the reader already knows",
+    "no scare tactics"
+  ],
+  "voiceTags": [
+    "plain and direct",
+    "calm, never alarmist",
+    "practical",
+    "respects what the reader already knows",
+    "no scare tactics"
+  ],
+  "look": [
+    "clean and high contrast",
+    "real supermarket packaging",
+    "legible label close-ups",
+    "clear flagged and cleared states",
+    "minimal chrome"
+  ],
+  "lookTags": [
+    "clean and high contrast",
+    "real supermarket packaging",
+    "legible label close-ups",
+    "clear flagged and cleared states",
+    "minimal chrome"
+  ],
+  "aesthetic": "clean and high contrast, real supermarket packaging, legible label close-ups, clear flagged and cleared states, minimal chrome",
+  "account": "",
+  "niche": "food scanning / allergen and ingredient checking app",
+  "do": "name the exact aisle, menu or lunchbox moment; show a real label; be specific about which ingredient and why it matters; report what a scan found rather than what it guarantees; keep the app to one middle-slide cameo",
+  "dont": "never call a product safe or allergen-free, no medical or diagnostic advice, no fear-mongering about additives, no moralising about food choices, never imply the app removes the need to read the label",
+  "context": "Draft tenant, second in the factory after the one that has real content. No campaign sheet, no posted content, and no website copy has been read yet, so nothing here is confirmed by the brand. Deliberately carries no first-person narrator: server/hook-engine.js only permits first-person story hooks when the brand context supplies a real one, and this tenant has none yet, so the generator will stay on diagnostic lists, how-to lists and contrarian reframes.",
+  "sourceUrl": "https://apps.apple.com/no/app/food-safety-scanner-mangoway/id6770260981",
+  "appStoreName": "Food Safety Scanner: Mangoway",
+  "subtitle": "Diets, Allergy & Healthy Food",
+  "developer": "Nazar Prystyuk",
+  "category": "Health & Fitness",
+  "pricing": {
+    "model": "free with in-app purchases",
+    "monthly": "$14.99",
+    "yearly": "$59.99",
+    "ratings": "not enough ratings yet"
+  },
+  "painPoints": [
+    "bloating after eating",
+    "breakouts they cannot trace to a cause",
+    "low energy and afternoon crashes",
+    "allergen small print in the aisle",
+    "hidden names for the same allergen",
+    "recipes changing on familiar products",
+    "eating out and having to ask",
+    "added sugar and additives"
+  ]
+}

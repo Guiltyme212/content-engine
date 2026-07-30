@@ -468,10 +468,9 @@
     <nav class='studio-nav'>
       <div class='studio-nav-label'>Create</div>
       <a class='studio-nav-item active' href='./index.html'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M4 19V8l8-5 8 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z'/><path d='M9 21v-7h6v7'/></svg>Studio</a>
-      <a class='studio-nav-item' href='./tools.html#influencers'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='8' r='4'/><path d='M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7'/></svg>Influencers</a>
-      <a class='studio-nav-item' href='./tools.html#strategy'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='3'/><path d='M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1'/></svg>Strategy</a>
-      <a class='studio-nav-item' href='./tools.html#hooks'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M16.5 6.5v7a5.5 5.5 0 0 1-11 0v-2'/><path d='m3 14 2.5-2.5L8 14'/><circle cx='16.5' cy='4.5' r='1.6'/></svg>Hook lab</a>
-      <a class='studio-nav-item' href='./tools.html#carousels'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x='7' y='4' width='10' height='16' rx='2'/><path d='M4 7v10M20 7v10'/></svg>Carousels</a>
+      <a class='studio-nav-item' href='./influencers.html'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='8' r='4'/><path d='M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7'/></svg>Influencers</a>
+      <a class='studio-nav-item' href='./story-lab.html'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M16.5 6.5v7a5.5 5.5 0 0 1-11 0v-2'/><path d='m3 14 2.5-2.5L8 14'/><circle cx='16.5' cy='4.5' r='1.6'/></svg>Story Lab</a>
+      <a class='studio-nav-item' href='./carousels-new.html'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x='7' y='4' width='10' height='16' rx='2'/><path d='M4 7v10M20 7v10'/></svg>Carousels</a>
       <a class='studio-nav-item' href='./tools.html#ugc'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='m10 9 5 3-5 3Z'/></svg>UGC content</a>
       <a class='studio-nav-item' href='./tools.html#calendar'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x='3' y='4.5' width='18' height='16' rx='2'/><path d='M3 9h18M8 3v3M16 3v3'/></svg>Calendar</a>
       <a class='studio-nav-item' href='./tools.html#analytics'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M4 20V10M10 20V4M16 20v-6M22 20H2'/></svg>Analytics</a>
@@ -492,7 +491,7 @@
       </a>
       <span class="topbar-spacer"></span>
       <span class="top-note">Swipe finished posts. We learn your taste.</span>
-      <a class="all-tools" href="./tools.html#hooks">Open tools <span aria-hidden="true">→</span></a>
+      <a class="all-tools" href="./story-lab.html">Open Story Lab <span aria-hidden="true">→</span></a>
     </header>
 
     <section class="hero">
@@ -537,6 +536,18 @@
                   <button class="primary" type="submit">Read company <span aria-hidden="true">→</span></button>
                 </div>
                 <p class="brand-help">We read the public website on the server, then turn its actual positioning and copy into an editable creative brief.</p>
+                <div class="preset-row" id="presetRow">
+                  <span>Your brands, ready to go:</span>
+                  <button type="button" class="preset-chip" data-preset="kokoro">Kokoro</button>
+                  <button type="button" class="preset-chip" data-preset="mangoway">Mangoway</button>
+                </div>
+                <style>
+                  .preset-row{display:flex;align-items:center;gap:9px;margin-top:14px;flex-wrap:wrap}
+                  .preset-row>span{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+                  .preset-chip{border:1.5px solid var(--line-2);background:#fff;border-radius:11px;padding:9px 18px;font-size:13px;font-weight:800;cursor:pointer;transition:.13s}
+                  .preset-chip:hover{border-color:var(--coral);color:var(--coral);transform:translateY(-1px)}
+                  .preset-chip.on{border-color:var(--coral);background:var(--coral-soft);color:var(--coral-dark)}
+                </style>
                 <div class="brand-context">
                   <label for="brandContext">What should the engine know?</label>
                   <textarea id="brandContext" placeholder="What are you selling right now? Who is this for? Add claims to avoid, founder context, audience beliefs, offers, or content goals."></textarea>
@@ -1709,6 +1720,27 @@
       qsa('.studio-nav-item').forEach(item=>item.addEventListener('click',closeRail));
       qsa('[data-stage-button]').forEach(button=>button.addEventListener('click',()=>setStage(button.dataset.stageButton)));
       qs('#brandForm').addEventListener('submit',analyzeBrand);
+
+      // ── preset tenants: profiles are server data (brands/<slug>/profile.json), the studio
+      // just loads one — nobody re-reads a company that's already in the building. ──
+      async function usePreset(slug,{quiet}={}){
+        try{
+          const res=await fetch('/api/brand?brand='+encodeURIComponent(slug));
+          const json=await res.json();
+          if(!res.ok||!json.company||!json.company.name) throw new Error(json.error||'no profile for '+slug);
+          state.company={...json.company,url:json.company.sourceUrl||json.company.domain||'',context:json.company.context||''};
+          renderBrandResult();
+          unlockAppShell(true);
+          persist();
+          qsa('.preset-chip').forEach(chip=>chip.classList.toggle('on',chip.dataset.preset===slug));
+          if(!quiet) toast(json.company.name+' loaded — no reading needed');
+        }catch(error){
+          if(!quiet) toast('Preset failed: '+(error.message||'server offline?'));
+        }
+      }
+      qsa('.preset-chip').forEach(chip=>chip.addEventListener('click',()=>usePreset(chip.dataset.preset)));
+      // Default tenant: if the studio opens empty, Kokoro loads itself.
+      if(!state.company) usePreset('kokoro',{quiet:true});
       qs('#toDiscover').addEventListener('click',()=>startDiscovery());
       qs('#passPost').addEventListener('click',()=>swipe('pass'));
       qs('#keepPost').addEventListener('click',()=>swipe('keep'));

@@ -1,0 +1,87 @@
+{
+  "pool": "alice-lifestyle",
+  "slideSlot": 1,
+  "brand": "kokoro",
+  "images": [
+    {
+      "file": "alice-lifestyle/01.jpg",
+      "original": "_originals/alice-lifestyle/01.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-lifestyle/02.jpg",
+      "original": "_originals/alice-lifestyle/02.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-lifestyle/03.jpg",
+      "original": "_originals/alice-lifestyle/03.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-lifestyle/04.jpg",
+      "original": "_originals/alice-lifestyle/04.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-lifestyle/05.jpg",
+      "original": "_originals/alice-lifestyle/05.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-lifestyle/06.jpg",
+      "original": "_originals/alice-lifestyle/06.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-lifestyle/07.jpg",
+      "original": "_originals/alice-lifestyle/07.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-lifestyle/08.jpg",
+      "original": "_originals/alice-lifestyle/08.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-lifestyle/09.jpg",
+      "original": "_originals/alice-lifestyle/09.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-lifestyle/10.jpg",
+      "original": "_originals/alice-lifestyle/10.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    }
+  ]
+}

@@ -889,14 +889,12 @@
     <div class="nav-label">Assembly line</div>
     <a class="nav-item" href="./index.html">
       <svg class="ic" viewBox="0 0 24 24"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Studio</a>
-    <button class="nav-item" data-view="influencers">
-      <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>Influencers</button>
-    <button class="nav-item" data-view="strategy">
-      <svg class="ic" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3"/></svg>Strategy</button>
-    <button class="nav-item" data-view="hooks">
-      <svg class="ic" viewBox="0 0 24 24"><circle cx="16.5" cy="4.5" r="1.6"/><path d="M16.5 6.5v7a5.5 5.5 0 0 1-11 0v-2"/><path d="m3 14 2.5-2.5L8 14"/></svg>Hook lab <span class="chip">NEW</span></button>
-    <button class="nav-item" data-view="carousels">
-      <svg class="ic" viewBox="0 0 24 24"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M4 7v10M20 7v10"/></svg>Carousels</button>
+    <a class="nav-item" href="./influencers.html">
+      <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>Influencers</a>
+    <a class="nav-item" href="./story-lab.html">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M16.5 6.5v7a5.5 5.5 0 0 1-11 0v-2"/><path d="m3 14 2.5-2.5L8 14"/><circle cx="16.5" cy="4.5" r="1.6"/></svg>Story Lab <span class="chip">NEW</span></a>
+    <a class="nav-item" href="./carousels-new.html">
+      <svg class="ic" viewBox="0 0 24 24"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M4 7v10M20 7v10"/></svg>Carousels</a>
     <button class="nav-item" data-view="ugc">
       <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>UGC Content <span class="chip">BETA</span></button>
     <button class="nav-item" data-view="calendar">
@@ -1047,94 +1045,23 @@
       <h1 class="title">Influencers</h1>
       <p class="subtitle">Persistent AI personas — train the face once, reuse it across every carousel and clip so the whole account reads like one person.</p>
     </div>
-    <!-- Train-a-new-face lives at the TOP now — it's the primary action on this tab -->
+    <!-- Alice is the only approved narrator. The full identity workspace is a dedicated page. -->
     <div class="train-hero" id="trainHero">
       <div class="th-ic"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5v1a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5z"/><path d="M4 21a8 8 0 0 1 16 0"/><path d="M19 4l1.5 1.5M17.5 5.5 19 4"/></svg></div>
       <div class="th-body">
-        <h3>Train a new face</h3>
-        <p>Pick who they are — niche, vibe, voice, look. We generate a consistent base character you reuse across every carousel and clip, forever.</p>
-        <div class="th-steps"><span>1 · Niche</span><span>2 · Persona</span><span>3 · Look</span><span>4 · Generate</span></div>
+        <h3>Alice is the Kokoro narrator</h3>
+        <p>One locked identity, two emotional ranges, and twenty approved portraits ready for the campaign.</p>
+        <div class="th-steps"><span>Identity locked</span><span>20 portraits</span><span>60-post campaign</span></div>
       </div>
-      <div class="th-cta"><button class="btn coral"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New influencer</button></div>
+      <div class="th-cta"><button class="btn coral">Open Alice</button></div>
     </div>
     <div class="card-grid" id="personaGrid">
       <div class="persona">
-        <div class="ph"><img src="assets/influencer-yuki.png" alt="Yuki"><span class="badge pill coral">primary face</span></div>
-        <div class="meta"><h3>Yuki</h3><div class="role">soft-spoken · late-twenties · the quiet friend</div>
-          <div class="traits"><span class="pill">lowercase</span><span class="pill">warm</span><span class="pill">no toxic positivity</span></div>
-          <div class="st"><div><div class="n">7</div><div class="l">carousels</div></div><div><div class="n">2</div><div class="l">clips</div></div><div><div class="n">128k</div><div class="l">reach</div></div></div>
+        <div class="ph"><img src="/pool-images/kokoro/alice-lifestyle/01.jpg" alt="Alice"><span class="badge pill coral">primary narrator</span></div>
+        <div class="meta"><h3>Alice</h3><div class="role">Kokoro's first-person narrator</div>
+          <div class="traits"><span class="pill">identity locked</span><span class="pill">phone-photo real</span><span class="pill">quiet honesty</span></div>
+          <div class="st"><div><div class="n">20</div><div class="l">portraits</div></div><div><div class="n">2</div><div class="l">roles</div></div><div><div class="n">60</div><div class="l">posts</div></div></div>
         </div>
-      </div>
-      <div class="persona">
-        <div class="ph"><img src="assets/influencer-rin.png" alt="Rin"><span class="badge pill violet">bedtime niche</span></div>
-        <div class="meta"><h3>Rin</h3><div class="role">calm night voice · rain-on-windows energy</div>
-          <div class="traits"><span class="pill">spiritual</span><span class="pill">slow</span><span class="pill">dusk palette</span></div>
-          <div class="st"><div><div class="n">3</div><div class="l">carousels</div></div><div><div class="n">1</div><div class="l">clips</div></div><div><div class="n">44k</div><div class="l">reach</div></div></div>
-        </div>
-      </div>
-      <div class="persona">
-        <div class="ph"><img src="assets/influencer-mika.png" alt="Mika"><span class="badge pill">gen-z raw</span></div>
-        <div class="meta"><h3>Mika</h3><div class="role">irreverent, honest, slightly chaotic</div>
-          <div class="traits"><span class="pill">raw</span><span class="pill">funny</span><span class="pill">real talk</span></div>
-          <div class="st"><div><div class="n">0</div><div class="l">carousels</div></div><div><div class="n">0</div><div class="l">clips</div></div><div><div class="n">—</div><div class="l">reach</div></div></div>
-        </div>
-      </div>
-      <div class="persona">
-        <div class="ph"><img src="assets/influencer-amara.png" alt="Amara"><span class="badge pill good">wellness &amp; lifestyle</span></div>
-        <div class="meta"><h3>Amara</h3><div class="role">warm, radiant · the encouraging friend</div>
-          <div class="traits"><span class="pill">upbeat</span><span class="pill">relatable</span><span class="pill">plant-mom</span></div>
-          <div class="st"><div><div class="n">5</div><div class="l">carousels</div></div><div><div class="n">3</div><div class="l">clips</div></div><div><div class="n">96k</div><div class="l">reach</div></div></div>
-        </div>
-      </div>
-      <div class="persona">
-        <div class="ph"><img src="assets/influencer-sofia.png" alt="Sofia"><span class="badge pill warn">food &amp; home</span></div>
-        <div class="meta"><h3>Sofia</h3><div class="role">confident, cozy · kitchen-table energy</div>
-          <div class="traits"><span class="pill">warm</span><span class="pill">practical</span><span class="pill">how-to</span></div>
-          <div class="st"><div><div class="n">2</div><div class="l">carousels</div></div><div><div class="n">1</div><div class="l">clips</div></div><div><div class="n">31k</div><div class="l">reach</div></div></div>
-        </div>
-      </div>
-      <div class="persona">
-        <div class="ph"><img src="assets/influencer-priya.png" alt="Priya"><span class="badge pill violet">productivity</span></div>
-        <div class="meta"><h3>Priya</h3><div class="role">thoughtful, calm · the study-with-me voice</div>
-          <div class="traits"><span class="pill">focused</span><span class="pill">clear</span><span class="pill">soft-spoken</span></div>
-          <div class="st"><div><div class="n">4</div><div class="l">carousels</div></div><div><div class="n">0</div><div class="l">clips</div></div><div><div class="n">58k</div><div class="l">reach</div></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ STRATEGY ============ -->
-  <section class="view" data-view="strategy">
-    <div class="page-head">
-      <div class="eyebrow"><span class="n">02</span> · the brief</div>
-      <h1 class="title">Content strategy</h1>
-      <p class="subtitle">Set who you're talking to and which skeleton the generator follows. This is the steering wheel — copy comes from the playbook, structure comes from here.</p>
-    </div>
-    <div class="strat-wrap">
-      <div class="card" style="padding:24px 26px">
-        <div class="field"><label>Who is this for</label><input class="input" value="quiet humans — mostly women, wrecked after a hard day, want to be heard not fixed"></div>
-        <div class="field"><label>Face</label>
-          <div class="chips"><span class="chip sel">Yuki · primary</span><span class="chip">Rin · bedtime</span><span class="chip">Mika · gen-z</span></div>
-        </div>
-        <div class="field"><label>Format skeleton</label>
-          <div class="chips"><span class="chip sel">A · validation ladder</span><span class="chip">B · before / after proof</span><span class="chip">C · psychology facts</span></div>
-        </div>
-        <div class="field"><label>Hook pattern</label>
-          <div class="chips"><span class="chip sel">for the ones who ___</span><span class="chip">you don't need ___. you need ___.</span><span class="chip">signs you're ___ (not ___)</span><span class="chip">+ hook bank</span></div>
-        </div>
-        <div class="field"><label>Posting rhythm</label>
-          <div class="chips"><span class="chip sel">1–2 / day</span><span class="chip sel">evening 6–10pm</span><span class="chip">calm audio on TikTok</span></div>
-        </div>
-        <div class="field" style="margin-bottom:8px"><label>Extra direction (optional)</label><textarea class="textarea" placeholder="anything specific for this batch…">lean into the "strong one" identity this week. rain + warm-room palette.</textarea></div>
-        <div style="display:flex;gap:10px;margin-top:6px"><button class="btn"><svg class="ic" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Save strategy</button><button class="btn ghost">Send 6 carousels to the line →</button></div>
-      </div>
-      <div>
-        <div class="card" style="padding:20px 22px">
-          <div class="eyebrow" style="margin-bottom:14px">resulting skeleton</div>
-          <div class="skeleton"><div class="fl"><b>hook</b> <span class="ar">→</span> validation <span class="ar">×4</span> <span class="ar">→</span> warmup <span class="ar">→</span> <b>soft app push</b> <span class="ar">(last slide only)</span></div></div>
-          <p style="font-size:13px;color:var(--muted);margin-top:15px;line-height:1.6">slides 2–5 read as organic comfort. the app appears once, phrased as a personal habit — <i>"i vent to kokoro. it listens."</i> never an ad.</p>
-        </div>
-        <div class="note" style="margin-top:16px"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><p><b>Guardrails on.</b> no "fix yourself" framing, no clinical terms, no emoji spam, no fake proof imagery — enforced from the brand brief.</p></div>
       </div>
     </div>
   </section>
@@ -1210,6 +1137,267 @@
       <p class="subtitle">Build slide by slide, preview it exactly as it lands in the feed — dots and all — then send it down the line.</p>
     </div>
 
+    <!-- ===== Campaign studio: review deck (whole-post cards) + object editor + smart theme swap ===== -->
+    <div class="camp" id="campRoot">
+      <div class="camp-top">
+        <div>
+          <span class="pill violet" style="margin-bottom:10px">CAMPAIGN · THE MONTH</span>
+          <h2 id="campTitle">Loading the campaign…</h2>
+        </div>
+        <div class="brand-switch" id="brandSwitch" title="brands are data — drop a folder in brands/ and it appears here"></div>
+        <div class="camp-progress"><b id="campDoneN">0</b><span id="campTotalN"> / — approved</span></div>
+      </div>
+      <div class="camp-rail" id="campRail"></div>
+
+      <!-- ── REVIEW: the post is the card. ‹ › flips slides, ✕ pass · ✎ edit · ✓ approve ── -->
+      <div class="rv" id="rvWrap" hidden>
+        <div class="rv-deck" id="rvDeck"></div>
+        <div class="rv-btns">
+          <button class="rb rb-no" id="rvPass" title="pass — decide later (←)"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          <button class="rb rb-edit" id="rvEdit" title="open the editor (E)"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+          <button class="rb rb-yes" id="rvOk" title="approve → library (→)"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5L20 6.5"/></svg></button>
+        </div>
+        <p class="deck-hint" id="rvHint"></p>
+      </div>
+
+      <!-- ── EDIT: rail · stage with free text objects · inspector ── -->
+      <div class="camp-editor" id="edWrap" hidden>
+        <div class="crail" id="crail"></div>
+
+        <div class="cstage">
+          <div class="cframe" id="cframe">
+            <img id="csBg" src="" alt="" draggable="false">
+            <div id="boxLayer"></div>
+            <button class="cyc l" id="cycL" title="previous background (←)">‹</button>
+            <button class="cyc r" id="cycR" title="next background (→)">›</button>
+            <span class="cand-chip" id="candChip"></span>
+          </div>
+          <p class="deck-hint" id="csWhy"></p>
+        </div>
+
+        <aside class="cinsp">
+          <div class="ins-head"><b id="csPostTitle"></b><span id="csSlideLabel"></span></div>
+
+          <div class="ins-block">
+            <div class="ins-lab"><b>Background</b><span id="insSrc"></span></div>
+            <div class="cands" id="cands"></div>
+            <div class="ins-row"><button class="btn ghost sm" id="swapTheme">Swap theme…</button></div>
+          </div>
+
+          <div class="ins-block">
+            <div class="ins-lab"><b>Text</b><span id="tbHint">click a box on the slide · drag to move</span></div>
+            <div class="tb-panel" id="tbPanel">
+              <textarea id="tbText" spellcheck="false" placeholder="select a text box…"></textarea>
+              <div class="sliders">
+                <label><span>Size</span><input type="range" id="tbFs" min="8" max="34" step="1"></label>
+                <label><span>Weight</span><input type="range" id="tbFw" min="300" max="900" step="25"></label>
+                <label><span>Outline</span><input type="range" id="tbSw" min="0" max="0.3" step="0.01"></label>
+              </div>
+              <div class="tb-colors">
+                <label class="cpick"><span>Text</span><input type="color" id="tbColor" value="#ffffff"></label>
+                <label class="cpick"><span>Line</span><input type="color" id="tbSc" value="#000000"></label>
+                <div class="seg3" id="tbBg">
+                  <button type="button" data-bg="none" class="on">None</button><button type="button" data-bg="white">White</button><button type="button" data-bg="black">Black</button>
+                </div>
+              </div>
+              <div class="ins-row">
+                <button class="btn ghost sm" id="tbAdd">+ Add text</button>
+                <button class="btn ghost sm danger" id="tbDel">Delete box</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ins-meta">
+            <p class="cap" id="csCaption"></p>
+            <p class="tags" id="csTags"></p>
+            <p class="song" id="csSong"></p>
+          </div>
+          <button class="btn coral approve" id="edDone">✓ Done editing</button>
+          <p class="side-foot"><a href="#" id="csShuffle">shuffle backgrounds</a> · <a href="#" id="csReset">start this post over</a></p>
+        </aside>
+      </div>
+
+      <div class="shelf-wrap">
+        <div class="shelf-head"><b>Post library</b><span id="shelfCount">approved posts land here, ready to schedule</span></div>
+        <div class="shelf" id="shelf"></div>
+      </div>
+
+      <!-- ── theme swap modal: same move as the competitor, except ranked by meaning ── -->
+      <div class="tmodal" id="tmodal" hidden>
+        <div class="tm-sheet">
+          <div class="tm-head">
+            <div><b>Swap theme</b><span>backgrounds re-match by meaning inside the theme — not at random</span></div>
+            <button class="tm-x" id="tmClose" aria-label="Close">✕</button>
+          </div>
+          <div class="tm-grid" id="tmGrid"><p class="tm-loading">loading themes…</p></div>
+          <div class="tm-foot">
+            <span id="tmSel">pick a theme</span>
+            <button class="btn ghost" id="tmThis" disabled>Apply to this slide</button>
+            <button class="btn coral" id="tmAll" disabled>Apply to all body slides</button>
+          </div>
+        </div>
+      </div>
+
+      <style>
+        .camp{border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:var(--shadow-lg);padding:30px 32px;margin-bottom:34px}
+        .camp-top{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}
+        .camp-top h2{font-family:var(--display);font-size:25px}
+        .camp-progress{font-size:14px;font-weight:800;color:var(--muted);white-space:nowrap;padding-top:8px}
+        .camp-progress b{color:var(--coral);font-size:22px;font-family:var(--display)}
+        .brand-switch{display:flex;gap:6px;margin:4px 18px 0 auto;background:#f4f2ee;border:1px solid var(--line);border-radius:12px;padding:4px}
+        .brand-switch button{border:0;background:transparent;border-radius:9px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;color:var(--muted);transition:.13s}
+        .brand-switch button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(16,16,20,.10)}
+        .brand-switch button:disabled{opacity:.45;cursor:not-allowed}
+        .camp-rail{display:flex;gap:8px;overflow-x:auto;padding:16px 2px 8px;scrollbar-width:thin}
+        .camp-chip{flex:0 0 auto;border:1px solid var(--line-2);border-radius:10px;background:#fbfaf8;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.12s}
+        .camp-chip:hover{border-color:var(--coral)}
+        .camp-chip.on{border-color:var(--coral);background:#fff;box-shadow:0 2px 8px rgba(240,101,92,.14)}
+        .camp-chip .dot{width:7px;height:7px;border-radius:50%;background:#ddd;flex:0 0 auto}
+        .camp-chip.done .dot{background:#3FB27F}
+
+        /* ── review deck ── */
+        .rv{margin-top:18px}
+        .rv-deck{position:relative;width:min(400px,100%);aspect-ratio:9/16;margin:0 auto;perspective:900px}
+        .pcard{position:absolute;inset:0;border-radius:24px;overflow:hidden;background:#101014;box-shadow:0 12px 40px rgba(16,16,20,.22);transition:transform .3s cubic-bezier(.2,.8,.3,1.05),opacity .3s}
+        .pcard>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;user-select:none;-webkit-user-drag:none}
+        .pcard.p1{transform:scale(.955) translateY(16px) rotate(1.6deg);filter:brightness(.9);z-index:1}
+        .pcard.p2{transform:scale(.912) translateY(30px) rotate(-1.8deg);filter:brightness(.8);z-index:0}
+        .pcard.top{z-index:3;cursor:grab;touch-action:pan-y}
+        .pcard.top:active{cursor:grabbing}
+        .pcard.top.drag{transition:none}
+        .pcard.fly-l{transform:translateX(-135%) rotate(-15deg)!important}
+        .pcard.fly-r{transform:translateX(135%) rotate(15deg)!important}
+        .pc-texts{position:absolute;inset:0;pointer-events:none}
+        .pc-arr{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.45);backdrop-filter:blur(5px);color:#fff;font-size:21px;cursor:pointer;opacity:0;transition:.15s;display:grid;place-items:center;line-height:1}
+        .pc-arr.l{left:10px}.pc-arr.r{right:10px}
+        .pcard.top:hover .pc-arr{opacity:1}
+        .pc-dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:5px;z-index:5}
+        .pc-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45);cursor:pointer;transition:.15s}
+        .pc-dots i.on{background:#fff;transform:scale(1.35)}
+        .pc-tag{position:absolute;top:12px;left:12px;z-index:5;background:rgba(0,0,0,.5);backdrop-filter:blur(5px);color:#fff;font-size:12px;font-weight:700;padding:5px 11px;border-radius:20px;pointer-events:none;max-width:75%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .pc-done{position:absolute;top:12px;right:12px;z-index:5;background:#3FB27F;color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;pointer-events:none}
+        .stamp{position:absolute;top:24px;z-index:7;font:800 25px/1 var(--display);letter-spacing:.08em;padding:7px 14px;border:3.5px solid;border-radius:10px;opacity:0;pointer-events:none;background:rgba(0,0,0,.18);backdrop-filter:blur(2px)}
+        .stamp.yes{left:16px;color:#4ade80;border-color:#4ade80;transform:rotate(-14deg)}
+        .stamp.no{right:16px;color:#f87171;border-color:#f87171;transform:rotate(14deg)}
+        .rv-btns{display:flex;justify-content:center;align-items:center;gap:20px;margin-top:18px}
+        .rb{width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;transition:transform .12s,box-shadow .12s;box-shadow:0 4px 14px rgba(16,16,20,.12)}
+        .rb:hover{transform:scale(1.08)}.rb:active{transform:scale(.94)}
+        .rb svg{width:23px;height:23px;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+        .rb-no{background:#fff;border:1.5px solid var(--line-2)}.rb-no svg{stroke:#e5484d}
+        .rb-edit{background:#fff;border:1.5px solid var(--line-2);width:64px;height:64px}.rb-edit svg{stroke:var(--ink)}
+        .rb-yes{background:var(--coral)}.rb-yes svg{stroke:#fff}
+        .deck-hint{margin-top:11px;text-align:center;font-size:13px;color:var(--muted);line-height:1.55;min-height:20px}
+
+        /* ── edit mode ── */
+        .camp-editor{display:grid;grid-template-columns:92px minmax(0,1fr) 340px;gap:24px;margin-top:20px;align-items:start}
+        .crail{display:flex;flex-direction:column;gap:10px}
+        .csl{position:relative;aspect-ratio:9/16;border-radius:11px;overflow:hidden;cursor:pointer;background:#ececec;border:2.5px solid transparent;transition:.13s}
+        .csl:hover{transform:translateX(2px)}
+        .csl img{width:100%;height:100%;object-fit:cover;display:block}
+        .csl.on{border-color:var(--coral)}
+        .csl .n{position:absolute;left:5px;top:5px;background:rgba(0,0,0,.55);color:#fff;font-size:10px;font-weight:800;padding:1px 6px;border-radius:5px}
+        .csl .role{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);color:#fff;font-size:9px;font-weight:700;text-align:center;padding:3px 2px;letter-spacing:.03em;text-transform:uppercase}
+        .cstage{max-width:400px;width:100%;margin:0 auto}
+        .cframe{position:relative;width:100%;aspect-ratio:9/16;border-radius:24px;overflow:hidden;background:#101014;box-shadow:0 10px 34px rgba(16,16,20,.2)}
+        .cframe>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+        #boxLayer{position:absolute;inset:0;z-index:3}
+        .cyc{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.45);backdrop-filter:blur(5px);color:#fff;font-size:22px;font-weight:700;cursor:pointer;opacity:0;transition:.15s;display:grid;place-items:center;line-height:1}
+        .cyc.l{left:12px}.cyc.r{right:12px}
+        .cframe:hover .cyc{opacity:1}
+        .cyc:hover{background:rgba(0,0,0,.7);transform:translateY(-50%) scale(1.1)}
+        .cand-chip{position:absolute;left:12px;bottom:12px;z-index:4;background:rgba(0,0,0,.5);backdrop-filter:blur(5px);color:#fff;font-size:12px;font-weight:700;padding:5px 11px;border-radius:20px;pointer-events:none}
+
+        /* text objects — typography inherits from slide-type.css (.tbox in its selector list) */
+        .tbox{position:absolute;transform:translate(-50%,-50%);max-width:86%;text-align:center;white-space:pre-wrap;cursor:grab;padding:4px 6px;border-radius:8px;border:1.5px dashed transparent;transition:border-color .12s}
+        .tbox:hover{border-color:rgba(255,255,255,.5)}
+        .tbox.sel{border-color:var(--coral);cursor:grabbing}
+        .tbox .in{box-decoration-break:clone;-webkit-box-decoration-break:clone}
+        .tbox.bg-white .in{background:#fff;color:#111;-webkit-text-stroke:0;padding:.16em .42em;border-radius:.32em}
+        .tbox.bg-black .in{background:#111;color:#fff;-webkit-text-stroke:0;padding:.16em .42em;border-radius:.32em}
+        .tbox .del{position:absolute;top:-11px;right:-11px;width:22px;height:22px;border-radius:50%;background:#e5484d;color:#fff;border:2px solid #fff;font-size:11px;font-weight:800;display:none;place-items:center;cursor:pointer;z-index:5;line-height:1}
+        .tbox.sel .del{display:grid}
+
+        /* inspector */
+        .cinsp{border:1px solid var(--line);border-radius:16px;background:#fbfaf8;padding:20px}
+        .ins-head b{font-family:var(--display);font-size:19px;display:block}
+        .ins-head span{display:block;color:var(--muted);font-size:13px;font-weight:600;margin-top:4px}
+        .ins-block{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+        .ins-lab{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;gap:10px}
+        .ins-lab b{font-size:13.5px;font-weight:800}
+        .ins-lab span{font-size:11.5px;color:var(--muted);text-align:right}
+        .cands{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-height:250px;overflow-y:auto;scrollbar-width:thin}
+        .cnd{position:relative;aspect-ratio:9/16;border-radius:8px;overflow:hidden;cursor:pointer;border:2.5px solid transparent;background:#e8e6e1;transition:.12s}
+        .cnd:hover{transform:translateY(-2px)}
+        .cnd img{width:100%;height:100%;object-fit:cover;display:block}
+        .cnd.on{border-color:var(--coral)}
+        .ins-row{display:flex;gap:8px;margin-top:10px}
+        .btn.sm{padding:8px 12px;font-size:12px}
+        .btn.danger{color:#e5484d}
+        #tbText{width:100%;min-height:64px;padding:11px;border:1px solid var(--line-2);border-radius:10px;background:#fff;font-size:13.5px;line-height:1.5;resize:vertical}
+        .sliders{display:grid;gap:8px;margin-top:11px}
+        .sliders label{display:grid;grid-template-columns:56px 1fr;align-items:center;gap:10px;font-size:12px;font-weight:700;color:var(--muted)}
+        .sliders input[type=range]{width:100%;accent-color:var(--coral)}
+        .tb-colors{display:flex;align-items:center;gap:12px;margin-top:11px;flex-wrap:wrap}
+        .cpick{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted)}
+        .cpick input{width:30px;height:30px;border:1px solid var(--line-2);border-radius:8px;padding:1px;background:#fff;cursor:pointer}
+        .seg3{display:flex;background:#efede9;border:1px solid var(--line);border-radius:9px;padding:3px;margin-left:auto}
+        .seg3 button{border:0;background:transparent;border-radius:6px;padding:5px 10px;font-size:11.5px;font-weight:700;color:var(--muted);cursor:pointer}
+        .seg3 button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(16,16,20,.12)}
+        .tb-panel.off{opacity:.45;pointer-events:none}
+        .ins-meta{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+        .ins-meta .cap{font-size:12.5px;line-height:1.58;color:var(--ink)}
+        .ins-meta .tags{font-size:11.5px;color:var(--muted);margin-top:6px}
+        .ins-meta .song{font-size:13.5px;font-weight:800;margin-top:8px}
+        .ins-meta .song::before{content:"♫ ";color:var(--coral)}
+        .approve{width:100%;margin-top:16px;padding:13px;font-size:14px}
+        .side-foot{margin-top:12px;text-align:center}
+        .side-foot a{font-size:12px;color:var(--muted);text-decoration:underline;cursor:pointer}
+        .side-foot a:hover{color:var(--coral)}
+
+        /* ── shelf ── */
+        .shelf-wrap{margin-top:26px;border-top:1px solid var(--line);padding-top:18px}
+        .shelf-head{display:flex;align-items:baseline;gap:12px}
+        .shelf-head b{font-family:var(--display);font-size:17px}
+        .shelf-head span{font-size:12.5px;color:var(--muted)}
+        .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:11px;margin-top:13px}
+        .shelf:empty{display:none}
+        .sp{position:relative;aspect-ratio:9/16;border-radius:11px;overflow:hidden;cursor:pointer;background:#eee;box-shadow:0 2px 10px rgba(16,16,20,.10);transition:.13s}
+        .sp:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(16,16,20,.16)}
+        .sp img{width:100%;height:100%;object-fit:cover;display:block}
+        .sp .id{position:absolute;top:5px;left:5px;background:rgba(0,0,0,.55);color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:6px}
+        .sp .ok{position:absolute;bottom:5px;right:5px;width:19px;height:19px;border-radius:50%;background:#3FB27F;color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center}
+
+        /* ── theme modal ── */
+        .tmodal{position:fixed;inset:0;z-index:80;background:rgba(20,18,16,.45);backdrop-filter:blur(3px);display:grid;place-items:center;padding:30px}
+        .tm-sheet{width:min(880px,100%);max-height:86vh;background:#fff;border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden}
+        .tm-head{display:flex;align-items:flex-start;gap:14px;padding:20px 22px 14px;border-bottom:1px solid var(--line)}
+        .tm-head b{font-family:var(--display);font-size:19px;display:block}
+        .tm-head span{display:block;font-size:12.5px;color:var(--muted);margin-top:4px}
+        .tm-x{margin-left:auto;width:32px;height:32px;border-radius:9px;border:1px solid var(--line-2);background:#fff;cursor:pointer;font-size:13px;font-weight:800;color:var(--muted)}
+        .tm-x:hover{color:var(--ink);border-color:var(--ink)}
+        .tm-grid{padding:16px 22px;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+        .tm-loading{color:var(--muted);font-size:13px}
+        .tset{border:2px solid var(--line);border-radius:13px;padding:10px;cursor:pointer;transition:.13s;background:#fff}
+        .tset:hover{border-color:#cfcac2}
+        .tset.on{border-color:var(--coral);box-shadow:0 4px 14px rgba(240,101,92,.16)}
+        .tset b{font-size:12.5px;display:block;margin-bottom:8px}
+        .tset b i{font-style:normal;color:var(--muted);font-weight:600;font-size:11px}
+        .tset .th{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+        .tset .th img{width:100%;aspect-ratio:9/14;object-fit:cover;border-radius:6px;background:#eee;display:block}
+        .tm-foot{display:flex;align-items:center;gap:10px;padding:14px 22px;border-top:1px solid var(--line)}
+        .tm-foot>span{font-size:12.5px;color:var(--muted);flex:1}
+
+        .legacy-tools{margin-top:8px}
+        .legacy-tools>summary{cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;padding:14px 4px;list-style-position:inside}
+        .legacy-tools>summary:hover{color:var(--ink)}
+        .legacy-tools[open]>summary{margin-bottom:14px}
+
+        @media (max-width:1080px){.camp-editor{grid-template-columns:72px minmax(0,1fr)}.cinsp{grid-column:1/-1}}
+        @media (max-width:760px){.camp-editor{grid-template-columns:1fr}.crail{flex-direction:row;overflow-x:auto}.csl{flex:0 0 56px}}
+      </style>
+    </div>
+
+    <details class="legacy-tools"><summary>Legacy tools — slideshow cloner, manual builder &amp; old drafts</summary>
     <!-- ===== Slideshow Cloner (live: scan a reference → adapt to your brand → generate) ===== -->
     <div class="cloner">
       <div class="cloner-intro">
@@ -1352,37 +1540,7 @@
       <p><b>Built from the reference analysis.</b> App plug sits mid-carousel as tip #3 (both viral references do this — never the last slide). Sky palette shifts warm → dusk → night across the set. The caption points at #3 to drive re-swipes, and the closer doubles as the save trigger.</p>
     </div>
 
-    <div class="filter-bar">
-      <div class="seg"><button class="on">All</button><button>In production</button><button>Needs review</button><button>Ready</button><button>Posted</button></div>
-      <div style="flex:1"></div>
-      <button class="btn"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New carousel</button>
-    </div>
-    <div class="car-grid">
-      <div class="car">
-        <div class="cover"><img src="assets/cover-held-it-together.png" alt="for everyone who held it together all day"><span class="mdots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-        <div class="cbody"><div class="nm">post-002 · kokoro</div><div class="st"><span>validation ladder</span><span style="color:var(--good)">posted</span></div><div class="row2"><span class="pill">128k reach</span><span class="pill coral">1.4k saves</span></div></div>
-      </div>
-      <div class="car">
-        <div class="cover"><img src="assets/cover-strong-one.png" alt="signs you're the strong one (not okay)"><span class="mdots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-        <div class="cbody"><div class="nm">draft · Yuki</div><div class="st"><span>validation ladder</span><span style="color:var(--warn)">needs review</span></div><div class="row2"><span class="pill warn">typo pass</span><span class="pill">7 slides</span></div></div>
-      </div>
-      <div class="car">
-        <div class="cover"><img src="assets/cover-be-heard.png" alt="you don't need advice. you need to be heard."><span class="mdots"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-        <div class="cbody"><div class="nm">draft · Rin</div><div class="st"><span>permission reframe</span><span style="color:var(--violet)">in production</span></div><div class="row2"><span class="pill violet">rendering 4/6</span></div></div>
-      </div>
-      <div class="car">
-        <div class="cover"><img src="assets/cover-magic-number.png" alt="the magic number for a quieter mind is one"><span class="mdots"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-        <div class="cbody"><div class="nm">draft · Yuki</div><div class="st"><span>specificity hook</span><span style="color:var(--violet)">in production</span></div><div class="row2"><span class="pill violet">rendering 2/6</span></div></div>
-      </div>
-      <div class="car">
-        <div class="cover"><img src="assets/cover-nature-brain.png" alt="your brain wasn't built for 9 hours of screens"><span class="mdots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-        <div class="cbody"><div class="nm">post-001 · nature-brain</div><div class="st"><span>psychology facts</span><span style="color:var(--good)">posted</span></div><div class="row2"><span class="pill">test post</span></div></div>
-      </div>
-      <div class="car">
-        <div class="cover"><img src="assets/cover-being-tired.png" alt="things nobody tells you about being tired"><span class="mdots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-        <div class="cbody"><div class="nm">queued · Yuki</div><div class="st"><span>validation ladder</span><span style="color:var(--muted)">ready</span></div><div class="row2"><span class="pill">scheduled fri</span></div></div>
-      </div>
-    </div>
+        </details>
   </section>
 
   <!-- ============ UGC (with iPhone preview) ============ -->
@@ -2638,24 +2796,8 @@
       setTimeout(()=>card.classList.remove('fresh'), 2500);
     }
 
-    // rehydrate any personas saved in a previous visit
-    (function restore(){
-      const grid = document.getElementById('personaGrid');
-      if(!grid) return;
-      const saved = window.CFStore.get('personas', []);
-      // insert oldest-last so the newest saved sits first
-      [...saved].reverse().forEach(p=>{
-        const card=document.createElement('div'); card.className='persona';
-        card.innerHTML =
-          `<div class="ph"><img src="${p.face}" alt="${p.name}"><span class="badge pill ${p.badge||''}">${p.badgeLabel||''}</span></div>`+
-          `<div class="meta"><h3>${p.name}</h3><div class="role">${p.role}</div>`+
-          `<div class="traits">${(p.voice||[]).map(v=>`<span class="pill">${v}</span>`).join('')}</div>`+
-          `<div class="st"><div><div class="n">0</div><div class="l">carousels</div></div>`+
-          `<div><div class="n">0</div><div class="l">clips</div></div>`+
-          `<div><div class="n">—</div><div class="l">reach</div></div></div></div>`;
-        grid.insertBefore(card, grid.firstChild);
-      });
-    })();
+    // Older generated placeholder personas are intentionally not restored.
+    // Alice is the only approved narrator until a real identity workflow adds another.
 
     function openWiz(){
       state.step=0; state.niche=defaultNiche(); state.arche='friend';
@@ -2679,7 +2821,7 @@
     backBtn.addEventListener('click', ()=>{ if(state.step>0){state.step--; paintStep();} });
     steps.forEach(s=>s.addEventListener('click',()=>{ const t=+s.dataset.step; if(t<=state.step){state.step=t;paintStep();} }));
 
-    document.getElementById('trainHero').addEventListener('click', openWiz);
+    document.getElementById('trainHero').addEventListener('click', ()=>{ location.href='./influencers.html'; });
     document.getElementById('fmClose').addEventListener('click', closeWiz);
     document.getElementById('faceScrim').addEventListener('click', closeWiz);
     document.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeWiz(); });
@@ -2980,6 +3122,497 @@
     if(hasSavedHooks) render(false);
     else genBatch();
   })();
+</script>
+<script>
+/* ── Campaign studio v3 — review deck + object editor + smart theme swap ─────────────────────
+   REVIEW: the card IS the post. ‹ › flips its 7 slides, drag right / ✓ approves to the library,
+   drag left / ✕ passes, ✎ opens the editor.
+   EDIT: text is an OBJECT — drag anywhere, add, delete, restyle (size/weight/color/outline/pill).
+   Backgrounds come from the semantic matcher; "Swap theme" re-matches by meaning inside a theme.
+   Brand is data (multi-tenant rule). Picks persist server-side per brand. */
+(function(){
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const root=$('campRoot'); if(!root) return;
+  let BRAND=new URLSearchParams(location.search).get('brand')||'kokoro';
+  const LS_KEY=()=>'campaign-picks-fallback:'+BRAND;
+
+  let brands=[], posts=[], post=null, decks=null;
+  let mode='review';                 // 'review' | 'edit'
+  let rvSlide=0;                     // slide shown on the review card
+  let cur=0, selBox=-1;              // edit: slide index + selected text box
+  let st={};                         // per slide n: {idx, texts:[{t,x,y,fs,fw,color,sw,sc,bg}]}
+  let store={posts:{}};
+  let offline=false, warned=false, saveTimer=null, syncing=false;
+  let themeSets=null, themePick=null;
+
+  const slideAt=i=>decks&&decks[i];
+  const slide=()=>slideAt(mode==='edit'?cur:rvSlide);
+  const candOf=s=>s?s.candidates[st[s.n].idx]||null:null;
+  const defTy=r=>r==='hook'?34:38;
+  const defFs=r=>r==='hook'?21:17;
+  const doneCount=()=>Object.values(store.posts).filter(p=>p&&p.done).length;
+  const isDone=id=>!!(store.posts[id]&&store.posts[id].done);
+
+  function defBox(s){ return {t:s.text,x:50,y:defTy(s.role),fs:defFs(s.role),fw:550,color:'#ffffff',sw:0.15,sc:'#000000',bg:'none'}; }
+
+  function toast(msg){
+    const t=document.createElement('div'); t.textContent=msg;
+    t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:11px 18px;border-radius:11px;font-size:13.5px;font-weight:600;z-index:120;opacity:0;transition:opacity .2s;box-shadow:0 6px 20px rgba(0,0,0,.25)';
+    document.body.appendChild(t); requestAnimationFrame(()=>t.style.opacity='1');
+    setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),250);},2100);
+  }
+  async function api(url,opts){
+    const r=await fetch(url,opts); const j=await r.json().catch(()=>({}));
+    if(!r.ok) throw new Error(j.error||('http '+r.status)); return j;
+  }
+
+  /* ── persistence ── */
+  function snapshot(markDone){
+    const entry=store.posts[post.id]=store.posts[post.id]||{slides:{}};
+    if(markDone!==undefined) entry.done=markDone;
+    entry.slides={};
+    for(const s of decks){
+      const c=candOf(s); if(!c) continue;
+      entry.slides[s.n]={file:c.file,url:c.url,texts:st[s.n].texts.map(b=>({...b}))};
+    }
+    return entry;
+  }
+  async function push(entry){
+    try{
+      await api('/api/picks',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({brand:BRAND,postId:post.id,done:!!entry.done,slides:entry.slides})});
+      offline=false;
+    }catch{
+      offline=true;
+      try{ localStorage.setItem(LS_KEY(),JSON.stringify(store)); }catch{}
+      if(!warned){ warned=true; toast('server unreachable — edits kept locally'); }
+    }
+  }
+  function autosave(){
+    if(!post||!decks) return;
+    clearTimeout(saveTimer);
+    const entry=snapshot();
+    saveTimer=setTimeout(()=>push(entry),450);
+  }
+
+  /* ── boot / brand switch ── */
+  async function boot(){
+    try{ brands=(await api('/api/brands')).brands||[]; }catch{ brands=[]; }
+    renderBrands();
+    let camp;
+    try{ camp=await api('/api/campaign?brand='+encodeURIComponent(BRAND)); }
+    catch(e){ $('campTitle').textContent=(String(e.message).indexOf('campaign')>=0)
+      ? 'No campaign for this brand yet — the sheet ingest creates one.'
+      : 'Campaign needs the local server (npm start).';
+      $('rvWrap').hidden=true; $('edWrap').hidden=true; $('campRail').innerHTML=''; $('shelf').innerHTML=''; return; }
+    posts=camp.campaign.posts;
+    try{ const p=await api('/api/picks?brand='+encodeURIComponent(BRAND)); store=p.picks&&p.picks.posts?p.picks:{posts:{}}; }
+    catch{ try{ store=JSON.parse(localStorage.getItem(LS_KEY())||'{"posts":{}}'); }catch{ store={posts:{}}; } offline=true; }
+    const b=brands.find(x=>x.key===BRAND);
+    $('campTitle').textContent='The month · '+((b&&b.name)||BRAND);
+    $('campTotalN').textContent=' / '+posts.length+' approved';
+    renderProgress(); renderRail(); renderShelf();
+    const next=posts.find(p=>!isDone(p.id));
+    openPost((next||posts[0]).id);
+  }
+  function renderBrands(){
+    const el=$('brandSwitch'); el.innerHTML='';
+    for(const b of brands){
+      const btn=document.createElement('button');
+      btn.textContent=b.name+(b.status==='draft'?' · draft':'');
+      btn.className=b.key===BRAND?'on':'';
+      btn.disabled=!b.hasCampaign&&b.key!==BRAND;
+      btn.title=b.hasCampaign?'':'no campaign yet — waiting on this brand sheet';
+      btn.onclick=()=>{ if(b.key===BRAND) return; BRAND=b.key;
+        history.replaceState(null,'','?brand='+encodeURIComponent(BRAND)+location.hash); boot(); };
+      el.appendChild(btn);
+    }
+  }
+  function renderProgress(){ $('campDoneN').textContent=doneCount(); }
+  function renderRail(){
+    const rail=$('campRail'); rail.innerHTML='';
+    for(const p of posts){
+      const b=document.createElement('button');
+      b.className='camp-chip'+(isDone(p.id)?' done':'')+(post&&post.id===p.id?' on':'');
+      b.innerHTML='<span class="dot"></span>'+p.id+' · '+p.topic.replace(/^\d+\.\s*/,'');
+      b.onclick=()=>openPost(p.id);
+      rail.appendChild(b);
+    }
+    const on=rail.querySelector('.on'); if(on) on.scrollIntoView({inline:'center',block:'nearest'});
+  }
+  function renderShelf(){
+    const shelf=$('shelf'); shelf.innerHTML='';
+    const done=posts.filter(p=>isDone(p.id));
+    $('shelfCount').textContent=done.length?done.length+' approved — tap one to reopen':'approved posts land here, ready to schedule';
+    for(const p of done){
+      const cover=(store.posts[p.id].slides||{})['1'];
+      const el=document.createElement('div');
+      el.className='sp'; el.title=p.slides[0].text+'  ·  ♫ '+(p.song||'');
+      el.innerHTML=(cover&&cover.url?'<img src="'+cover.url+'" loading="lazy">':'')
+        +'<span class="id">'+p.id+'</span><span class="ok">✓</span>';
+      el.onclick=()=>openPost(p.id);
+      shelf.appendChild(el);
+    }
+  }
+
+  /* ── post loading ── */
+  async function openPost(id){
+    post=posts.find(p=>p.id===id); if(!post) return;
+    mode='review'; rvSlide=0; cur=0; selBox=-1; decks=null; st={};
+    $('rvWrap').hidden=false; $('edWrap').hidden=true;
+    $('rvDeck').innerHTML='<div class="pcard top" style="display:grid;place-items:center;color:#777;font-size:13px">matching backgrounds…</div>';
+    $('rvHint').textContent='';
+    renderRail();
+    let r;
+    try{ r=await api('/api/match',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({brand:BRAND,postId:id})}); }
+    catch(e){ $('rvHint').textContent='matcher unreachable — is the server running?'; return; }
+    decks=r.slides;
+    const sv=store.posts[post.id];
+    for(const s of decks){
+      st[s.n]={idx:0,texts:[defBox(s)]};
+      const e=sv&&sv.slides&&sv.slides[s.n];
+      if(e){
+        let i=s.candidates.findIndex(c=>c.file===e.file);
+        if(i<0&&e.url){ s.candidates.unshift({file:e.file,url:e.url,restored:true}); i=0; }
+        if(i>=0) st[s.n].idx=i;
+        if(Array.isArray(e.texts)&&e.texts.length){ st[s.n].texts=e.texts.map(b=>({...defBox(s),...b})); }
+        else{ // legacy single-text format from v1/v2
+          const b=defBox(s);
+          if(typeof e.ty==='number') b.y=e.ty;
+          if(typeof e.fs==='number') b.fs=e.fs;
+          if(typeof e.text==='string') b.t=e.text;
+          st[s.n].texts=[b];
+        }
+      }
+    }
+    renderReview();
+  }
+
+  /* ── text box DOM (shared by review + edit) ── */
+  function boxEl(b,interactive){
+    const el=document.createElement('div');
+    el.className='tbox bg-'+(b.bg||'none');
+    el.style.left=b.x+'%'; el.style.top=b.y+'%';
+    el.style.fontSize=b.fs+'px';
+    el.style.fontVariationSettings="'opsz' 36, 'wght' "+(b.fw||550);
+    el.style.color=b.color||'#fff';
+    el.style.webkitTextStroke=(b.bg&&b.bg!=='none')?'0':((b.sw!=null?b.sw:0.15)+'em '+(b.sc||'#000'));
+    if(!interactive){ el.style.pointerEvents='none'; el.style.border='0'; }
+    const inner=document.createElement('span'); inner.className='in'; inner.textContent=b.t;
+    el.appendChild(inner);
+    return el;
+  }
+
+  /* ── REVIEW mode ── */
+  function renderReview(){
+    if(!decks) return;
+    mode='review';
+    $('rvWrap').hidden=false; $('edWrap').hidden=true;
+    const deck=$('rvDeck'); deck.innerHTML='';
+    // peeking cards: the next two un-approved posts, cover only
+    const queue=posts.filter(p=>p.id!==post.id&&!isDone(p.id)).slice(0,2);
+    [['p2',queue[1]],['p1',queue[0]]].forEach(([cls,p])=>{
+      if(!p) return;
+      const el=document.createElement('div'); el.className='pcard '+cls;
+      const sv=store.posts[p.id], cover=sv&&sv.slides&&sv.slides['1'];
+      const guess=cover&&cover.url?cover.url:'/pool-images/'+encodeURIComponent(BRAND)+'/alice-lifestyle/'+String((p.id-1)%10+1).padStart(2,'0')+'.jpg';
+      el.innerHTML='<img src="'+guess+'" loading="lazy" onerror="this.remove()">';
+      deck.appendChild(el);
+    });
+    const s=slideAt(rvSlide), c=candOf(s);
+    const top=document.createElement('div'); top.className='pcard top';
+    top.innerHTML=(c?'<img src="'+c.url+'" draggable="false">':'')
+      +'<span class="pc-tag">Post '+post.id+' · '+post.topic.replace(/^\d+\.\s*/,'')+'</span>'
+      +(isDone(post.id)?'<span class="pc-done">in library ✓</span>':'')
+      +'<button class="pc-arr l">‹</button><button class="pc-arr r">›</button>'
+      +'<div class="stamp yes">APPROVE</div><div class="stamp no">PASS</div>';
+    const texts=document.createElement('div'); texts.className='pc-texts';
+    for(const b of st[s.n].texts) texts.appendChild(boxEl(b,false));
+    top.insertBefore(texts,top.querySelector('.pc-arr.l'));
+    const dots=document.createElement('div'); dots.className='pc-dots';
+    decks.forEach((d,i)=>{ const dot=document.createElement('i'); if(i===rvSlide)dot.className='on';
+      dot.onclick=e=>{e.stopPropagation();rvSlide=i;renderReview();}; dots.appendChild(dot); });
+    top.appendChild(dots);
+    deck.appendChild(top);
+    top.querySelector('.pc-arr.l').onclick=e=>{e.stopPropagation();rvSlide=(rvSlide-1+decks.length)%decks.length;renderReview();};
+    top.querySelector('.pc-arr.r').onclick=e=>{e.stopPropagation();rvSlide=(rvSlide+1)%decks.length;renderReview();};
+    bindCardDrag(top);
+    $('rvHint').innerHTML='slide <b>'+(rvSlide+1)+' / '+decks.length+'</b> · '+s.role
+      +(c&&c.why?' — '+c.why:'')+'<br>‹ › browse slides · drag right to approve · left to pass · <b>E</b> to edit';
+  }
+
+  function bindCardDrag(card){
+    let on=false,sx=0,sy=0,dx=0;
+    const yes=card.querySelector('.stamp.yes'), no=card.querySelector('.stamp.no');
+    card.addEventListener('pointerdown',e=>{
+      if(e.target.closest('.pc-arr')||e.target.closest('.pc-dots')) return;
+      on=true; sx=e.clientX; sy=e.clientY; dx=0;
+      card.classList.add('drag'); card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove',e=>{
+      if(!on) return;
+      dx=e.clientX-sx;
+      card.style.transform='translate('+dx+'px,'+((e.clientY-sy)*0.3)+'px) rotate('+(dx*0.05)+'deg)';
+      yes.style.opacity=Math.min(1,Math.max(0,dx/85));
+      no.style.opacity=Math.min(1,Math.max(0,-dx/85));
+    });
+    const up=()=>{
+      if(!on) return; on=false;
+      card.classList.remove('drag');
+      if(dx>95) approvePost(card);
+      else if(dx<-95) passPost(card);
+      else{ card.style.transform=''; yes.style.opacity=0; no.style.opacity=0; }
+    };
+    card.addEventListener('pointerup',up); card.addEventListener('pointercancel',up);
+  }
+
+  function nextPostId(from,skipDone){
+    const order=[...posts.filter(p=>p.id>from),...posts.filter(p=>p.id<=from&&p.id!==from)];
+    const hit=order.find(p=>skipDone?!isDone(p.id):p.id!==from);
+    return hit?hit.id:null;
+  }
+  async function approvePost(card){
+    if(card) card.classList.add('fly-r');
+    clearTimeout(saveTimer);
+    await push(snapshot(true));
+    renderProgress(); renderShelf(); renderRail();
+    toast('post '+post.id+' → library ✓');
+    const nxt=nextPostId(post.id,true);
+    setTimeout(()=>{ if(nxt) openPost(nxt); else { renderReview(); toast('all '+posts.length+' posts approved'); } },300);
+  }
+  function passPost(card){
+    if(card) card.classList.add('fly-l');
+    const nxt=nextPostId(post.id,false);
+    setTimeout(()=>{ if(nxt) openPost(nxt); },260);
+  }
+
+  $('rvPass').onclick=()=>passPost($('rvDeck').querySelector('.pcard.top'));
+  $('rvOk').onclick=()=>approvePost($('rvDeck').querySelector('.pcard.top'));
+  $('rvEdit').onclick=()=>enterEdit();
+
+  /* ── EDIT mode ── */
+  function enterEdit(){
+    if(!decks) return;
+    mode='edit'; cur=rvSlide; selBox=st[slideAt(cur).n].texts.length?0:-1;
+    $('rvWrap').hidden=true; $('edWrap').hidden=false;
+    $('csPostTitle').textContent='Post '+post.id+' · '+post.topic.replace(/^\d+\.\s*/,'');
+    $('csCaption').textContent=post.caption;
+    $('csTags').textContent=(post.hashtags||[]).map(h=>'#'+h).join(' ');
+    $('csSong').textContent=post.song||'';
+    renderEdit();
+  }
+  $('edDone').onclick=()=>{ rvSlide=cur; renderReview(); };
+
+  function renderEdit(){
+    if(!decks) return;
+    const s=slideAt(cur), c=candOf(s);
+    $('csBg').src=c?c.url:'';
+    $('candChip').textContent=c?((st[s.n].idx+1)+' / '+s.candidates.length+((s.source||'').indexOf('pool:')===0?' · '+s.source.slice(5):(c.folder?' · '+c.folder:''))):'';
+    $('csWhy').textContent=c?(c.restored?'your earlier pick, restored':(c.why||'')):'no candidates yet';
+    $('csSlideLabel').textContent='Slide '+(cur+1)+' of '+decks.length+' · '+s.role;
+    // text boxes
+    const layer=$('boxLayer'); layer.innerHTML='';
+    st[s.n].texts.forEach((b,i)=>{
+      const el=boxEl(b,true);
+      if(i===selBox) el.classList.add('sel');
+      const del=document.createElement('span'); del.className='del'; del.textContent='✕';
+      del.onclick=e=>{ e.stopPropagation(); st[s.n].texts.splice(i,1); selBox=Math.min(selBox,st[s.n].texts.length-1); renderEdit(); autosave(); };
+      el.appendChild(del);
+      bindBoxDrag(el,i);
+      layer.appendChild(el);
+    });
+    // rail
+    const rail=$('crail'); rail.innerHTML='';
+    decks.forEach((d,i)=>{
+      const cc=candOf(d);
+      const el=document.createElement('div');
+      el.className='csl'+(i===cur?' on':'');
+      el.innerHTML=(cc?'<img src="'+cc.url+'" loading="lazy">':'')
+        +'<span class="n">'+d.n+'</span><span class="role">'+d.role+'</span>';
+      el.onclick=()=>{cur=i;selBox=st[d.n].texts.length?0:-1;renderEdit();};
+      rail.appendChild(el);
+    });
+    // candidates
+    $('insSrc').textContent=(s.source||'').indexOf('pool:')===0?('persona pool · '+s.source.slice(5)):'matched from the library';
+    const grid=$('cands'); grid.innerHTML='';
+    s.candidates.forEach((cc,i)=>{
+      const el=document.createElement('div');
+      el.className='cnd'+(i===st[s.n].idx?' on':'');
+      el.title=cc.why||cc.file;
+      el.innerHTML='<img src="'+cc.url+'" loading="lazy">';
+      el.onclick=()=>{ st[s.n].idx=i; renderEdit(); autosave(); };
+      grid.appendChild(el);
+    });
+    syncInspector();
+  }
+
+  function syncInspector(){
+    const s=slideAt(cur); const b=selBox>=0?st[s.n].texts[selBox]:null;
+    $('tbPanel').classList.toggle('off',!b);
+    $('tbHint').textContent=b?('box '+(selBox+1)+' of '+st[s.n].texts.length):'click a box on the slide · drag to move';
+    syncing=true;
+    if(b){
+      $('tbText').value=b.t; $('tbFs').value=b.fs; $('tbFw').value=b.fw; $('tbSw').value=b.sw;
+      $('tbColor').value=b.color.length===4?b.color+b.color.slice(1):b.color;
+      $('tbSc').value=b.sc.length===4?b.sc+b.sc.slice(1):b.sc;
+      document.querySelectorAll('#tbBg button').forEach(x=>x.classList.toggle('on',x.dataset.bg===(b.bg||'none')));
+    } else { $('tbText').value=''; }
+    syncing=false;
+  }
+
+  function bindBoxDrag(el,i){
+    let on=false,px=0,py=0;
+    el.addEventListener('pointerdown',e=>{
+      if(e.target.classList.contains('del')) return;
+      selBox=i; renderEditSelectionOnly();
+      on=true; px=e.clientX; py=e.clientY;
+      el.setPointerCapture(e.pointerId); e.preventDefault();
+    });
+    el.addEventListener('pointermove',e=>{
+      if(!on) return;
+      const s=slideAt(cur), b=st[s.n].texts[i];
+      const r=$('cframe').getBoundingClientRect();
+      b.x=Math.max(2,Math.min(98,b.x+((e.clientX-px)/r.width)*100));
+      b.y=Math.max(2,Math.min(96,b.y+((e.clientY-py)/r.height)*100));
+      px=e.clientX; py=e.clientY;
+      el.style.left=b.x+'%'; el.style.top=b.y+'%';
+    });
+    const up=()=>{ if(on){ on=false; autosave(); } };
+    el.addEventListener('pointerup',up); el.addEventListener('pointercancel',up);
+  }
+  function renderEditSelectionOnly(){
+    document.querySelectorAll('#boxLayer .tbox').forEach((el,i)=>el.classList.toggle('sel',i===selBox));
+    syncInspector();
+  }
+
+  function cycle(dir){
+    const s=slideAt(cur); if(!s||!s.candidates.length) return;
+    st[s.n].idx=(st[s.n].idx+dir+s.candidates.length)%s.candidates.length;
+    renderEdit(); autosave();
+  }
+  $('cycL').onclick=e=>{e.stopPropagation();cycle(-1);};
+  $('cycR').onclick=e=>{e.stopPropagation();cycle(1);};
+
+  /* inspector inputs */
+  const liveBox=()=>{const s=slideAt(cur);return selBox>=0?st[s.n].texts[selBox]:null;};
+  const liveEl=()=>document.querySelectorAll('#boxLayer .tbox')[selBox];
+  $('tbText').addEventListener('input',e=>{ if(syncing)return; const b=liveBox(); if(!b)return;
+    b.t=e.target.value; const el=liveEl(); if(el) el.querySelector('.in').textContent=b.t; autosave(); });
+  $('tbFs').addEventListener('input',e=>{ if(syncing)return; const b=liveBox(); if(!b)return;
+    b.fs=Number(e.target.value); const el=liveEl(); if(el) el.style.fontSize=b.fs+'px'; autosave(); });
+  $('tbFw').addEventListener('input',e=>{ if(syncing)return; const b=liveBox(); if(!b)return;
+    b.fw=Number(e.target.value); const el=liveEl(); if(el) el.style.fontVariationSettings="'opsz' 36, 'wght' "+b.fw; autosave(); });
+  $('tbSw').addEventListener('input',e=>{ if(syncing)return; const b=liveBox(); if(!b)return;
+    b.sw=Number(e.target.value); const el=liveEl(); if(el&&(b.bg||'none')==='none') el.style.webkitTextStroke=b.sw+'em '+b.sc; autosave(); });
+  $('tbColor').addEventListener('input',e=>{ if(syncing)return; const b=liveBox(); if(!b)return;
+    b.color=e.target.value; const el=liveEl(); if(el) el.style.color=b.color; autosave(); });
+  $('tbSc').addEventListener('input',e=>{ if(syncing)return; const b=liveBox(); if(!b)return;
+    b.sc=e.target.value; const el=liveEl(); if(el&&(b.bg||'none')==='none') el.style.webkitTextStroke=b.sw+'em '+b.sc; autosave(); });
+  document.querySelectorAll('#tbBg button').forEach(btn=>btn.addEventListener('click',()=>{
+    const b=liveBox(); if(!b)return;
+    b.bg=btn.dataset.bg; renderEdit(); autosave();
+  }));
+  $('tbAdd').onclick=()=>{
+    const s=slideAt(cur); if(!s)return;
+    st[s.n].texts.push({t:'tap to edit',x:50,y:60,fs:15,fw:550,color:'#ffffff',sw:0.15,sc:'#000000',bg:'none'});
+    selBox=st[s.n].texts.length-1; renderEdit(); autosave();
+    $('tbText').focus(); $('tbText').select();
+  };
+  $('tbDel').onclick=()=>{
+    const s=slideAt(cur); if(!s||selBox<0)return;
+    st[s.n].texts.splice(selBox,1); selBox=Math.min(selBox,st[s.n].texts.length-1);
+    renderEdit(); autosave();
+  };
+
+  /* ── theme modal (smart swap) ── */
+  async function openThemes(){
+    $('tmodal').hidden=false; themePick=null;
+    $('tmSel').textContent='pick a theme'; $('tmThis').disabled=true; $('tmAll').disabled=true;
+    if(!themeSets){
+      try{ themeSets=(await api('/api/image-library')).sets||[]; }
+      catch{ $('tmGrid').innerHTML='<p class="tm-loading">could not load themes — is the server running?</p>'; return; }
+    }
+    const grid=$('tmGrid'); grid.innerHTML='';
+    for(const set of themeSets){
+      const el=document.createElement('div');
+      el.className='tset';
+      el.innerHTML='<b>'+set.label+' <i>· '+set.count+'</i></b>'
+        +'<div class="th">'+set.images.slice(0,5).map(im=>'<img src="'+im.url+'" loading="lazy">').join('')+'</div>';
+      el.onclick=()=>{
+        themePick=set.id;
+        document.querySelectorAll('.tset').forEach(x=>x.classList.remove('on'));
+        el.classList.add('on');
+        $('tmSel').textContent=set.label+' — re-matched by meaning';
+        $('tmThis').disabled=false; $('tmAll').disabled=false;
+      };
+      grid.appendChild(el);
+    }
+  }
+  $('swapTheme').onclick=openThemes;
+  $('tmClose').onclick=()=>{ $('tmodal').hidden=true; };
+  $('tmodal').addEventListener('click',e=>{ if(e.target===$('tmodal')) $('tmodal').hidden=true; });
+
+  async function swapSlideTheme(s){
+    const r=await api('/api/match/slide',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({brand:BRAND,text:s.text,theme:themePick})});
+    if(r.candidates&&r.candidates.length){ s.candidates=r.candidates; s.source='library'; s.mode=r.mode; st[s.n].idx=0; }
+    return r.mode;
+  }
+  $('tmThis').onclick=async()=>{
+    if(!themePick) return; const s=slideAt(cur);
+    $('tmThis').disabled=true; $('tmThis').textContent='matching…';
+    try{ const m=await swapSlideTheme(s); toast(m==='unranked'?'theme not indexed yet — set order':'re-matched inside '+themePick); }
+    catch{ toast('swap failed'); }
+    $('tmThis').textContent='Apply to this slide'; $('tmodal').hidden=true;
+    renderEdit(); autosave();
+  };
+  $('tmAll').onclick=async()=>{
+    if(!themePick) return;
+    $('tmAll').disabled=true; $('tmAll').textContent='matching…';
+    const body=decks.filter(d=>(d.source||'').indexOf('pool:')!==0);
+    try{ await Promise.all(body.map(d=>swapSlideTheme(d))); toast('all body slides → '+themePick); }
+    catch{ toast('some slides failed to swap'); }
+    $('tmAll').textContent='Apply to all body slides'; $('tmodal').hidden=true;
+    renderEdit(); autosave();
+  };
+
+  /* ── shared actions ── */
+  $('csShuffle').onclick=e=>{
+    e.preventDefault(); if(!decks) return;
+    for(const s of decks) if((s.source||'')==='library'&&s.candidates.length>1)
+      st[s.n].idx=(st[s.n].idx+1)%s.candidates.length;
+    renderEdit(); autosave(); toast('backgrounds shuffled');
+  };
+  $('csReset').onclick=async e=>{
+    e.preventDefault(); if(!post) return;
+    delete store.posts[post.id];
+    try{ await api('/api/picks',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({brand:BRAND,postId:post.id,reset:true})}); }catch{}
+    renderProgress(); renderShelf(); openPost(post.id);
+  };
+
+  /* ── keyboard ── */
+  document.addEventListener('keydown',e=>{
+    const view=document.querySelector('.view[data-view="carousels"]');
+    if(!view||!view.classList.contains('show')||!decks) return;
+    if(/INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+    if(!$('tmodal').hidden){ if(e.key==='Escape') $('tmodal').hidden=true; return; }
+    if(mode==='review'){
+      if(e.key==='ArrowLeft'){ e.preventDefault(); passPost($('rvDeck').querySelector('.pcard.top')); }
+      else if(e.key==='ArrowRight'){ e.preventDefault(); approvePost($('rvDeck').querySelector('.pcard.top')); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); rvSlide=(rvSlide-1+decks.length)%decks.length; renderReview(); }
+      else if(e.key==='ArrowDown'||e.key===' '){ e.preventDefault(); rvSlide=(rvSlide+1)%decks.length; renderReview(); }
+      else if(e.key==='e'||e.key==='E'){ e.preventDefault(); enterEdit(); }
+    } else {
+      if(e.key==='ArrowLeft'){ e.preventDefault(); cycle(-1); }
+      else if(e.key==='ArrowRight'){ e.preventDefault(); cycle(1); }
+      else if(e.key==='Delete'||e.key==='Backspace'){ e.preventDefault(); $('tbDel').onclick(); }
+      else if(e.key==='Escape'){ e.preventDefault(); rvSlide=cur; renderReview(); }
+    }
+  });
+
+  boot();
+})();
 </script>
 </body>
 </html>

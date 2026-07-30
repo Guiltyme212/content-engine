@@ -1,0 +1,87 @@
+{
+  "pool": "product-phone",
+  "slideSlot": 5,
+  "brand": "kokoro",
+  "images": [
+    {
+      "file": "product-phone/01.jpg",
+      "original": "_originals/product-phone/01.jpg",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "product-phone/02.jpg",
+      "original": "_originals/product-phone/02.jpg",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "product-phone/03.jpg",
+      "original": "_originals/product-phone/03.jpg",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "product-phone/04.jpg",
+      "original": "_originals/product-phone/04.jpg",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "product-phone/05.jpg",
+      "original": "_originals/product-phone/05.jpg",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "product-phone/06.jpg",
+      "original": "_originals/product-phone/06.jpg",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "product-phone/07.jpg",
+      "original": "_originals/product-phone/07.jpg",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "product-phone/08.jpg",
+      "original": "_originals/product-phone/08.jpg",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "product-phone/09.jpg",
+      "original": "_originals/product-phone/09.jpg",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "product-phone/10.jpg",
+      "original": "_originals/product-phone/10.jpg",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    }
+  ]
+}

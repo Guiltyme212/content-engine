@@ -1,6 +1,7 @@
 # secrets — never commit keys
 .env
 .env.*
+!.env.example
 *.key
 openai.key
 
@@ -15,3 +16,14 @@ Thumbs.db
 
 # gsd planning scratch (created by /gsd commands; keep local until useful)
 .planning/
+
+# dropped-in asset archives — too big for git (GitHub rejects files over 100MB)
+Kokoro.zip
+*.zip
+
+# extracted pool originals — ~140MB of PNG; only the 1080x1920 derivatives ship.
+# Not path-anchored on purpose: ingest-zip --out can put the pools root anywhere.
+**/_originals/
+
+# half-written files from an interrupted ingest (the run cleans these up itself)
+*.part
