@@ -138,7 +138,24 @@ function renderBrands() {
   const active = state.brands.find((brand) => brand.key === state.brand);
   if (active) {
     $("#sideBrandName").textContent = active.name;
-    $("#sideBrandAvatar").textContent = active.name.slice(0, 1).toUpperCase();
+    const fallback = active.name.slice(0, 1).toUpperCase();
+    const logo = active.logo || "";
+    [
+      ["#sideBrandAvatar", "#sideBrandLogo", "#sideBrandFallback"],
+      ["#topBrandAvatar", "#topBrandLogo", "#topBrandFallback"],
+    ].forEach(([avatarSelector, logoSelector, fallbackSelector]) => {
+      const avatar = $(avatarSelector);
+      const image = $(logoSelector);
+      $(fallbackSelector).textContent = fallback;
+      avatar.classList.toggle("has-logo", Boolean(logo));
+      if (logo) {
+        image.src = logo;
+        image.alt = `${active.name} logo`;
+      } else {
+        image.removeAttribute("src");
+        image.alt = "";
+      }
+    });
   }
 }
 

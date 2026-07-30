@@ -191,7 +191,7 @@
     }
 
     .review-stage {
-      width: min(100%, 470px);
+      width: min(100%, 560px);
       display: grid;
       justify-items: center;
       gap: 17px;
@@ -200,8 +200,8 @@
     .post-stack {
       position: relative;
       width: auto;
-      max-width: 326px;
-      height: min(560px, calc(100dvh - 180px));
+      max-width: 374px;
+      height: min(640px, calc(100dvh - 180px));
       aspect-ratio: 9 / 16;
       isolation: isolate;
     }
@@ -263,7 +263,7 @@
       font-family: "TikTok Sans", sans-serif;
       font-optical-sizing: none;
       font-variation-settings: "opsz" 36, "wght" 700;
-      font-size: clamp(17px, 2.2vw, 24px);
+      font-size: clamp(17px, 2.2vw, 26px);
       font-weight: 700;
       line-height: 1.23;
       letter-spacing: 0;
@@ -920,6 +920,18 @@
       font-size: 8px;
     }
 
+    .brand-picker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-picker .brand-avatar {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+    }
+
     .post-stack::before,
     .post-stack::after {
       display: none;
@@ -1157,8 +1169,11 @@
       </nav>
       <div class="side-footer">
         <div class="brand-mini">
-          <span class="brand-avatar" id="sideBrandAvatar">K</span>
-          <span><strong id="sideBrandName">Kokoro</strong><span>test account</span></span>
+          <span class="brand-avatar has-logo" id="sideBrandAvatar">
+            <img id="sideBrandLogo" src="./assets/kokoro-logo.png" alt="">
+            <span class="brand-avatar-fallback" id="sideBrandFallback">K</span>
+          </span>
+          <span class="brand-copy"><strong id="sideBrandName">Kokoro</strong><span>test account</span></span>
         </div>
       </div>
     </aside>
@@ -1170,7 +1185,13 @@
         <div class="page-identity"><strong>Carousels</strong><span class="crumb" id="crumb">/ monthly campaign</span></div>
         <div class="topbar-spacer"></div>
         <span class="status">Saved locally and to campaign</span>
-        <select class="select" id="brandSelect" aria-label="Brand"></select>
+        <div class="brand-picker">
+          <span class="brand-avatar has-logo" id="topBrandAvatar">
+            <img id="topBrandLogo" src="./assets/kokoro-logo.png" alt="">
+            <span class="brand-avatar-fallback" id="topBrandFallback">K</span>
+          </span>
+          <select class="select" id="brandSelect" aria-label="Brand"></select>
+        </div>
       </header>
 
       <div class="campaign-page" id="campaignPage">

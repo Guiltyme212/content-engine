@@ -395,6 +395,7 @@ const server = http.createServer(async (req, res) => {
         brands.push({
           key: e.name,
           name: profile.name || e.name,
+          logo: profile.logo || '',
           status: profile.status || 'confirmed',
           hasCampaign: existsSync(path.join(base, e.name, 'campaign.json')),
         });

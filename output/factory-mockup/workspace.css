@@ -213,23 +213,43 @@ img {
   height: 30px;
   display: grid;
   place-items: center;
+  overflow: hidden;
   border-radius: 50%;
   color: #fff;
+  border: 1px solid rgba(38, 43, 39, 0.14);
   background: var(--accent);
+  box-shadow: 0 3px 10px rgba(34, 41, 36, 0.1);
   font-size: 11px;
   font-weight: 850;
 }
 
-.brand-mini strong,
-.brand-mini span {
+.brand-avatar img {
+  width: 100%;
+  height: 100%;
+  display: none;
+  object-fit: cover;
+}
+
+.brand-avatar.has-logo img {
   display: block;
 }
 
-.brand-mini strong {
+.brand-avatar.has-logo .brand-avatar-fallback {
+  display: none;
+}
+
+.brand-avatar-fallback,
+.brand-copy,
+.brand-copy strong,
+.brand-copy > span {
+  display: block;
+}
+
+.brand-copy strong {
   font-size: 11px;
 }
 
-.brand-mini span {
+.brand-copy > span {
   margin-top: 2px;
   color: var(--muted);
   font-size: 9px;
