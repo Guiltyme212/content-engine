@@ -2,8 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   CONTENT_FIRST_REFERENCE,
+  audienceBlock,
+  briefBlock,
   compatibleMessages,
   generatePrompt,
+  structuredModelOptions,
   hasRepayableDebt,
   inferHookPattern,
   lintHook,
@@ -146,4 +149,60 @@ test('Claude-compatible proxies receive the trusted strategy in the visible requ
     model: 'gpt-5.6-sol',
   });
   assert.deepEqual(openai.map((message) => message.role), ['system', 'user']);
+});
+
+test('the audience layer reaches the prompt as aimable material', () => {
+  const block = audienceBlock({ audience_intel: {
+    pains: [{ label: 'Emotional exhaustion', tell: 'you stop replying to people you care about', cost: 'you feel further away' }],
+    beliefs: ['rest has to be earned'],
+    words: ['drained', 'fine, i guess'],
+    habit: 'a two-minute check-in before bed',
+    plugLine: 'i use it to hear what i actually feel',
+    avoid: 'no medical claims',
+  } });
+  assert.match(block, /AUDIENCE PAINS/);
+  assert.match(block, /you stop replying to people you care about/);
+  assert.match(block, /BELIEFS TO BREAK/);
+  assert.match(block, /drained \/ fine, i guess/);
+  assert.match(block, /PRODUCT BRIDGE/);
+  assert.match(block, /NEVER CLAIM/);
+  // A brief without the layer must not grow empty headings.
+  assert.equal(audienceBlock({}), '');
+  assert.doesNotMatch(briefBlock({ name: 'Acme' }), /AUDIENCE PAINS/);
+  assert.match(briefBlock({ name: 'Acme', audience_intel: { pains: [{ label: 'Burnout' }] } }), /AUDIENCE PAINS/);
+});
+
+test('structured extraction never lands on a legacy model', () => {
+  const keys = ['STRUCTURED_MODEL_PROVIDER', 'STRUCTURED_MODEL_NAME', 'ANTHROPIC_API_KEY', 'MODEL_PROVIDER', 'MODEL_NAME', 'PROXY_BASE_URL', 'PROXY_API_KEY', 'OPENAI_API_KEY'];
+  const saved = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
+  const reset = () => keys.forEach((key) => delete process.env[key]);
+  const legacy = /gpt-4|gpt-3|^o\d/i;
+  try {
+    // A direct Anthropic key wins and pins the current model.
+    reset();
+    process.env.ANTHROPIC_API_KEY = 'sk-ant-test';
+    assert.deepEqual(structuredModelOptions(), { temperature: 0.2, provider: 'anthropic', model: 'claude-opus-5' });
+
+    // The live setup: an OpenAI-compatible proxy serving Claude. Reuse the model it carries.
+    reset();
+    Object.assign(process.env, { MODEL_PROVIDER: 'proxy', MODEL_NAME: 'claude-opus-4-8', PROXY_BASE_URL: 'https://proxy.test', PROXY_API_KEY: 'k' });
+    assert.deepEqual(structuredModelOptions(), { temperature: 0.2, provider: 'proxy', model: 'claude-opus-4-8' });
+
+    // A proxy pointed at a non-Claude model still gets a Claude model for extraction.
+    process.env.MODEL_NAME = 'gpt-4o';
+    assert.equal(structuredModelOptions().model, 'claude-opus-5');
+
+    // An OpenAI key alone is NOT a fallback — OpenAI is for image generation only.
+    reset();
+    process.env.OPENAI_API_KEY = 'sk-proj-test';
+    assert.throws(() => structuredModelOptions(), /No Claude model is configured/);
+
+    // An explicit override is honoured but still defaults the model to a current Claude one.
+    reset();
+    process.env.STRUCTURED_MODEL_PROVIDER = 'anthropic';
+    assert.doesNotMatch(structuredModelOptions().model, legacy);
+  } finally {
+    reset();
+    for (const [key, value] of Object.entries(saved)) if (value !== undefined) process.env[key] = value;
+  }
 });

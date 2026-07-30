@@ -5,16 +5,16 @@ import { readFile, readdir } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { generateHooks, gradeHook, modelInfo } from './hook-engine.js';
-import { extractCompany } from './company-engine.js';
-import { generateCarousels } from './carousel-engine.js';
+import { generateHooks, gradeHook, modelInfo, structuredModelOptions } from './hook-engine.js';
+import { extractCompany, regenerateAudience } from './company-engine.js';
+import { carouselModelOptions, generateCarousels } from './carousel-engine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const SITE = path.join(ROOT, 'output', 'factory-mockup');
 const IMAGE_LIBRARY = path.join(ROOT, 'scraped-images');
 const PORT = process.env.PORT || 3000;
-const MODEL_ENDPOINTS = new Set(['/api/company/extract', '/api/carousels', '/api/hooks', '/api/hooks/grade']);
+const MODEL_ENDPOINTS = new Set(['/api/company/extract', '/api/company/audience', '/api/carousels', '/api/hooks', '/api/hooks/grade']);
 const RATE_WINDOW_MS = 15 * 60 * 1000;
 const RATE_LIMIT = 30;
 const MAX_ACTIVE_MODEL_REQUESTS = 4;
@@ -222,6 +222,14 @@ const server = http.createServer(async (req, res) => {
         const company = await withModelSlot(() => extractCompany({ url: body.url, context: body.context || '' }));
         return sendJson(res, 200, { company });
       }
+      if (url === '/api/company/audience') {
+        const audience = await withModelSlot(() => regenerateAudience({
+          url: body.url || '',
+          context: body.context || '',
+          company: body.company || null,
+        }));
+        return sendJson(res, 200, { audience });
+      }
       if (url === '/api/carousels') {
         const themes = (await imageLibrary()).map(({ id, label }) => ({ id, label }));
         const carousels = await withModelSlot(() => generateCarousels({
@@ -265,7 +273,17 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   const m = modelInfo();
+  const carouselModel = carouselModelOptions();
   console.log(`Content Factory running → http://localhost:${PORT}`);
   console.log(`Hook engine: provider=${m.provider} model=${m.model}`);
-  console.log(`OpenAI key: ${m.openaiKey ? 'present' : 'MISSING'}`);
+  console.log(`Carousel engine: provider=${carouselModel.provider || m.provider} model=${carouselModel.model || m.model}`);
+  // Brand + audience extraction must land on a current Claude model. Surface a bad config at
+  // boot instead of letting the first user of the Studio discover it.
+  try {
+    const structured = structuredModelOptions();
+    console.log(`Brand/audience engine: provider=${structured.provider} model=${structured.model}`);
+  } catch (error) {
+    console.error(`Brand/audience engine: NOT CONFIGURED — ${error.message}`);
+  }
+  console.log(`OpenAI key (images only): ${m.openaiKey ? 'present' : 'MISSING'}`);
 });

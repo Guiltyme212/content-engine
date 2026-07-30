@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  compactCompany,
+  extractLogo,
   isPrivateAddress,
+  normalizeAudienceOutput,
   normalizeCompanyOutput,
   parseWebsiteUrl,
   readableWebsiteText,
@@ -48,4 +51,61 @@ test('company output is normalized to the frontend brand contract', () => {
   assert.deepEqual(company.voice, ['direct', 'warm']);
   assert.deepEqual(company.look, ['editorial', 'bright']);
   assert.equal(company.context, 'Focus on founder stories.');
+  assert.deepEqual(company.audience_intel.pains, []);
+});
+
+test('logo extraction prefers square marks and resolves them absolutely', () => {
+  const html = `<html><head>
+    <meta property='og:image' content='https://cdn.example.com/card.png'>
+    <link rel='icon' href='/favicon-32.png' sizes='32x32'>
+    <link rel='apple-touch-icon' href='/touch-180.png' sizes='180x180'>
+  </head><body></body></html>`;
+  assert.equal(extractLogo(html, 'https://example.com/pricing'), 'https://example.com/touch-180.png');
+
+  // No declared icons: fall back to the social card, then to the conventional favicon path.
+  assert.equal(
+    extractLogo(`<meta property='og:image' content='//cdn.example.com/card.png'>`, 'https://example.com/'),
+    'https://cdn.example.com/card.png',
+  );
+  assert.equal(extractLogo('<html></html>', 'https://example.com/'), 'https://example.com/favicon.ico');
+  // A private-network icon href is skipped, not returned.
+  assert.equal(
+    extractLogo(`<link rel='icon' href='http://127.0.0.1/logo.png'>`, 'https://example.com/'),
+    'https://example.com/favicon.ico',
+  );
+});
+
+test('audience output tolerates loose model shapes and drops duplicates', () => {
+  const audience = normalizeAudienceOutput({ audience: {
+    pains: [
+      { label: 'Emotional exhaustion', tell: 'You stop replying to people you care about.', cost: 'You feel further away.' },
+      'Overthinking at night',
+      { pain: 'emotional exhaustion' },
+      { tell: 'no label so it is dropped' },
+    ],
+    myths: ['Rest has to be earned', 'Rest has to be earned'],
+    vocabulary: ['drained', 'fine, i guess'],
+    habit: 'a two-minute check-in before bed',
+    plug: 'i use it to hear what i actually feel',
+    never: 'no medical or clinical claims',
+  } });
+  assert.deepEqual(audience.pains.map((pain) => pain.label), ['Emotional exhaustion', 'Overthinking at night']);
+  assert.equal(audience.pains[0].pinned, false);
+  assert.equal(audience.pains[1].tell, '');
+  assert.deepEqual(audience.beliefs, ['Rest has to be earned']);
+  assert.deepEqual(audience.words, ['drained', 'fine, i guess']);
+  assert.equal(audience.habit, 'a two-minute check-in before bed');
+  assert.equal(audience.plugLine, 'i use it to hear what i actually feel');
+  assert.equal(audience.avoid, 'no medical or clinical claims');
+  assert.equal(normalizeAudienceOutput({ audience: { pains: [] } }), null);
+  assert.equal(normalizeAudienceOutput('nonsense'), null);
+});
+
+test('a hand-edited brief is bounded before it is sent back to the model', () => {
+  const compact = compactCompany({ name: 'A'.repeat(400), product: 'p', voice: ['calm', 'calm', 'warm'], junk: 'x' });
+  assert.equal(compact.name.length, 120);
+  assert.deepEqual(compact.voice, ['calm', 'warm']);
+  assert.equal('junk' in compact, false);
+  assert.equal(compactCompany({}), null);
+  assert.equal(compactCompany(null), null);
 });

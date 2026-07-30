@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { carouselPrompt, editorialTopic, normalizeCarouselOutput, normalizeTasteList } from './carousel-engine.js';
+import { carouselPrompt, compactBrief, editorialTopic, normalizeCarouselOutput, normalizeTasteList } from './carousel-engine.js';
 
 const themes = [
   { id: 'real-life', label: 'Real Life' },
@@ -249,7 +249,40 @@ test('carousel prompt demands observable receipts and a neutral product cameo', 
   assert.match(prompt.system, /Never use because, so I can, made for me/i);
   assert.match(prompt.system, /Reuse at least one capability noun, verb, or direct grammatical form/i);
   assert.match(prompt.system, /Ask one exact, answerable question/i);
-  assert.match(prompt.system, /slide four is an unnumbered product interruption/i);
+  assert.match(prompt.system, /Write the cover and complete story TOGETHER/i);
+  assert.match(prompt.system, /A1 THE ROUTINE/i);
+  assert.match(prompt.system, /A2 THE MIRROR/i);
+  assert.match(prompt.system, /A3 THE DIARY/i);
+  assert.match(prompt.system, /Use slide 4 for 5-7-slide A1\/A2 carousels and slide 6 for an 8-slide A3 diary/i);
+  assert.match(prompt.system, /REAL candid human library photo/i);
+  assert.doesNotMatch(prompt.system, /previous response failed|unnumbered product interruption/i);
+});
+
+test('an eight-slide A3 diary keeps its numbered shape and uses slide six for the cameo', () => {
+  const hook = 'how i stopped taking unfinished work to bed after one brutal year';
+  const personalBrief = { ...brief, context: 'I spent a year carrying unfinished work into bed and changed my evening routine.' };
+  const diary = candidate(hook);
+  diary.structure = 'A3';
+  diary.slides = [
+    slide('Hook', 0, { text: hook }),
+    slide('Story beat', 1, { text: '1. i closed the laptop at 8pm because the inbox never chose an ending.' }),
+    slide('Story beat', 2, { text: '2. i left my phone in the kitchen so work stopped following me upstairs.' }),
+    slide('Story beat', 3, { text: '3. i wrote one loose end on paper so my pillow stopped holding the list.', alt: '3. i put one loose end on paper so the list stayed off my pillow.', userAsset: false }),
+    slide('Story beat', 4, { text: '4. i said the unfinished thought aloud because silence kept rehearsing it.' }),
+    slide('Product moment', 5, { text: '5. i record one voice note in Northstar.', alt: '5. i leave one voice note in Northstar.', userAsset: true }),
+    slide('Story beat', 6, { text: '6. i turned off the hall light because a dark room finally marked the day done.' }),
+    slide('Closer', 7, { text: 'save this for the night your job tries to follow you into bed.' }),
+  ];
+  const [normalized] = normalizeCarouselOutput({ carousels: [diary] }, options({ brief: personalBrief }));
+  assert.equal(normalized.structure, 'A3');
+  assert.equal(normalized.slides[5].userAsset, true);
+
+  const earlyCameo = structuredClone(diary);
+  earlyCameo.slides[3].role = 'Product moment';
+  earlyCameo.slides[3].userAsset = true;
+  earlyCameo.slides[5].role = 'Story beat';
+  earlyCameo.slides[5].userAsset = false;
+  assert.deepEqual(normalizeCarouselOutput({ carousels: [earlyCameo] }, options({ brief: personalBrief })), []);
 });
 
 test('taste summaries accept both compact objects and strings', () => {
@@ -261,4 +294,48 @@ test('taste summaries accept both compact objects and strings', () => {
   assert.equal(taste[0].hook, 'A hook saved from an older screen');
   assert.deepEqual(taste[1].themes, ['real-life']);
   assert.equal(taste[1].story, 'Hook | tension | product | payoff');
+});
+
+test('known pains aim the batch, and pinned pains win', () => {
+  const withPains = {
+    ...brief,
+    audience_intel: {
+      pains: [
+        { label: 'Emotional exhaustion', tell: 'you stop replying to people you care about' },
+        { label: 'Overthinking at night', pinned: true },
+      ],
+    },
+  };
+  const topic = editorialTopic(withPains);
+  assert.match(topic, /the operator pinned these/);
+  assert.match(topic, /Overthinking at night/);
+  assert.doesNotMatch(topic, /Emotional exhaustion/);
+
+  const unpinned = editorialTopic({ ...withPains, audience_intel: { pains: [{ label: 'Emotional exhaustion' }] } });
+  assert.match(unpinned, /Emotional exhaustion/);
+  assert.doesNotMatch(unpinned, /operator pinned/);
+
+  // No audience layer: the topic keeps its original shape.
+  assert.doesNotMatch(editorialTopic(brief), /known audience pains/);
+});
+
+test('the audience layer survives compaction into the model packet', () => {
+  const brand = compactBrief({
+    ...brief,
+    audience_intel: {
+      pains: [{ label: 'Emotional exhaustion', tell: 'you stop replying', cost: 'x'.repeat(400), pinned: true }, { junk: true }],
+      words: ['drained'],
+      habit: 'a two-minute check-in',
+      avoid: 'no medical claims',
+    },
+  });
+  assert.equal(brand.audience_intel.pains.length, 1);
+  assert.equal(brand.audience_intel.pains[0].pinned, true);
+  assert.equal(brand.audience_intel.pains[0].cost.length, 220);
+  assert.deepEqual(brand.audience_intel.words, ['drained']);
+  assert.equal(compactBrief(brief).audience_intel, null);
+
+  const prompt = carouselPrompt({ brand, topic: editorialTopic(brief), themes, count: 2 });
+  assert.match(prompt.user, /Emotional exhaustion/);
+  assert.match(prompt.user, /no medical claims/);
 });

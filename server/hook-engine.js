@@ -11,15 +11,24 @@
 // won't force a mismatched pattern onto a topic, and (3) an A–F grading rubric so weak
 // hooks never reach the user.
 
+// EVERY text call in this engine runs on a CURRENT Claude model. No legacy models anywhere
+// (gpt-4o, gpt-4, gpt-3.5, o1): they write generic, off-voice copy and miss the playbook's
+// craft rules, and this layer decides what every carousel says. OpenAI is for IMAGE
+// generation only (gpt-image-2, a locked decision). Today the working Claude path is Dan's
+// OpenAI-compatible proxy (MODEL_PROVIDER=proxy + a claude-* MODEL_NAME); set
+// ANTHROPIC_API_KEY to talk to api.anthropic.com directly instead.
+const CLAUDE_MODEL = 'claude-opus-5';
+
 // Read config LAZILY at call time. The server loads .env after this module is imported
 // (ES imports evaluate first), so reading these at module top would capture empty values.
 const cfg = () => ({
   provider: process.env.MODEL_PROVIDER || 'openai',
-  model: process.env.MODEL_NAME || 'gpt-5.6-sol',
-  // gpt-4o runs it today on the working OpenAI key. HOOK_MODEL_KEY is the key Dan pasted —
-  // used only if wired to a provider later. OPENAI_API_KEY is the live default.
+  model: process.env.MODEL_NAME || CLAUDE_MODEL,
   openaiKey: process.env.OPENAI_API_KEY,
   anthropicKey: process.env.ANTHROPIC_API_KEY || process.env.HOOK_MODEL_KEY,
+  // Only a real ANTHROPIC_API_KEY may auto-select the direct Anthropic path — HOOK_MODEL_KEY
+  // is a proxy key, and routing it at api.anthropic.com would just 401.
+  directAnthropicKey: process.env.ANTHROPIC_API_KEY,
   // 'proxy' provider: an OpenAI-compatible endpoint at a custom base URL (e.g. a Claude proxy
   // that speaks /v1/chat/completions). Base URL + key come from env — never hardcoded.
   proxyBase: process.env.PROXY_BASE_URL,
@@ -274,7 +283,42 @@ export function briefBlock(brief = {}) {
 - niche: ${b.niche || '(not specified)'}
 - do: ${b.do || 'validate the audience; speak to their real moment; stay in the voice above'}
 - don't: ${b.dont || 'clichés, hype, anything that breaks the brand voice'}
-- current content context: ${b.context || '(not specified)'}`;
+- current content context: ${b.context || '(not specified)'}${audienceBlock(b)}`;
+}
+
+// The audience layer of the tenant profile: the pains a post can be aimed at, the beliefs it
+// can break, the words the audience actually uses, and how the product is allowed to appear.
+// Editable by the user in the Studio, so treat it as the operator's intent, not a suggestion.
+export function audienceBlock(brief = {}) {
+  const a = brief?.audience_intel || brief?.audienceIntel || brief?.intel;
+  if (!a || typeof a !== 'object') return '';
+  const pains = (Array.isArray(a.pains) ? a.pains : [])
+    .map((pain) => {
+      if (!pain) return '';
+      if (typeof pain === 'string') return `- ${pain}`;
+      const parts = [pain.label, pain.tell && `they notice it when: ${pain.tell}`, pain.cost && `what it costs them: ${pain.cost}`];
+      return parts.filter(Boolean).length ? `- ${parts.filter(Boolean).join(' — ')}` : '';
+    })
+    .filter(Boolean);
+  const beliefs = (Array.isArray(a.beliefs) ? a.beliefs : []).filter(Boolean);
+  const words = (Array.isArray(a.words) ? a.words : []).filter(Boolean);
+  const lines = [];
+  if (pains.length) {
+    lines.push('', 'AUDIENCE PAINS (aim the post at ONE of these; do not invent a pain that is not here):', ...pains);
+  }
+  if (beliefs.length) {
+    lines.push('', 'BELIEFS TO BREAK (good material for the slide that reframes):', ...beliefs.map((belief) => `- "${belief}"`));
+  }
+  if (words.length) {
+    lines.push('', `THEIR WORDS (write with this vocabulary, not corporate synonyms for it): ${words.join(' / ')}`);
+  }
+  if (a.habit || a.plugLine) {
+    lines.push('', 'PRODUCT BRIDGE (the product appears ONCE, mid-carousel, as a habit the narrator already has — never as a pitch):');
+    if (a.habit) lines.push(`- the habit: ${a.habit}`);
+    if (a.plugLine) lines.push(`- how it gets named: ${a.plugLine}`);
+  }
+  if (a.avoid) lines.push('', `NEVER CLAIM (hard line, no exceptions): ${a.avoid}`);
+  return lines.length ? `\n${lines.join('\n')}` : '';
 }
 
 // ── Prompt builders ────────────────────────────────────────────────────────────────────
@@ -375,20 +419,26 @@ Grade it, explain briefly, and give 3 stronger rewrites in the brand voice. JSON
 }
 
 // ── Model call ─────────────────────────────────────────────────────────────────────────
-export async function callModel({ system, user, maxTokens, provider, model }) {
+export async function callModel({ system, user, maxTokens, provider, model, reasoningEffort, temperature }) {
   const configured = cfg();
-  const c = { ...configured, provider: provider || configured.provider, model: model || configured.model };
+  const c = {
+    ...configured,
+    provider: provider || configured.provider,
+    model: model || configured.model,
+    reasoningEffort: reasoningEffort || configured.reasoningEffort,
+  };
+  const request = { system, user, maxTokens, temperature };
   if (c.provider === 'proxy') {
     if (!c.proxyBase) throw new Error('No proxy base URL set (PROXY_BASE_URL).');
     if (!c.proxyKey) throw new Error('No proxy key set (PROXY_API_KEY).');
-    return callOpenAICompatible({ system, user, maxTokens }, c, c.proxyBase, c.proxyKey);
+    return callOpenAICompatible(request, c, c.proxyBase, c.proxyKey);
   }
   if (c.provider === 'anthropic') {
     if (!c.anthropicKey) throw new Error('No Anthropic key set (ANTHROPIC_API_KEY).');
-    return callAnthropic({ system, user, maxTokens }, c);
+    return callAnthropic(request, c);
   }
   if (!c.openaiKey) throw new Error('No OpenAI key set (OPENAI_API_KEY).');
-  return callOpenAICompatible({ system, user, maxTokens }, c, 'https://api.openai.com', c.openaiKey);
+  return callOpenAICompatible(request, c, 'https://api.openai.com', c.openaiKey);
 }
 
 // Works for OpenAI and any OpenAI-compatible endpoint (e.g. a Claude proxy that exposes
@@ -406,7 +456,7 @@ export function compatibleMessages({ system, user }, { provider, model } = {}) {
     ];
 }
 
-async function callOpenAICompatible({ system, user, maxTokens }, c, baseUrl, key) {
+async function callOpenAICompatible({ system, user, maxTokens, temperature }, c, baseUrl, key) {
   const url = baseUrl.replace(/\/+$/, '') + '/v1/chat/completions';
   const isClaude = /claude/i.test(c.model);
   const payload = {
@@ -415,8 +465,10 @@ async function callOpenAICompatible({ system, user, maxTokens }, c, baseUrl, key
     messages: compatibleMessages({ system, user }, c),
   };
   // gpt-5.x and o-series only accept the DEFAULT temperature; older models take a custom one.
-  const supportsTemp = !/^(gpt-5|o\d)/i.test(c.model);
-  if (supportsTemp) payload.temperature = 0.9;
+  const supportsTemp = !/^(gpt-5|o\d)|claude-fable/i.test(c.model);
+  // Hook writing wants spread (0.9). Extraction passes a low value — the brand facts and the
+  // audience pains have to be evidence-led, not creative.
+  if (supportsTemp) payload.temperature = Number.isFinite(temperature) ? temperature : 0.9;
   if (maxTokens) {
     const tokenLimit = Math.max(256, Math.min(Number(maxTokens) || 1500, 8000));
     if (supportsTemp || isClaude) payload.max_tokens = tokenLimit;
@@ -452,29 +504,54 @@ async function callOpenAICompatible({ system, user, maxTokens }, c, baseUrl, key
   return data.choices?.[0]?.message?.content || '{}';
 }
 
+// Native Anthropic Messages API. Three things every current Claude model requires and the
+// OpenAI-shaped path gets wrong:
+//   1. temperature / top_p / top_k are REJECTED with a 400 — never send them.
+//   2. reasoning depth is `output_config.effort`, not a top-level `effort`.
+//   3. thinking is ON by default (Opus 5 / Sonnet 5), so content[0] is often a thinking block
+//      whose text is empty — read every text block instead of trusting index 0, and leave
+//      max_tokens headroom because it caps thinking + answer together.
 async function callAnthropic({ system, user, maxTokens }, c) {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  const payload = {
+    model: c.model.startsWith('claude') ? c.model : CLAUDE_MODEL,
+    max_tokens: Math.max(1024, Math.min(Number(maxTokens) || 1500, 16000)),
+    system: system + '\nReturn ONLY the JSON object, no prose, no code fences.',
+    messages: [{ role: 'user', content: user }],
+    output_config: { effort: c.reasoningEffort || 'medium' },
+  };
+  const call = () => fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'x-api-key': c.anthropicKey,
       'anthropic-version': '2023-06-01',
     },
-    body: JSON.stringify({
-      model: c.model.startsWith('claude') ? c.model : 'claude-sonnet-5',
-      max_tokens: Math.max(256, Math.min(Number(maxTokens) || 1500, 8000)),
-      temperature: 0.9,
-      system: system + '\nReturn ONLY the JSON object, no prose, no code fences.',
-      messages: [{ role: 'user', content: user }],
-    }),
+    body: JSON.stringify(payload),
     signal: AbortSignal.timeout(60_000),
   });
+
+  let res = await call();
   if (!res.ok) {
-    const txt = await res.text().catch(() => '');
-    throw new Error(`Anthropic ${res.status}: ${txt.slice(0, 300)}`);
+    let txt = await res.text().catch(() => '');
+    // Older Claude models predate output_config.effort. Drop it once and retry.
+    if (payload.output_config && /output_config|effort/i.test(txt)) {
+      delete payload.output_config;
+      res = await call();
+    }
+    if (!res.ok) {
+      txt = await res.text().catch(() => '');
+      throw new Error(`Anthropic ${res.status}: ${txt.slice(0, 300)}`);
+    }
   }
   const data = await res.json();
-  return data.content?.[0]?.text || '{}';
+  if (data.stop_reason === 'refusal') throw new Error('The model declined to answer this request.');
+  const text = (Array.isArray(data.content) ? data.content : [])
+    .filter((block) => block && block.type === 'text' && typeof block.text === 'string')
+    .map((block) => block.text)
+    .join('')
+    .trim();
+  if (!text) throw new Error(`Anthropic returned no text (stop_reason: ${data.stop_reason || 'unknown'}).`);
+  return text;
 }
 
 export function parseJson(raw) {
@@ -588,9 +665,27 @@ export function modelInfo() {
   return { provider: c.provider, model: c.model, openaiKey: !!c.openaiKey };
 }
 
+// Model for the structured extraction calls (brand profile, audience pains). This is the
+// layer that decides what every carousel is ABOUT, so it always lands on a current Claude
+// model — never a legacy one, and never OpenAI. `temperature` is low on purpose: extraction
+// must be evidence-led, not inventive.
 export function structuredModelOptions() {
   const c = cfg();
-  const provider = process.env.STRUCTURED_MODEL_PROVIDER || (c.openaiKey ? 'openai' : c.provider);
-  const model = process.env.STRUCTURED_MODEL_NAME || (provider === 'openai' ? 'gpt-4o' : c.model);
-  return { provider, model };
+  const envProvider = process.env.STRUCTURED_MODEL_PROVIDER;
+  const envModel = process.env.STRUCTURED_MODEL_NAME;
+  const claudeOrDefault = (model) => (/claude/i.test(model || '') ? model : CLAUDE_MODEL);
+  const options = { temperature: 0.2 };
+  if (envProvider || envModel) {
+    return { ...options, provider: envProvider || c.provider, model: envModel || CLAUDE_MODEL };
+  }
+  if (c.directAnthropicKey) return { ...options, provider: 'anthropic', model: CLAUDE_MODEL };
+  // The proxy is the live Claude path. Reuse the model it is already configured to serve
+  // rather than forcing an ID that particular proxy may not carry.
+  if (c.provider === 'proxy' && c.proxyBase && c.proxyKey) {
+    return { ...options, provider: 'proxy', model: claudeOrDefault(c.model) };
+  }
+  if (c.provider === 'anthropic' && c.anthropicKey) {
+    return { ...options, provider: 'anthropic', model: claudeOrDefault(c.model) };
+  }
+  throw new Error('No Claude model is configured for extraction. Set PROXY_BASE_URL + PROXY_API_KEY (with a claude-* MODEL_NAME), or ANTHROPIC_API_KEY.');
 }

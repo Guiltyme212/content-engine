@@ -50,6 +50,15 @@ The Content Factory demo is live at **https://content-engine-production-f818.up.
 
 ## Repo layout
 
+- **The company profile carries an audience layer** (added 2026-07-30): pains (label + the
+  behavioural tell + the emotional cost), beliefs to break, the audience's own words, and a
+  product bridge (habit / plug line / claims to avoid). Extracted from the tenant's site in
+  parallel with the brand profile (`extractAudience` in `server/company-engine.js`), **edited in
+  place by the operator** in the Studio's brief card, and read by every generator via
+  `briefBlock()`/`editorialTopic()`. A *pinned* pain is an explicit instruction: it must survive
+  a regenerate and it aims the next batch. This exists because a freelancer's 60-post sheet
+  proved the pain list is the asset and the slide template is cheap — see
+  `examples/analysis/example4-fixed-slot-machine.md` and body shape A4 in the playbook.
 - `library/carousel-playbook.md` — **the copy/knowledge layer.** Format skeletons, hook bank,
   slide craft rules, visual rules — brand-agnostic craft that applies to any tenant. Per-brand
   briefs (e.g. Kokoro's) are examples/inputs, not the point. Generators write FROM this file.
@@ -68,13 +77,45 @@ The Content Factory demo is live at **https://content-engine-production-f818.up.
 
 ## Locked-in decisions (do not relitigate without Dan)
 
+0. **Models: current Claude for every text call; NO legacy models, ever** (2026-07-30). Dan
+   rejected `gpt-4o` outright ("it knows nothing about hooks"). Banned everywhere in the copy
+   layer, including "harmless" structured-JSON side calls: `gpt-4o`, `gpt-4o-mini`, `gpt-4`,
+   `gpt-4-turbo`, `gpt-3.5-*`, `o1-*`. Default `claude-opus-5`; read the `claude-api` skill for
+   exact IDs instead of copying whatever a neighbouring file used. OpenAI stays for **image**
+   generation only (decision 1). Today's working Claude path is Dan's OpenAI-compatible proxy
+   (`MODEL_PROVIDER=proxy` + a `claude-*` `MODEL_NAME` + `PROXY_BASE_URL`/`PROXY_API_KEY`);
+   there is no real `ANTHROPIC_API_KEY` in the repo — `HOOK_MODEL_KEY` is the proxy key, so it
+   would 401 against api.anthropic.com. `structuredModelOptions()` in `server/hook-engine.js`
+   throws rather than silently falling back to OpenAI, and the server logs the resolved
+   brand/audience model at boot. Railway production already has `MODEL_PROVIDER`, `MODEL_NAME`,
+   `MODEL_REASONING_EFFORT`, `PROXY_BASE_URL`, and `PROXY_API_KEY` set on the `content-engine`
+   service (verified 2026-07-30), so the proxy route works there too. The proxy serves
+   `claude-opus-5`, `claude-opus-4-8`, `claude-sonnet-5`, and `claude-sonnet-4-6` — all verified
+   live. **The proxy key has now been pasted in chat twice: rotate it before production.**
 1. **Image generation: OpenAI `gpt-image-2`** (1024x1536 portrait). `high` quality for slides
    with text (~$0.17/img), `medium` for drafts (~$0.04). Batch API halves costs at volume.
 2. **Typography: real-font OVERLAY on textless backgrounds** (REVERSED 2026-07-20). The winning
-   TikTok carousels don't bake text into images — creators type it in TikTok's editor (font =
-   Proxima Nova). So the engine now generates a **clean textless background** (gpt-image-2) and
-   overlays **real Montserrat text** on top — white fill + thin black outline, TikTok-native look,
-   draggable position. This is the current builder architecture. (Earlier note said "render text
+   TikTok carousels don't bake text into images — creators type it in TikTok's editor. So the
+   engine now generates a **clean textless background** (gpt-image-2) and overlays **real
+   TikTok Sans text** (TikTok's own editor font, self-hosted variable woff2 in
+   `output/factory-mockup/fonts/`, Montserrat fallback; adopted 2026-07-24) on top — white
+   fill + black outline, `paint-order:stroke fill`. All of it lives once in
+   `output/factory-mockup/slide-type.css`; per-element rules keep POSITION and FONT-SIZE only
+   — do not re-declare typeface/weight/tracking/leading/stroke locally or the surfaces drift
+   apart again (they already did once: five surfaces had five different line-heights).
+   **The exact values are measured, not taste** (2026-07-30) — headless-Chrome renders
+   compared by ink mask against a native-res crop of the real cover
+   (`assets/ref-example1-text.png`, whose line is 321px wide splitting 91/60/147px at the
+   word spaces): `opsz` 36 pinned, `wght` 700, `letter-spacing:0`, `line-height:1.23`,
+   `-webkit-text-stroke:.15em`. Two traps recorded in that file: (a) `opsz` MUST be pinned
+   (`font-optical-sizing:none`) because CSS defaults to `auto`, which ties `opsz` to the
+   rendered px size, so 5–28px surfaces each picked a different, looser cut — IoU by opsz:
+   36 → .651, 16 → .519, 12 → .443; (b) measuring the reference's black halo suggests a
+   `.21em` stroke, which is wrong — it is a downscaled JPEG and blur spreads a thin outline
+   over extra dark pixels. Judge stroke on a rendered ladder. Never guess tracking from a
+   screenshot; a hand-picked `-.012em` measured worse and made the line 26px too narrow.
+   Verify any change on `/font-match.html`.
+   This is the current builder architecture. (Earlier note said "render text
    INSIDE the image" and "Dan rejected overlay" — that was about ugly SYSTEM fonts / the GDI+
    renderer; the fix was a good web font, not baking letters. Old baked-text covers in
    `output/` are superseded.) Still demand exact spelling and review every slide.

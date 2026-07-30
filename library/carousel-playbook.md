@@ -20,8 +20,9 @@ A carousel is a reference the viewer wants to keep — if it isn't save-worthy, 
 - At least one useful editorial slide follows the cameo. The product is never the conclusion.
 
 **Body shapes for A — pick ONE per carousel and repeat it on every body slide.** The viewer
-learns the shape on slide 2; from then on swiping is free. Never mix shapes in one post. All
-three are verified winners described in the reference analysis later in this playbook:
+learns the shape on slide 2; from then on swiping is free. Never mix shapes in one post. A1–A3
+are verified winners described in the reference analysis later in this playbook; A4 is a
+production template proven at volume rather than by one viral post:
 
 - **A1 · Tip listicle — "the routine"** (proven: `examples/example1/`, 397K ❤️ / 145.8K 🔖)
   Slide shape: `N. [specific action] ([2-4 word benefit])` — action AND payoff on every slide.
@@ -40,6 +41,23 @@ three are verified winners described in the reference analysis later in this pla
   "here's what I did" beats "here's what you should do". Cameo = "______ was my go-to for
   this", mid-to-late. Pairs naturally with A2 for the same audience: first the "you"
   checklist, then the "I" recovery story.
+
+- **A4 · Fixed-slot pain machine — "the assembly line"** (proven at volume:
+  `examples/analysis/example4-fixed-slot-machine.md`, 60 posts from one template)
+  Seven fixed slots, same order every time:
+  `hook → constant credibility line → pain stated as a behaviour → deepen or kill the myth →
+  the fix + the cameo → mechanism/reframe → aphorism`.
+  Slot 2 is a **constant** ("trust me, i know." in that operator's voice) — it buys the
+  slide-1→3 swipe, the most expensive one in the carousel, and costs nothing to author. Slot 3
+  must be a *tell*, not a feeling ("you stop replying to people you care about", not
+  "you feel disconnected"). Slot 5 is the only product moment; slot 7 carries no plug and is
+  written to be screenshotted. In the numbered variant, slots 3–7 are items `1.`–`5.` and the
+  cameo is item **3** — dead centre, two useful items after it.
+  Caption formula: one takeaway + a soft first-person plug + exactly 4 hashtags, single line
+  (TikTok photo captions cannot contain line breaks). Use this shape when generating a *batch*
+  aimed at a pain list: it is the cheapest reliable way to turn N pains into N postable
+  carousels. Its known failure mode: the cameo drifts into naming the category instead of the
+  product's actual mechanic — see §3.
 
 ### B. Before/after proof
 `hook (bold claim) → proof pair × 3-4 → opinionated payoff (comparison list)`
@@ -137,7 +155,8 @@ Any failure → fix and re-run. All five pass → ship to human review (Dan stil
 - One post = one style recipe (same light, palette, mood in every prompt) so the carousel reads as designed.
 - **Architecture (locked 2026-07-20): real-font OVERLAY on textless backgrounds.** Generate a
   clean, textless background per slide (gpt-image-2, 1024x1536 portrait), then overlay real
-  Montserrat text — white fill + thin black outline, TikTok-native look, draggable position.
+  TikTok Sans text (TikTok's own editor font; Montserrat fallback) — white fill + thin black
+  outline (~0.13em stroke, painted under the fill), TikTok-native look, draggable position.
   Never bake letters into the image. Demand exact spelling; a human reviews every slide.
 - Bind the visual world to the content's emotional register, then hold it across all slides:
   - how-to/practical → authentic casual phone photos (mirror selfie, POV hands, lifestyle
@@ -257,3 +276,38 @@ Rejected-round lessons (why v1/v2 failed Dan's taste): v1 named concepts, not sc
 ("switch off after work", "mind never gets to rest") — whisper-hooks; v2 was structurally
 right but still soft. What fixed it: scene/body/clock concreteness, severity + timeframes,
 and giving the parenthetical a real job. Hooks 1/2/6 flagged as first-test candidates.
+
+### 2026-07-30 · The audience layer: pains become the input, not an afterthought
+
+Source: 60 finished Kokoro slideshows a freelancer wrote for Dan in one Google Sheet, torn down
+in `examples/analysis/example4-fixed-slot-machine.md`. The finding that changed the engine: the
+sheet is not 60 ideas, it is **one rigid seven-slot template run over a list of 20 pains**. The
+template is cheap and repeatable; the pain list is the asset. Folded in as body shape **A4** in
+§1.
+
+What this changed in the product (built the same day):
+
+- The company profile now carries an **audience layer** alongside positioning: 6–10 *pains*
+  (label + the behavioural tell + the emotional cost), *beliefs to break*, the audience's own
+  *words*, and a *product bridge* (the product restated as one habit, plus the plug line and the
+  claims to never make). Extracted from the tenant's own site in the same pass as the brand
+  profile, then **editable by the operator** in the Studio — pains can be deleted, added, or
+  **pinned** to force them into the next batch.
+- `editorialTopic()` now aims a batch at those pains instead of asking the model to rediscover
+  the audience every run; `briefBlock()` ships the whole layer into every prompt as data.
+- Every text/craft call runs on a **current Claude model**. No legacy models anywhere in the
+  copy layer (the brand/audience extraction used to fall back to `gpt-4o`): cheap old models
+  write generic, off-voice hooks and miss these rules, and this is the layer that decides what
+  a post is about. OpenAI remains for image generation only.
+
+Two craft rules the sheet earned, both from its weaknesses:
+
+1. **The cameo must name the mechanic, not the category.** All 60 posts plug Kokoro as generic
+   journaling / "checking in with my emotions" — interchangeable with any mood tracker, so the
+   viewer has no reason to want *this* app. Slot 5 has to say the specific thing the product
+   does ("i said one sentence out loud and it made me a 4-minute meditation out of it"), not the
+   category it belongs to.
+2. **A constant credibility slide is free swipe-buying.** One fixed line in slot 2, identical
+   across every post in the series, carries the slide-1→3 swipe — the most expensive one in the
+   carousel — precisely because it is never asked to be clever. Per-tenant data (its wording is
+   voice), not a global default.
