@@ -684,35 +684,45 @@ export async function generateCarousels({ brief, liked, disliked, themes, count 
   // independent, so nothing was gained by writing them in one response. Split up, each call is
   // ~3k tokens (~60s) and the wall clock is the SLOWEST carousel instead of the sum.
   const rotation = shapeRotation(brand);
-  const attempts = await Promise.allSettled(
-    Array.from({ length: targetCount }, (_, index) => generateAttempt({
-      ...input,
-      count: 1,
-      assignedShape: rotation[index % rotation.length],
-    })),
-  );
+  const carousels = [];
+  const seenHooks = [...excludedHooks];
+  const failures = [];
 
   // PARTIAL SUCCESS IS A RESULT. Previously one bad response threw away the entire batch after
   // minutes of waiting. Now a call that times out, errors, or returns unparseable JSON only
   // costs its own carousel. Normalising in sequence (not in parallel) is deliberate: feeding
   // each accepted hook into the next call's excludedHooks is what dedupes across calls, since
   // the calls could not see each other's hooks while they ran.
-  const carousels = [];
-  const seenHooks = [...excludedHooks];
-  const failures = [];
-  for (const attempt of attempts) {
-    if (attempt.status === 'rejected') { failures.push(attempt.reason?.message || 'model call failed'); continue; }
-    if (!attempt.value) { failures.push('unparseable JSON'); continue; }
-    for (const carousel of normalizeCarouselOutput(attempt.value, {
-      themes: availableThemes,
-      count: 1,
-      excludedHooks: seenHooks,
-      brief: brand,
-    })) {
-      carousels.push(carousel);
-      seenHooks.push(carousel.hook);
+  const runWave = async () => {
+    const attempts = await Promise.allSettled(
+      Array.from({ length: targetCount }, (_, index) => generateAttempt({
+        ...input,
+        count: 1,
+        assignedShape: rotation[index % rotation.length],
+      })),
+    );
+    for (const attempt of attempts) {
+      if (attempt.status === 'rejected') { failures.push(attempt.reason?.message || 'model call failed'); continue; }
+      if (!attempt.value) { failures.push('unparseable JSON'); continue; }
+      for (const carousel of normalizeCarouselOutput(attempt.value, {
+        themes: availableThemes,
+        count: 1,
+        excludedHooks: seenHooks,
+        brief: brand,
+      })) {
+        carousels.push(carousel);
+        seenHooks.push(carousel.hook);
+      }
     }
-  }
+  };
+
+  await runWave();
+  // The publish checks are strict enough that a whole wave occasionally returns nothing, which
+  // the user sees as a hard error on a batch that would have worked. A wave is only ~25s now, so
+  // buy one retry rather than making them press the button again. Bounded at two waves: if the
+  // brief genuinely cannot produce a passing carousel, failing fast beats looping.
+  if (!carousels.length) await runWave();
+
   if (!carousels.length) {
     const detail = failures.length ? ` (${failures.slice(0, 3).join('; ')})` : '';
     throw new CarouselEngineError(`The model did not return a carousel that passed the five publish checks. Please generate again.${detail}`, 502);
