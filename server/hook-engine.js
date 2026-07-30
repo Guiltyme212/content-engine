@@ -19,6 +19,14 @@
 // ANTHROPIC_API_KEY to talk to api.anthropic.com directly instead.
 const CLAUDE_MODEL = 'claude-opus-5';
 
+// These calls are OUTPUT-bound: a carousel prompt is only ~2.4k input tokens but asks for
+// thousands of output tokens, which are emitted one at a time. Measured against the proxy at
+// ~52 tokens/sec, so budget from the token cap: ~3k tokens needs ~60s, ~7.6k needs ~147s.
+// A hardcoded 60s silently aborted every carousel batch part-way through — the request had no
+// chance of finishing, so the UI waited the full minute and then errored. Override with
+// MODEL_TIMEOUT_MS if a slower model or a bigger cap is introduced.
+const MODEL_TIMEOUT_MS = Math.max(15_000, Number(process.env.MODEL_TIMEOUT_MS) || 150_000);
+
 // Read config LAZILY at call time. The server loads .env after this module is imported
 // (ES imports evaluate first), so reading these at module top would capture empty values.
 const cfg = () => ({
@@ -208,7 +216,11 @@ export function promisedListCount(text) {
   return Number(match[1]) || words[match[1].toLowerCase()] || 0;
 }
 
-function hasFirstPersonSource(brief = {}) {
+// Exported so the carousel fan-out can gate the A3 diary shape on the same condition the
+// linter enforces. A first-person cover is rejected outright unless the tenant's context
+// supplies a real first-person experience, so assigning A3 without checking this wastes a
+// whole generation call.
+export function hasFirstPersonSource(brief = {}) {
   const context = String(brief?.context || '');
   return /\b(?:i|i['\u2019](?:m|ve|d|ll)|me|my|mine)\b/i.test(context);
 }
@@ -480,7 +492,7 @@ async function callOpenAICompatible({ system, user, maxTokens, temperature }, c,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
     body: JSON.stringify(payload),
-    signal: AbortSignal.timeout(60_000),
+    signal: AbortSignal.timeout(MODEL_TIMEOUT_MS),
   });
 
   let res = await call();
@@ -527,7 +539,7 @@ async function callAnthropic({ system, user, maxTokens }, c) {
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify(payload),
-    signal: AbortSignal.timeout(60_000),
+    signal: AbortSignal.timeout(MODEL_TIMEOUT_MS),
   });
 
   let res = await call();

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { carouselPrompt, compactBrief, editorialTopic, normalizeCarouselOutput, normalizeTasteList } from './carousel-engine.js';
+import { carouselPrompt, compactBrief, editorialTopic, explainProductCameo, normalizeCarouselOutput, normalizeTasteList } from './carousel-engine.js';
 
 const themes = [
   { id: 'real-life', label: 'Real Life' },
@@ -338,4 +338,49 @@ test('the audience layer survives compaction into the model packet', () => {
   const prompt = carouselPrompt({ brand, topic: editorialTopic(brief), themes, count: 2 });
   assert.match(prompt.user, /Emotional exhaustion/);
   assert.match(prompt.user, /no medical claims/);
+});
+
+test('a numbered product cameo may use its two allowed sentences', () => {
+  // Regression: the cameo MUST keep its numbered beat prefix ("3. i ..."), but the sentence
+  // count split on [.!?] treated that "3." as a sentence. A cameo using the two sentences the
+  // prompt explicitly allows therefore measured as three and was rejected every time, so in
+  // practice only a one-sentence comma-joined cameo could pass. This was the single largest
+  // source of discarded carousels.
+  const twoSentenceCameo = '3. I talk the whole day into Northstar. It turns my own words into a short reflection.';
+  const withCameo = candidate('How to stop replaying the same evening conversation');
+  withCameo.slides[3] = slide('Product moment', 3, { text: twoSentenceCameo, alt: twoSentenceCameo });
+  const [carousel] = normalizeCarouselOutput({ carousels: [withCameo] }, options({ count: 1 }));
+  assert.ok(carousel, 'a numbered two-sentence cameo should pass the publish checks');
+  assert.equal(carousel.slides[3].text, twoSentenceCameo);
+  assert.deepEqual(explainProductCameo(twoSentenceCameo, brief), []);
+});
+
+test('the cameo explainer names the condition that failed', () => {
+  // Twelve conditions ANDed together report nothing useful when the answer is just false.
+  const tooLong = '3. I talk the whole day into Northstar and it listens and then it turns my own words into a short saved reflection that I can play back later tonight.';
+  assert.ok(explainProductCameo(tooLong, brief).some((reason) => /too long/.test(reason)));
+  assert.ok(explainProductCameo('3. I open the thing.', brief).some((reason) => /product term/.test(reason)));
+});
+
+test('a pinned body shape carries its mechanical slide budget and cameo slot', () => {
+  // Each parallel call is pinned to one shape, so the prompt must state that shape's exact
+  // budget: the loose prose version kept producing carousels the validators rejected.
+  const a3 = carouselPrompt({ brand: compactBrief(brief), themes, liked: [], disliked: [], count: 1, assignedShape: 'A3' });
+  assert.match(a3.system, /PINNED TO BODY SHAPE A3/);
+  assert.match(a3.system, /EXACTLY 8 slides/);
+  assert.match(a3.system, /SLIDE 6 exactly/);
+  assert.match(a3.system, /NEVER promise more than 5 items/);
+
+  // No first-person experience in this brief, so a first-person cover cannot pass the lint.
+  assert.match(a3.system, /cover must contain NO i \/ my \/ me/);
+  const withStory = carouselPrompt({
+    brand: compactBrief({ ...brief, context: 'i used to reopen the same message every night before bed' }),
+    themes, liked: [], disliked: [], count: 1, assignedShape: 'A3',
+  });
+  assert.doesNotMatch(withStory.system, /cover must contain NO i \/ my \/ me/);
+
+  // An unpinned batch prompt keeps the original plural framing.
+  const batch = carouselPrompt({ brand: compactBrief(brief), themes, liked: [], disliked: [], count: 3 });
+  assert.match(batch.system, /BUILD EXACTLY 3 DISTINCT CAROUSELS/);
+  assert.doesNotMatch(batch.system, /PINNED TO BODY SHAPE/);
 });
