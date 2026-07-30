@@ -16,13 +16,28 @@
    word spaces into 91 / 60 / 147px. The settings below reproduce that as
    91 / 61 / 147px at a total of 320px — within 1px on every word.
 
-   opsz 36 + wght 700 + letter-spacing 0
+   wght 550 + letter-spacing .022em  ← THE ONE THAT MATTERED
+     Measured on the REAL .post-hook component (not a test page) via Playwright at
+     deviceScaleFactor 38.12/20, so the capture lands at the reference's own em.
+     STEM WIDTH is what identifies weight, and it is measurable: the mode of white
+     run widths across the x-height. Reference 3px (.079em). wght 700 gave 5px.
+     Ladder: wght 400 -> 2px | 450-550 -> 3px | 600 -> 4px | 700 -> 5px.
+     Dropping to 550 costs 14px of line width, which positive tracking restores:
+       wght 550 track .025  stem 3  line 323  words 90/60/146   <- best
+       wght 550 track .020  stem 3  line 320  words 89/60/145
+       wght 700 track 0     stem 5  line 319  words 89/61/147   <- old, right width
+                                                                   but far too heavy
+     So the reference is a MODERATE weight set open, not a bold weight set tight.
+     Both earlier revisions got this backwards, which is why the total line width
+     matched while the text still looked obviously wrong: at wght 700 the thick stems
+     crowd the letters, and the reference's letters are visibly separated.
+
+   opsz 36 pinned
      Ink-mask IoU against the reference, each candidate scaled to the same 321px
      line width:  opsz36 .651 | opsz24 .622 | opsz20 .608 | opsz16 .519 | opsz12 .443
-     So the reference matches the DISPLAY optical cut, and tracking must stay at 0.
-     An earlier revision shipped letter-spacing:-.012em on the theory that TikTok's
-     text looked tighter; that measured WORSE (IoU .636) and made the line 26px too
-     narrow. Do not reintroduce negative tracking.
+     So the reference matches the DISPLAY optical cut.
+     Do NOT use negative tracking. A revision shipped letter-spacing:-.012em from
+     eyeballing a screenshot; it measured worse (IoU .636) and ran 26px narrow.
 
    font-optical-sizing:none is what makes the pin hold. TikTok Sans is a 2-axis
    variable font (opsz 12-36 default 36, wght 300-900 default 300) and CSS defaults
@@ -44,8 +59,10 @@
      38.12px that reproduces its 321px line width. 47/38.12 = 1.233. The previous
      1.28 added ~1.8px of extra leading per line.
 
-   Weight 700 is confirmed independently: stem width measured .125em on the
-   reference, which is Bold for a grotesque of this class.
+   Measure on the REAL component, at the reference's em, and check STEM WIDTH — not
+   just line width. Two settings can produce the same line width and look nothing
+   alike. Use Playwright (Dan's instruction) and screenshot the actual element with
+   locator.screenshot(), not a synthetic page.
 
    Re-check any change with output/factory-mockup/font-match.html.
    ───────────────────────────────────────────────────────────────────────────── */
@@ -56,21 +73,25 @@
 .bslide-text,
 .srail-thumb .im .tt {
   font-family: 'TikTok Sans', Montserrat, 'Inter', system-ui, sans-serif;
-  font-weight: 700;
+  font-weight: 550;
   font-optical-sizing: none;
-  font-variation-settings: 'opsz' 36, 'wght' 700;
-  letter-spacing: 0;
+  font-variation-settings: 'opsz' 36, 'wght' 550;
+  letter-spacing: .022em;
   line-height: 1.23;
   color: #fff;
   -webkit-text-stroke: .15em #000;
   paint-order: stroke fill;
+  /* no text-shadow: TikTok's editor draws the outline only. A blurred shadow under
+     tightly-set lines smears into a dark slab behind the text on busy photos, which
+     is the single most un-TikTok-looking thing the overlay did. */
+  text-shadow: none;
 }
 
 /* numbered lead-ins inside a body slide ("1." / "2.") sit one step heavier —
    must go through 'wght', since font-variation-settings beats font-weight */
 .bslide-text .n {
-  font-weight: 800;
-  font-variation-settings: 'opsz' 36, 'wght' 800;
+  font-weight: 650;
+  font-variation-settings: 'opsz' 36, 'wght' 650;
 }
 
 /* NO visual guard here. An earlier version drew a dashed outline when the font

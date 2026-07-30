@@ -127,7 +127,7 @@
     .secondary{background:#fff;border:1px solid var(--line-2)}
     .secondary:hover{background:var(--paper-2);border-color:#aaa69e}
 
-    .brand-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(360px,.9fr);border-top:1px solid var(--line)}
+    .brand-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(390px,.98fr);border-top:1px solid var(--line);align-items:stretch}
     .brand-intake{padding:40px 34px 42px;border-right:1px solid var(--line);background:linear-gradient(145deg,#fff 0%,#fbfaf7 100%)}
     .brand-intake label{display:block;font-size:12px;font-weight:750;margin-bottom:10px}
     .brand-row{display:flex;gap:10px}
@@ -137,7 +137,12 @@
     .extract-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
     .extract-list div{padding-top:13px;border-top:1px solid var(--line)}
     .extract-list b{display:block;font-family:var(--display);font-size:20px}.extract-list span{display:block;color:var(--muted);font-size:11.5px;line-height:1.48;margin-top:4px}
-    .analysis-card{min-height:350px;padding:34px;display:flex;flex-direction:column;justify-content:center;background:#191917;color:#fff}
+    /* Empty state is centred; a real brief is long, so it starts at the top and scrolls in
+       place instead of leaving dead space under a short card. */
+    .analysis-card{min-height:350px;padding:32px;display:flex;flex-direction:column;justify-content:center;background:#191917;color:#fff}
+    .analysis-card.filled{justify-content:flex-start;max-height:min(88vh,900px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.22) transparent}
+    .analysis-card.filled::-webkit-scrollbar{width:8px}
+    .analysis-card.filled::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:8px}
     .analysis-idle{max-width:330px;color:rgba(255,255,255,.5);font-size:13px;line-height:1.7}
     .analysis-idle b{display:block;color:#fff;font-family:var(--display);font-size:23px;line-height:1.2;margin-bottom:11px}
     .analysis-run{display:none}.analysis-run.show{display:block}
@@ -155,6 +160,40 @@
     .result-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:15px}
     .result-tags span{padding:5px 8px;border:1px solid rgba(255,255,255,.16);border-radius:8px;color:rgba(255,255,255,.76);font-size:10px;font-weight:700}
     .brand-result .primary{width:100%;margin-top:22px}
+    .result-mark img{width:100%;height:100%;object-fit:contain;border-radius:inherit;display:block}
+    .result-mark.has-logo{background:#fff;padding:5px}
+
+    /* Editable brief. Every value is click-to-edit in place — no second settings screen. */
+    [data-edit]{outline:none;border-radius:6px;cursor:text;transition:box-shadow .15s,background .15s}
+    [data-edit]:hover{box-shadow:0 0 0 1px rgba(255,255,255,.2)}
+    [data-edit]:focus{box-shadow:0 0 0 1px var(--coral);background:rgba(255,255,255,.07)}
+    [data-edit]:empty::before{content:attr(data-placeholder);color:rgba(255,255,255,.28)}
+    .intel-block{padding-top:14px;margin-top:14px;border-top:1px solid rgba(255,255,255,.11)}
+    .intel-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+    .intel-head b{color:#fff;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase}
+    .intel-head i{flex:1;font-style:normal;color:rgba(255,255,255,.35);font-size:9.5px;letter-spacing:.05em}
+    .intel-btn{border:1px solid rgba(255,255,255,.18);background:none;color:rgba(255,255,255,.72);border-radius:7px;font-family:inherit;font-size:10px;font-weight:750;padding:4px 8px;cursor:pointer;transition:.15s}
+    .intel-btn:hover:not(:disabled){border-color:var(--coral);color:#fff}
+    .intel-btn:disabled{opacity:.45;cursor:default}
+    .pain{position:relative;padding:9px 56px 9px 10px;margin-bottom:6px;border:1px solid rgba(255,255,255,.1);border-radius:11px;background:rgba(255,255,255,.03)}
+    .pain.pinned{border-color:var(--coral);background:rgba(240,110,95,.11)}
+    .pain-label{display:block;color:#fff;font-size:12.5px;font-weight:700;line-height:1.42}
+    .pain-tell{display:block;color:rgba(255,255,255,.62);font-size:11px;line-height:1.55;margin-top:4px}
+    .pain-cost{display:block;color:rgba(255,255,255,.42);font-size:10.5px;line-height:1.5;margin-top:3px}
+    .pain-tools{position:absolute;top:7px;right:7px;display:flex;gap:3px}
+    .pain-tools button{width:22px;height:22px;display:grid;place-items:center;border:0;border-radius:6px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-size:11px;line-height:1;cursor:pointer;transition:.15s}
+    .pain-tools button:hover{background:rgba(255,255,255,.18);color:#fff}
+    .pain.pinned .pain-tools [data-pin]{background:var(--coral);color:#fff}
+    .intel-empty{color:rgba(255,255,255,.35);font-size:11.5px;line-height:1.6}
+    .chips{display:flex;flex-wrap:wrap;gap:6px}
+    .chip{display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:5px 7px 5px 9px;border:1px solid rgba(255,255,255,.16);border-radius:8px;color:rgba(255,255,255,.78);font-size:10.5px;font-weight:700;line-height:1.4}
+    .chip span{white-space:normal}
+    .chip button{border:0;background:none;color:rgba(255,255,255,.4);font-size:12px;line-height:1;padding:0 1px;cursor:pointer}
+    .chip button:hover{color:var(--coral)}
+    .bridge{display:grid;grid-template-columns:76px 1fr;gap:9px;align-items:baseline;padding:5px 0}
+    .bridge label{color:rgba(255,255,255,.4);font-size:10px;font-weight:750;letter-spacing:.04em;text-transform:uppercase}
+    .bridge span{color:rgba(255,255,255,.82);font-size:12px;line-height:1.55}
+    .intel-note{margin-top:11px;color:rgba(255,255,255,.32);font-size:10.5px;line-height:1.55;text-align:center}
 
     .swipe-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;min-height:626px;border-top:1px solid var(--line)}
     .swipe-zone{position:relative;display:grid;place-items:center;padding:26px;background:linear-gradient(145deg,#f5f3ee 0%,#fff 62%)}
@@ -168,7 +207,7 @@
     .post-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
     .post-top span{padding:6px 9px;border-radius:20px;background:rgba(18,18,16,.5);backdrop-filter:blur(8px);font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
     /* type comes from slide-type.css — geometry only here */
-    .post-hook{margin:auto 0;padding:0 8px;text-align:center;text-shadow:0 2px 10px rgba(0,0,0,.42);font-size:28px}
+    .post-hook{margin:auto 0;padding:0 8px;text-align:center;font-size:28px}
     .post-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}.post-foot b{display:block;font-size:11.5px}.post-foot p{color:rgba(255,255,255,.65);font-size:10px;margin-top:3px}.post-foot .slide-count{font-size:10.5px;font-weight:800}
     .stamp{position:absolute;z-index:4;top:34px;padding:7px 11px;border:3px solid;border-radius:10px;opacity:0;font-family:var(--display);font-size:19px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
     .stamp.keep{left:24px;color:#c9f3d4;border-color:#c9f3d4;transform:rotate(-8deg)}.stamp.pass{right:24px;color:#ffd1cc;border-color:#ffd1cc;transform:rotate(8deg)}
@@ -202,7 +241,7 @@
     .phone{position:relative;width:min(350px,100%);aspect-ratio:9/16;overflow:hidden;border:10px solid #191919;border-radius:40px;background:#111;box-shadow:0 34px 72px -40px rgba(0,0,0,.72)}
     .phone>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
     .phone::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.03) 55%,rgba(0,0,0,.55));pointer-events:none}
-    .phone-text{position:absolute;z-index:3;left:9%;right:9%;top:40%;transform:translateY(-50%);padding:7px;border-radius:8px;text-align:center;white-space:pre-wrap;cursor:grab;user-select:none;font-size:18px;text-shadow:0 2px 4px rgba(0,0,0,.28)}
+    .phone-text{position:absolute;z-index:3;left:9%;right:9%;top:40%;transform:translateY(-50%);padding:7px;border-radius:8px;text-align:center;white-space:pre-wrap;cursor:grab;user-select:none;font-size:18px}
     .phone-text:hover,.phone-text.dragging{background:rgba(0,0,0,.12);box-shadow:0 0 0 1px rgba(255,255,255,.3)}
     .phone-count{position:absolute;z-index:4;right:13px;top:14px;padding:4px 9px;border-radius:20px;background:rgba(0,0,0,.54);color:#fff;font-size:10px;font-weight:800}
     .phone-dots{position:absolute;z-index:4;left:0;right:0;bottom:65px;display:flex;justify-content:center;gap:5px}.phone-dots i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.48)}.phone-dots i.active{background:#fff;transform:scale(1.35)}
@@ -305,7 +344,7 @@
     .post-card::after{background:linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,.04) 30%,rgba(0,0,0,.08) 55%,rgba(0,0,0,.72) 100%)}
     .post-content{padding:18px 17px 19px}
     .post-top span{background:rgba(20,20,18,.52);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px);letter-spacing:0;text-transform:none;font-size:9px}
-    .post-hook{max-width:295px;margin:auto;padding:12px 8px;text-shadow:0 2px 5px rgba(0,0,0,.22);font-size:20px;white-space:pre-wrap}
+    .post-hook{max-width:295px;margin:auto;padding:12px 8px;font-size:20px;white-space:pre-wrap}
     .post-foot{display:block;padding-top:13px;border-top:1px solid rgba(255,255,255,.22)}
     .preview-role{display:block;color:rgba(255,255,255,.74);font-size:9.5px;font-weight:700;text-align:center;margin-bottom:9px}
     .preview-controls{display:grid;grid-template-columns:38px minmax(0,1fr) 38px;align-items:center;gap:8px}
@@ -520,17 +559,48 @@
                 <div class="analysis-line" data-analysis-line="1"><i></i><span>Reading positioning and product promise</span></div>
                 <div class="analysis-line" data-analysis-line="2"><i></i><span>Finding the audience and emotional tension</span></div>
                 <div class="analysis-line" data-analysis-line="3"><i></i><span>Extracting voice and visual cues</span></div>
+                <div class="analysis-line" data-analysis-line="4"><i></i><span>Finding the pains worth posting about</span></div>
               </div>
               <div class="brand-result" id="brandResult">
                 <div class="result-top">
                   <span class="result-mark" id="resultMark">K</span>
-                  <span><h3 id="resultName">Your company</h3><p id="resultDomain">yourcompany.com</p></span>
+                  <span><h3 id="resultName" data-edit="name" data-placeholder="Company name">Your company</h3><p id="resultDomain">yourcompany.com</p></span>
                 </div>
-                <div class="result-copy"><b>What it sells</b><span id="resultProduct"></span></div>
-                <div class="result-copy"><b>Who should feel seen</b><span id="resultAudience"></span></div>
-                <div class="result-copy"><b>Your added context</b><span id="resultContext"></span></div>
+                <div class="result-copy"><b>What it sells</b><span id="resultProduct" data-edit="product" data-placeholder="What the product does and promises"></span></div>
+                <div class="result-copy"><b>Who should feel seen</b><span id="resultAudience" data-edit="audience" data-placeholder="Who should recognize themselves"></span></div>
+                <div class="result-copy"><b>Your added context</b><span id="resultContext" data-edit="context" data-placeholder="No extra context added yet."></span></div>
                 <div class="result-tags" id="resultTags"></div>
+
+                <div class="intel-block">
+                  <div class="intel-head">
+                    <b>Audience pains</b><i id="painCount"></i>
+                    <button class="intel-btn" id="painRegen" type="button">⟳ Regenerate</button>
+                  </div>
+                  <div id="painList"></div>
+                  <button class="intel-btn" id="painAdd" type="button" style="margin-top:4px">+ Add a pain</button>
+                </div>
+
+                <div class="intel-block">
+                  <div class="intel-head"><b>Beliefs to break</b><i>slide 4 material</i></div>
+                  <div class="chips" id="beliefList"></div>
+                  <button class="intel-btn" id="beliefAdd" type="button" style="margin-top:8px">+ Add</button>
+                </div>
+
+                <div class="intel-block">
+                  <div class="intel-head"><b>Product bridge</b><i>how the app may appear</i></div>
+                  <div class="bridge"><label for="intelHabit">Habit</label><span id="intelHabit" data-edit="habit" data-scope="intel" data-placeholder="the product as one small daily habit"></span></div>
+                  <div class="bridge"><label for="intelPlug">Plug line</label><span id="intelPlug" data-edit="plugLine" data-scope="intel" data-placeholder="one first-person sentence naming it"></span></div>
+                  <div class="bridge"><label for="intelAvoid">Never claim</label><span id="intelAvoid" data-edit="avoid" data-scope="intel" data-placeholder="claims this brand must never make"></span></div>
+                </div>
+
+                <div class="intel-block">
+                  <div class="intel-head"><b>Their words</b><i>hook vocabulary</i></div>
+                  <div class="chips" id="wordList"></div>
+                  <button class="intel-btn" id="wordAdd" type="button" style="margin-top:8px">+ Add</button>
+                </div>
+
                 <button class="primary" id="toDiscover" type="button">Show ready carousels <span aria-hidden="true">→</span></button>
+                <p class="intel-note">Click any line to edit it. Saved on this device and used by every generator.</p>
               </div>
             </aside>
           </div>
@@ -908,6 +978,7 @@
         submit.textContent='Reading company...';
         qs('#analysisIdle').style.display = 'none';
         qs('#brandResult').classList.remove('show');
+        qs('.analysis-card').classList.remove('filled');
         qs('#analysisRun').classList.add('show');
         const lines = qsa('[data-analysis-line]');
         lines.forEach(line => {line.className = 'analysis-line';line.querySelector('i').textContent=''});
@@ -925,6 +996,7 @@
           if(!result.payload?.company?.name) throw new Error('The website did not produce a usable company brief.');
           state.company=result.payload.company;
           state.company.context=context;
+          state.company.url=website;
           qs('#analysisRun').classList.remove('show');
           renderBrandResult();
           unlockAppShell(true);
@@ -939,19 +1011,172 @@
           submit.textContent='Read company →';
         }
       }
+      // ── the editable brief ────────────────────────────────────────────────────────────
+      // The extracted profile is a starting point, not a verdict. Everything here is edited in
+      // place, kept in state.company, and read by every generator through the brief.
+      const EMPTY_INTEL = () => ({pains:[],beliefs:[],words:[],habit:'',plugLine:'',avoid:''});
+      function intel(){
+        if(!state.company) return EMPTY_INTEL();
+        const current=state.company.audience_intel;
+        if(!current || typeof current!=='object') state.company.audience_intel=EMPTY_INTEL();
+        const value=state.company.audience_intel;
+        ['pains','beliefs','words'].forEach(key=>{if(!Array.isArray(value[key])) value[key]=[]});
+        ['habit','plugLine','avoid'].forEach(key=>{if(typeof value[key]!=='string') value[key]=''});
+        return value;
+      }
       function renderBrandResult(){
         const company = state.company;
+        if(!company) return;
         const voice=Array.isArray(company.voice)?company.voice:[];
         const look=Array.isArray(company.look)?company.look:[];
-        qs('#resultMark').textContent = company.name.charAt(0).toUpperCase();
-        qs('#resultName').textContent = company.name;
-        qs('#resultDomain').textContent = company.domain;
-        qs('#resultProduct').textContent = company.product;
-        qs('#resultAudience').textContent = company.audience;
-        qs('#resultContext').textContent = company.context || 'No extra context added yet.';
+        const mark=qs('#resultMark');
+        const letter=(company.name||'C').charAt(0).toUpperCase();
+        // Hotlinked straight from the site. Some hosts block that, so the letter mark stays the
+        // fallback rather than leaving a broken image in the brief.
+        if(company.logo){
+          mark.classList.add('has-logo');
+          mark.innerHTML=`<img src="${escapeHtml(company.logo)}" alt="${escapeHtml(company.name||'')} logo">`;
+          mark.querySelector('img').addEventListener('error',()=>{
+            mark.classList.remove('has-logo');mark.textContent=letter;
+          },{once:true});
+        }else{
+          mark.classList.remove('has-logo');mark.textContent=letter;
+        }
+        qs('#resultName').textContent = company.name || '';
+        qs('#resultDomain').textContent = company.domain || '';
+        qs('#resultProduct').textContent = company.product || '';
+        qs('#resultAudience').textContent = company.audience || '';
+        qs('#resultContext').textContent = company.context || '';
         qs('#resultTags').innerHTML = [...voice.slice(0,3),...look.slice(0,3)].map(tag => `<span>${escapeHtml(tag)}</span>`).join('');
+        renderIntel();
         qs('#brandResult').classList.add('show');
+        qs('.analysis-card').classList.add('filled');
       }
+      function renderIntel(){
+        const value=intel();
+        const pinnedCount=value.pains.filter(pain=>pain.pinned).length;
+        qs('#painCount').textContent = value.pains.length
+          ? `${value.pains.length} found${pinnedCount?` · ${pinnedCount} pinned`:''}`
+          : '';
+        qs('#painList').innerHTML = value.pains.length
+          ? value.pains.map((pain,index)=>`
+            <div class="pain${pain.pinned?' pinned':''}">
+              <span class="pain-label" data-edit="label" data-scope="pain" data-index="${index}" data-placeholder="the pain, in their words">${escapeHtml(pain.label||'')}</span>
+              <span class="pain-tell" data-edit="tell" data-scope="pain" data-index="${index}" data-placeholder="the moment they notice it">${escapeHtml(pain.tell||'')}</span>
+              <span class="pain-cost" data-edit="cost" data-scope="pain" data-index="${index}" data-placeholder="what it costs them">${escapeHtml(pain.cost||'')}</span>
+              <span class="pain-tools">
+                <button type="button" data-pin="${index}" title="${pain.pinned?'Unpin':'Pin — force this into the next batch'}" aria-label="Pin pain">📌</button>
+                <button type="button" data-drop-pain="${index}" title="Remove this pain" aria-label="Remove pain">✕</button>
+              </span>
+            </div>`).join('')
+          : `<p class="intel-empty">No pains yet. Regenerate, or add the ones you already know.</p>`;
+        qs('#beliefList').innerHTML = value.beliefs.length
+          ? value.beliefs.map((belief,index)=>`<span class="chip"><span data-edit="belief" data-scope="list" data-index="${index}">${escapeHtml(belief)}</span><button type="button" data-drop="beliefs" data-index="${index}" aria-label="Remove belief">✕</button></span>`).join('')
+          : `<p class="intel-empty">Nothing yet.</p>`;
+        qs('#wordList').innerHTML = value.words.length
+          ? value.words.map((word,index)=>`<span class="chip"><span data-edit="word" data-scope="list" data-index="${index}">${escapeHtml(word)}</span><button type="button" data-drop="words" data-index="${index}" aria-label="Remove phrase">✕</button></span>`).join('')
+          : `<p class="intel-empty">Nothing yet.</p>`;
+        qs('#intelHabit').textContent=value.habit||'';
+        qs('#intelPlug').textContent=value.plugLine||'';
+        qs('#intelAvoid').textContent=value.avoid||'';
+        qsa('[data-edit]',qs('#brandResult')).forEach(node=>node.setAttribute('contenteditable','plaintext-only'));
+      }
+      function commitEdit(node){
+        if(!state.company) return;
+        const field=node.dataset.edit;
+        const text=node.textContent.replace(/\s+/g,' ').trim();
+        const scope=node.dataset.scope||'company';
+        const index=Number(node.dataset.index);
+        const value=intel();
+        if(scope==='company') state.company[field]=text;
+        else if(scope==='intel') value[field]=text;
+        else if(scope==='pain'&&value.pains[index]) value.pains[index][field]=text;
+        else if(scope==='list'){
+          const key=field==='belief'?'beliefs':'words';
+          if(text){value[key][index]=text}
+          // Only re-render when a chip disappears. Re-rendering on every edit would replace the
+          // node mid-interaction and swallow the click that follows (e.g. a neighbouring ✕).
+          else{value[key].splice(index,1);renderIntel()}
+        }
+        node.textContent=text;
+        persist();
+      }
+      async function regeneratePains(){
+        if(!state.company) return;
+        const button=qs('#painRegen');
+        button.disabled=true;button.textContent='Reading…';
+        try{
+          const payload=await api('/api/company/audience',{
+            url:qs('#brandUrl').value.trim() || state.company.sourceUrl || '',
+            context:state.company.context||'',
+            company:state.company
+          });
+          const fresh=payload?.audience;
+          if(!fresh) throw new Error('The audience pass came back empty.');
+          const value=intel();
+          // A pinned pain is the operator's decision — a regenerate must never drop it.
+          const pinned=value.pains.filter(pain=>pain.pinned);
+          const taken=new Set(pinned.map(pain=>(pain.label||'').toLowerCase()));
+          const added=(Array.isArray(fresh.pains)?fresh.pains:[])
+            .filter(pain=>pain&&pain.label&&!taken.has(String(pain.label).toLowerCase()));
+          state.company.audience_intel={
+            ...fresh,
+            pains:[...pinned,...added].slice(0,10)
+          };
+          renderIntel();persist();
+          toast(pinned.length?`New pains found. ${pinned.length} pinned kept.`:'New pains found.');
+        }catch(error){
+          toast(error.message||'Could not regenerate the pains.');
+        }finally{
+          button.disabled=false;button.textContent='⟳ Regenerate';
+        }
+      }
+      function focusNew(selector){
+        const nodes=qsa(selector,qs('#brandResult'));
+        const last=nodes[nodes.length-1];
+        if(last){last.focus();
+          const range=document.createRange();range.selectNodeContents(last);
+          const selection=getSelection();selection.removeAllRanges();selection.addRange(range);
+        }
+      }
+      (function wireBriefEditor(){
+        const root=qs('#brandResult');
+        root.addEventListener('focusout',event=>{
+          const node=event.target.closest?.('[data-edit]');
+          if(node) commitEdit(node);
+        });
+        root.addEventListener('keydown',event=>{
+          const node=event.target.closest?.('[data-edit]');
+          if(!node) return;
+          if(event.key==='Enter'){event.preventDefault();node.blur()}
+          if(event.key==='Escape'){event.preventDefault();renderBrandResult();}
+        });
+        root.addEventListener('click',event=>{
+          if(!state.company) return;
+          const value=intel();
+          const pin=event.target.closest('[data-pin]');
+          if(pin){const index=Number(pin.dataset.pin);
+            if(value.pains[index]){value.pains[index].pinned=!value.pains[index].pinned;renderIntel();persist()}
+            return;}
+          const dropPain=event.target.closest('[data-drop-pain]');
+          if(dropPain){value.pains.splice(Number(dropPain.dataset.dropPain),1);renderIntel();persist();return}
+          const drop=event.target.closest('[data-drop]');
+          if(drop){value[drop.dataset.drop].splice(Number(drop.dataset.index),1);renderIntel();persist();return}
+        });
+        qs('#painRegen').addEventListener('click',regeneratePains);
+        qs('#painAdd').addEventListener('click',()=>{
+          const value=intel();
+          if(value.pains.length>=10) return toast('Ten pains is the cap. Remove one first.');
+          value.pains.push({label:'',tell:'',cost:'',pinned:true});
+          renderIntel();persist();focusNew('[data-scope="pain"][data-edit="label"]');
+        });
+        qs('#beliefAdd').addEventListener('click',()=>{
+          const value=intel();value.beliefs.push('');renderIntel();persist();focusNew('[data-edit="belief"]');
+        });
+        qs('#wordAdd').addEventListener('click',()=>{
+          const value=intel();value.words.push('');renderIntel();persist();focusNew('[data-edit="word"]');
+        });
+      })();
       function installBatch(sources){
         state.batch++;
         state.candidates=sources.map((source,index)=>readyCandidate(source,index,state.batch));

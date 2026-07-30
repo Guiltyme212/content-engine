@@ -67,11 +67,11 @@
   .v-auto   .sample{font-family:'TikTok Sans',Montserrat,sans-serif;font-weight:700;letter-spacing:0;
                     font-optical-sizing:auto;-webkit-text-stroke:.13em #000}
   .v-fixed  .sample{font-family:'TikTok Sans',Montserrat,sans-serif;font-optical-sizing:none;
-                    font-variation-settings:'opsz' 36,'wght' 700;letter-spacing:0;
+                    font-variation-settings:'opsz' 36,'wght' 550;letter-spacing:.022em;
                     -webkit-text-stroke:.15em #000}
   .v-tight  .sample{font-family:'TikTok Sans',Montserrat,sans-serif;font-optical-sizing:none;
-                    font-variation-settings:'opsz' 36,'wght' 700;letter-spacing:-.012em;
-                    -webkit-text-stroke:.155em #000}
+                    font-variation-settings:'opsz' 36,'wght' 700;letter-spacing:0;
+                    -webkit-text-stroke:.15em #000}
   /* the small-optical cut as the previews actually rendered it: opsz follows px size,
      so at 18px it picks the loose text cut, then gets scaled up for display */
   .v-small  .sample{font-family:'TikTok Sans',Montserrat,sans-serif;font-weight:700;
@@ -140,13 +140,14 @@ waist this summer:</div></div>
     <div class="sample">how to shrink your
 waist this summer:</div></div>
 
-  <div class="vcard good v-fixed"><span class="tag">3 · opsz 36 pinned · wght 700 · tracking 0 · stroke .15em
-    <em>shipped in slide-type.css — measured match (ink IoU .651, words within 1px)</em></span>
+  <div class="vcard good v-fixed"><span class="tag">3 · opsz 36 · wght 550 · tracking +.022em · stroke .15em
+    <em>shipped — stem 3px, matching the reference's 3px; line 320–323px vs 321px</em></span>
     <div class="sample">how to shrink your
 waist this summer:</div></div>
 
-  <div class="vcard bad v-tight"><span class="tag">4 · same but −.012em tracking
-    <em>a previous revision — measured worse (IoU .636) and 26px too narrow</em></span>
+  <div class="vcard bad v-tight"><span class="tag">4 · same but wght 700, tracking 0
+    <em>the previous revision. Right line width, but stem 5px vs the reference's 3px —
+    thick stems crowd the letters, which is why it still looked wrong</em></span>
     <div class="sample">how to shrink your
 waist this summer:</div></div>
 </div>
@@ -168,7 +169,7 @@ document.fonts.load('700 18px "TikTok Sans"', 'abcdefghijklmnopqrstuvwxyz')
 // x/y place our line on top of the reference's own ink origin (x 34, ink top 23);
 // the element sits 2px left and 7px above that because of side bearing and the
 // gap between the line box top and the ascender
-var SHIPPED = { size:38, lh:1.23, track:0, wght:700, opsz:36, stroke:150, x:32, y:16 };
+var SHIPPED = { size:38, lh:1.23, track:22, wght:550, opsz:36, stroke:150, x:32, y:16 };
 var CTLS = [
   { k:'size',   label:'font-size',      min:24, max:52,  step:.5, unit:'px'  },
   { k:'lh',     label:'line-height',    min:1,  max:1.6, step:.01,unit:''    },
