@@ -1,0 +1,14 @@
+{
+  "name": "content-factory",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Multi-tenant content-generation service. Serves the factory site + hook engine API.",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "node server/test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,2957 @@
+{
+  "brand": "kokoro",
+  "source": {
+    "type": "google-sheet",
+    "fileId": "1rG8svgOZSIQsU-fP7mVYTAEKxKLkiob9y1pm1yoxvdU",
+    "importedAt": null
+  },
+  "bio": "Daily mental wellness & meditation tips 🌿\nFind \"Kokoro\" app on the App Store ✨",
+  "accountName": "alice_kokoro or alice_kokoroapp",
+  "personaPrompts": {
+    "slide1": "I'll upload multiple reference photos of the same person.\nFor each reference photo, generate 6 new photos that looks like it was taken of the same person during the same period of their life.\nKeep unchanged\nFace and facial features (do not alter identity)\nHair color, haircut, and texture (unless I explicitly ask otherwise)\nSkin tone\nBody proportions\nOverall facial expression and emotional vibe\nAge and appearance\nThe person's recognizable identity\nChange\nLocation/background (or keep a similar setting if requested)\nPose\nCamera angle\nComposition\nOutfit\nSmall accessories if appropriate\nMinor details that naturally vary between photos\nStyle requirements\nUltra-realistic photograph\nHigh-end editorial/lifestyle photography\nNatural lighting\nAuthentic skin texture\nNo beauty filters\nNo AI-looking artifacts\nHigh-resolution\nShallow depth of field\nVertical 9:16 unless specified otherwise\nVery important\nTreat each uploaded image independently.\nGenerate one new variation for each reference photo.\nDo not blend poses, clothing, backgrounds, or compositions from different uploaded images.\nThe generated image should look like the next photo taken after the reference photo, with the same person but a different pose, outfit, camera angle, and/or location.\nThe person must remain instantly recognizable in every generated image.",
+    "slide2": "I'll upload multiple reference photos of the same person.\nFor each reference photo, generate 6 new photos of the exact same person in the same room, as if they were taken during the same photoshoot, just a few minutes apart.\nKeep unchanged\nFace and facial features (do not alter identity)\nHair color, haircut, and texture\nSkin tone\nAge and body proportions\nFacial expression and overall emotional vibe\nThe room and its layout\nFurniture and background elements\nLighting, shadows, color grading, and atmosphere\nTime of day\nCamera quality and realism\nChange\nPose (every image should have a different natural pose)\nCamera angle and framing\nBody position\nHand placement\nOutfit (different clothing that fits the same aesthetic)\nSmall accessories if appropriate\nMinor natural variations that would occur during a real photoshoot\nRequirements\nThe 6 generated photos must all be different from one another.\nEach image should feel like the next shot taken by the photographer, not a copy of the previous one.\nDo not repeat poses or camera angles.\nKeep the room identical, but vary where the person sits, stands, leans, or looks naturally within it.\nPreserve the same emotional atmosphere.\nStyle\nUltra-realistic photograph\nHigh-end editorial/lifestyle photography\nLooks like another frame from the same photoshoot\nNatural skin texture\nNo beauty filters\nNo AI artifacts\nShallow depth of field\nProfessional camera quality\nVertical 9:16\nVery Important\nTreat each uploaded reference photo independently.\nGenerate 6 variations for each reference image only.\nDo not combine features, poses, or compositions from different reference photos.\nThe person must remain instantly recognizable as the exact same individual in every generated image.",
+    "slide5": "I'll upload multiple reference photos of the same person.\nFor each reference photo, generate 6 new photos of the exact same person in the same room, as if they were taken during the same photoshoot, just a few minutes apart.\nKeep unchanged\nFace and facial features (do not alter identity)\nHair color, haircut, and texture\nSkin tone\nAge and body proportions\nFacial expression and overall emotional vibe\nThe room and its layout\nFurniture, décor, and background elements\nLighting, shadows, color grading, and atmosphere\nTime of day\nCamera quality, lens characteristics, and realism\nChange\nPose (every image should have a completely different but natural pose)\nCamera angle and framing\nBody position\nHand placement\nOutfit (different clothing that matches the same aesthetic)\nSmall accessories if appropriate\nFacial gaze (looking at the camera, away, down, etc.)\nMinor natural variations that would occur during a real photoshoot\nRequirements\nGenerate 6 unique photos for each reference image.\nEvery generated photo must be noticeably different from the others.\nEach image should feel like the next shot taken by the photographer, not a recreation of the previous one.\nDo not repeat poses, camera angles, framing, or clothing.\nKeep the room identical while naturally changing where the person sits, stands, lies down, leans, or interacts with the environment.\nPreserve the same emotional atmosphere and visual style.\nStyle\nUltra-realistic photograph\nLooks like another frame from the same photoshoot\nHigh-end editorial/lifestyle photography\nNatural skin texture\nNo beauty filters\nNo AI-looking artifacts\nShallow depth of field\nProfessional camera quality\nVertical 9:16\nVery Important\nTreat each uploaded reference photo independently.\nGenerate 6 variations for each reference image only.\nDo not combine features, poses, clothing, expressions, or compositions from different reference photos.\nThe person must remain instantly recognizable as the exact same individual in every generated image.\nThe only noticeable differences should be the pose, outfit, camera angle, framing, and natural body positioning, while the identity, room, lighting, and mood remain unchanged."
+  },
+  "posts": [
+    {
+      "id": 1,
+      "topic": "Burnout symptom",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "The burnout symptom nobody warned me about"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You stop replying to people you genuinely care about."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Even \"relaxing\" feels like another task on your to-do list."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "The first habit that actually helped was checking in with my emotions every evening. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Slowly, the things you once loved stop feeling exciting."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Burnout whispers long before it screams."
+        }
+      ],
+      "caption": "Some things I wish someone had told me sooner 🤍 I use the Kokoro app to help me slow down and check in with myself every day.",
+      "hashtags": [
+        "burnout",
+        "mentalhealth",
+        "meditation",
+        "wellness"
+      ],
+      "song": "EX7STENCE"
+    },
+    {
+      "id": 2,
+      "topic": "Before burnout",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "I wish someone had told me this before I burned out"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Being busy isn't the same as being okay."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Rest isn't something you earn. Your brain needs it to function."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "A 2-minute emotional check-in became part of my routine. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Stress doesn't disappear just because you ignore it."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Don't wait until your body forces you to slow down."
+        }
+      ],
+      "caption": "Healing starts with understanding what you're feeling 🤍 I use the Kokoro app to help me become more aware of my emotions.",
+      "hashtags": [
+        "burnout",
+        "mentalhealth",
+        "mindfulness",
+        "healing"
+      ],
+      "song": "Phantom – ESD"
+    },
+    {
+      "id": 3,
+      "topic": "Vacation",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "I thought I needed a vacation... but I was wrong"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "The trip helped... for about a week."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Then the same thoughts came right back."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "What actually changed things was understanding how I felt each day. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "I wasn't just tired—I was emotionally exhausted."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "You can't escape stress if your mind comes with you."
+        }
+      ],
+      "caption": "You're not lazy. You might just be emotionally exhausted 🤍 I use the Kokoro app to help me understand how I'm really feeling.",
+      "hashtags": [
+        "burnout",
+        "stress",
+        "mentalhealth",
+        "wellness"
+      ],
+      "song": "Lost the Spark"
+    },
+    {
+      "id": 4,
+      "topic": "Burnout mistakes",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 mistakes that quietly lead to burnout"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "1. Pretending you're \"fine\" because it's easier."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "2. Waiting until you're completely drained before resting."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "3. Never checking in with yourself. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "4. Believing rest has to be earned."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "5. Ignoring the little warning signs until they become impossible to ignore."
+        }
+      ],
+      "caption": "Burnout doesn't happen overnight. Neither does healing 🤍 I use the Kokoro app to help me build small habits that actually stick.",
+      "hashtags": [
+        "burnout",
+        "selfcare",
+        "mentalhealth",
+        "mindfulness"
+      ],
+      "song": "Agreement Song"
+    },
+    {
+      "id": 5,
+      "topic": "Meditation",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "I thought meditation would never work for me"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You don't have to stop your thoughts. Nobody can."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "The goal is to notice them—not chase them."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "I kept showing up for just two minutes a day. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Tiny sessions you actually do beat perfect sessions you never start."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Your mind doesn't need perfection. It needs practice."
+        }
+      ],
+      "caption": "Meditation isn't about having no thoughts 🤍 I use the Kokoro app to help me stay consistent with meditation.",
+      "hashtags": [
+        "meditation",
+        "mindfulness",
+        "mentalhealth",
+        "focus"
+      ],
+      "song": "Cool for the Summer (Slowed)"
+    },
+    {
+      "id": 6,
+      "topic": "Always tired",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "The real reason I was always tired"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "My body wasn't exhausted. My mind was."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Every day ended with the same stress I woke up with."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Spending two minutes reflecting changed more than another hour of sleep. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Mental exhaustion can feel exactly like physical exhaustion."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Sometimes the problem isn't your sleep. It's your stress."
+        }
+      ],
+      "caption": "Being tired isn't always about sleep 🤍 I use the Kokoro app to help me unwind mentally every evening.",
+      "hashtags": [
+        "burnout",
+        "stress",
+        "wellness",
+        "mentalhealth"
+      ],
+      "song": "Dracula (JENNIE Remix)"
+    },
+    {
+      "id": 7,
+      "topic": "Emotional exhaustion",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 signs you're emotionally exhausted"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "1. Small tasks suddenly feel overwhelming."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "2. \"How are you?\" becomes a difficult question to answer."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "3. You stop checking in with yourself. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "4. Nothing feels exciting anymore."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "5. You're surviving instead of living."
+        }
+      ],
+      "caption": "Emotional exhaustion looks different than most people think 🤍 I use the Kokoro app to help me recognize it before it gets worse.",
+      "hashtags": [
+        "burnout",
+        "mentalhealth",
+        "healing",
+        "wellness"
+      ],
+      "song": "Babydoll – Ari Abdul"
+    },
+    {
+      "id": 8,
+      "topic": "Depression recovery",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "How I slowly became myself again after depression"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "I stopped trying to fix my life overnight."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Small habits mattered more than motivation ever did."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Looking at my emotions every day helped me stay consistent. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Progress looked invisible until I looked back."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Healing isn't linear—and it doesn't have to be."
+        }
+      ],
+      "caption": "Healing is rarely linear, and that's okay 🤍 I use the Kokoro app to help me stay consistent, even on hard days.",
+      "hashtags": [
+        "healing",
+        "mentalhealth",
+        "mindfulness",
+        "wellness"
+      ],
+      "song": "Daisies – Justin Bieber"
+    },
+    {
+      "id": 9,
+      "topic": "Recovery rating",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "Rating everything that helped me recover from burnout"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Walking every day → 8/10. Simpler than I expected."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Sleeping more → 6/10. Helpful, but never enough on its own."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Daily emotional check-ins → 10/10. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Meditation → 9/10. It got easier the longer I stayed consistent."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "There was no magic fix. Just small habits that finally added up."
+        }
+      ],
+      "caption": "Small habits changed more than I expected 🤍 I use the Kokoro app to help me reflect for a few minutes every day.",
+      "hashtags": [
+        "mentalhealth",
+        "meditation",
+        "wellness",
+        "selfcare"
+      ],
+      "song": "Chanel (Slowed)"
+    },
+    {
+      "id": 10,
+      "topic": "Biggest lie",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "The biggest lie burnout made me believe"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "\"I just need to push a little harder.\""
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "The harder I pushed, the worse I felt."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Everything changed once I actually started listening to myself. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Ignoring stress doesn't make you stronger."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "The strongest people know when it's time to slow down."
+        }
+      ],
+      "caption": "Burnout lies to you more than you realize 🤍 I use the Kokoro app to help me reconnect with myself.",
+      "hashtags": [
+        "burnout",
+        "mentalhealth",
+        "mindfulness",
+        "stress"
+      ],
+      "song": "Self Aware"
+    },
+    {
+      "id": 11,
+      "topic": "Overthinking",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 signs you're stuck in overthinking"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You replay conversations that ended days ago."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "You think of the \"perfect\" response long after it's too late."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "A simple nightly brain dump helped me quiet the noise. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Your brain stays busy even when your body is exhausted."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "You don't need more answers. You need more peace."
+        }
+      ],
+      "caption": "Overthinking steals more than your time 🤍 I use the Kokoro app to help me quiet my mind before bed.",
+      "hashtags": [
+        "overthinking",
+        "mentalhealth",
+        "mindfulness",
+        "anxiety"
+      ],
+      "song": "EX7STENCE"
+    },
+    {
+      "id": 12,
+      "topic": "Survival mode",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 signs you're living in survival mode"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Rest makes you feel guilty instead of relaxed."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Every notification feels like an emergency."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Daily emotional check-ins helped me realize how long I'd been stuck. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "You can't remember the last time you genuinely felt calm."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Surviving isn't the same as living."
+        }
+      ],
+      "caption": "Survival mode isn't meant to be permanent 🤍 I use the Kokoro app to help me slow down and breathe.",
+      "hashtags": [
+        "burnout",
+        "stress",
+        "mentalhealth",
+        "wellness"
+      ],
+      "song": "Phantom – ESD"
+    },
+    {
+      "id": 13,
+      "topic": "Emotional numbness",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "This could be why nothing feels exciting anymore"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "It's not that you've stopped caring. You're emotionally drained."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Even your favorite things feel like obligations."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Naming what I felt each day slowly brought me back to myself. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Numbness is often your mind protecting itself."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "You can't feel joy if you're stuck in survival mode."
+        }
+      ],
+      "caption": "Feeling numb doesn't mean you don't care 🤍 I use the Kokoro app to help me reconnect with my emotions.",
+      "hashtags": [
+        "mentalhealth",
+        "burnout",
+        "healing",
+        "selfcare"
+      ],
+      "song": "Lost the Spark"
+    },
+    {
+      "id": 14,
+      "topic": "Therapist advice",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "The therapist advice I didn't want to hear... but needed"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Stop trying to control every thought."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "You don't have to earn your right to rest."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Spending two minutes checking in with myself changed more than I expected. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Healing starts with awareness, not perfection."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "The hardest advice is often the one that changes you most."
+        }
+      ],
+      "caption": "Sometimes the hardest advice is exactly what we need 🤍 I use the Kokoro app to help me practice it every day.",
+      "hashtags": [
+        "therapy",
+        "mentalhealth",
+        "healing",
+        "mindfulness"
+      ],
+      "song": "Agreement Song"
+    },
+    {
+      "id": 15,
+      "topic": "Meditation",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "I used to think meditation wasn't for me"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "I thought my mind was \"too busy.\""
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Then I realized that's exactly why I needed it."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "I committed to just two minutes a day. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Small, consistent moments changed everything."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "You don't have to be calm to begin."
+        }
+      ],
+      "caption": "Meditation became easier once I stopped chasing perfection 🤍 I use the Kokoro app to help me stay consistent.",
+      "hashtags": [
+        "meditation",
+        "mindfulness",
+        "wellness",
+        "focus"
+      ],
+      "song": "Cool for the Summer (Slowed)"
+    },
+    {
+      "id": 16,
+      "topic": "Always tired",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "If you're always tired, read this"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "More sleep didn't fix how I felt."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "My brain never got a chance to recover."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "A simple evening reflection became my reset button. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Stress can drain you as much as lack of sleep."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Being tired isn't always about sleep."
+        }
+      ],
+      "caption": "If this feels familiar, you're definitely not alone 🤍 I use the Kokoro app to help me check in with myself daily.",
+      "hashtags": [
+        "burnout",
+        "mentalhealth",
+        "stress",
+        "wellness"
+      ],
+      "song": "Dracula (JENNIE Remix)"
+    },
+    {
+      "id": 17,
+      "topic": "Burnout recovery",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "How I slowly recovered from burnout"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "I stopped measuring my worth by my productivity."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "I learned that resting isn't falling behind."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "One small daily habit helped me stay consistent. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Recovery happened so slowly I almost missed it."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Healing is quiet before it's obvious."
+        }
+      ],
+      "caption": "Recovery happens one small habit at a time 🤍 I use the Kokoro app to help me stay on track.",
+      "hashtags": [
+        "burnout",
+        "healing",
+        "mentalhealth",
+        "wellness"
+      ],
+      "song": "Babydoll – Ari Abdul"
+    },
+    {
+      "id": 18,
+      "topic": "Rest",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "Everyone tells you to rest... but nobody explains this"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Your body can be lying in bed while your mind keeps working."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "That's why sleeping doesn't always feel refreshing."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Checking in with my emotions became part of winding down. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Real rest begins when your mind feels safe too."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Rest isn't just sleep. It's feeling at peace."
+        }
+      ],
+      "caption": "Rest is more than just getting enough sleep 🤍 I use the Kokoro app to help me relax my mind too.",
+      "hashtags": [
+        "selfcare",
+        "burnout",
+        "mentalhealth",
+        "mindfulness"
+      ],
+      "song": "Daisies – Justin Bieber"
+    },
+    {
+      "id": 19,
+      "topic": "Brain fog",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 signs your brain is overwhelmed"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You forget what you were about to do."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "You reread the same sentence three times."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Tracking how I felt helped me spot patterns I never noticed before. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Simple decisions suddenly feel impossible."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Brain fog isn't laziness. It's a signal."
+        }
+      ],
+      "caption": "Your brain is trying to tell you something 🤍 I use the Kokoro app to help me notice those signals.",
+      "hashtags": [
+        "mentalhealth",
+        "brainfog",
+        "burnout",
+        "wellness"
+      ],
+      "song": "Chanel (Slowed)"
+    },
+    {
+      "id": 20,
+      "topic": "High-functioning stress",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "You can look completely fine... and still be burning out"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Everyone praises how much you're getting done."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Nobody sees how exhausted you feel inside."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Paying attention to my emotions changed the way I treated myself. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "High-functioning stress is still stress."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Don't wait until your body forces you to slow down."
+        }
+      ],
+      "caption": "Looking okay doesn't always mean feeling okay 🤍 I use the Kokoro app to help me check in with myself honestly.",
+      "hashtags": [
+        "mentalhealth",
+        "burnout",
+        "anxiety",
+        "wellness"
+      ],
+      "song": "Self Aware"
+    },
+    {
+      "id": 21,
+      "topic": "People-pleasing",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 signs you're a people pleaser (and it's exhausting you)"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You say \"yes\" even when every part of you wants to say \"no.\""
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "You worry more about disappointing others than disappointing yourself."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Taking two minutes to ask myself what I needed changed everything. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "You spend so much energy keeping everyone else happy that nothing is left for you."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Being kind to yourself isn't selfish."
+        }
+      ],
+      "caption": "People pleasing is exhausting in ways you don't notice 🤍 I use the Kokoro app to help me put myself first sometimes.",
+      "hashtags": [
+        "peoplepleasing",
+        "mentalhealth",
+        "selfcare",
+        "healing"
+      ],
+      "song": "EX7STENCE"
+    },
+    {
+      "id": 22,
+      "topic": "Perfectionism",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "Things I wish I knew before perfectionism burned me out"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Perfection wasn't making me better—it was keeping me stuck."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "I kept waiting until everything felt \"ready.\""
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Celebrating small wins became part of my daily routine. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Progress comes from showing up, not getting everything right."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Done is almost always better than perfect."
+        }
+      ],
+      "caption": "Progress beats perfection every single time 🤍 I use the Kokoro app to help me focus on consistency instead.",
+      "hashtags": [
+        "perfectionism",
+        "mentalhealth",
+        "mindfulness",
+        "wellness"
+      ],
+      "song": "Phantom – ESD"
+    },
+    {
+      "id": 23,
+      "topic": "Productivity anxiety",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 signs your anxiety is pretending to be productivity"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You always need to feel busy to feel valuable."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Relaxing makes you feel guilty instead of peaceful."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Reflecting for a few minutes each evening helped me separate pressure from purpose. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Being constantly busy doesn't mean you're moving forward."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Your worth isn't measured by your to-do list."
+        }
+      ],
+      "caption": "Anxiety often disguises itself as productivity 🤍 I use the Kokoro app to help me slow down and reflect.",
+      "hashtags": [
+        "anxiety",
+        "burnout",
+        "mentalhealth",
+        "focus"
+      ],
+      "song": "Lost the Spark"
+    },
+    {
+      "id": 24,
+      "topic": "Nervous system",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "Nobody tells you this about your nervous system"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "I couldn't understand why I still felt exhausted on \"easy\" days."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Then I learned my nervous system was still stuck in survival mode."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "A short evening reset helped me feel safe again. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Calm isn't something you find. It's something you practice."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Your nervous system deserves rest too."
+        }
+      ],
+      "caption": "Your nervous system deserves kindness too 🤍 I use the Kokoro app to help me feel calmer every day.",
+      "hashtags": [
+        "nervoussystem",
+        "mentalhealth",
+        "wellness",
+        "mindfulness"
+      ],
+      "song": "Agreement Song"
+    },
+    {
+      "id": 25,
+      "topic": "Doomscrolling",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 signs doomscrolling is changing your brain"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You unlock your phone without even realizing it."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "You finish scrolling feeling more anxious than before."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Replacing five minutes of scrolling with a mental check-in made a huge difference. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Your attention is being trained every single day."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Protect your mind like you protect your body."
+        }
+      ],
+      "caption": "Protect your attention. Protect your peace 🤍 I use the Kokoro app to help me spend less time scrolling.",
+      "hashtags": [
+        "doomscrolling",
+        "mentalhealth",
+        "mindfulness",
+        "focus"
+      ],
+      "song": "Cool for the Summer (Slowed)"
+    },
+    {
+      "id": 26,
+      "topic": "Emotional awareness",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "The emotional skill I wish I'd learned years earlier"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "When someone asks how you feel, \"I don't know\" becomes your default answer."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "You call every emotion \"stress\" because it's easier."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Naming one emotion every evening slowly changed the way I understood myself. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "You can't care for emotions you never recognize."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Awareness always comes before healing."
+        }
+      ],
+      "caption": "Emotional awareness changes everything 🤍 I use the Kokoro app to help me build that habit.",
+      "hashtags": [
+        "selfawareness",
+        "mentalhealth",
+        "healing",
+        "wellness"
+      ],
+      "song": "Dracula (JENNIE Remix)"
+    },
+    {
+      "id": 27,
+      "topic": "Healing",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "Everyone tells you healing takes time... but nobody tells you this"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Healing often feels like nothing is changing."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Then one day you realize you're reacting differently than before."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Looking back at my daily reflections reminded me how far I'd actually come. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Growth is easiest to see in hindsight."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Keep going. Your future self will thank you."
+        }
+      ],
+      "caption": "Healing feels slow until you look back 🤍 I use the Kokoro app to help me see my progress.",
+      "hashtags": [
+        "healing",
+        "mentalhealth",
+        "mindfulness",
+        "wellness"
+      ],
+      "song": "Babydoll – Ari Abdul"
+    },
+    {
+      "id": 28,
+      "topic": "Brain reset",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 things I do when my brain feels overwhelmed"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "I stop trying to solve every problem immediately."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "I step away from my phone—even if it's only for a few minutes."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "I spend two quiet minutes checking in with myself. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "I remind myself that not everything is urgent."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Small resets stop big breakdowns."
+        }
+      ],
+      "caption": "Tiny resets can prevent big breakdowns 🤍 I use the Kokoro app to help me reset every evening.",
+      "hashtags": [
+        "mentalhealth",
+        "stress",
+        "mindfulness",
+        "wellness"
+      ],
+      "song": "Daisies – Justin Bieber"
+    },
+    {
+      "id": 29,
+      "topic": "Self-worth",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "The biggest lie I believed about self-worth"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "I thought I had to earn rest."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "I believed being productive made me more valuable."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Daily journaling helped me notice those beliefs for what they were. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Your value doesn't change because you had a bad day."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "You are enough before you achieve anything."
+        }
+      ],
+      "caption": "Your worth has never depended on your productivity 🤍 I use the Kokoro app to help me remember that.",
+      "hashtags": [
+        "selfworth",
+        "mentalhealth",
+        "selfcare",
+        "healing"
+      ],
+      "song": "Chanel (Slowed)"
+    },
+    {
+      "id": 30,
+      "topic": "Happiness",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 signs you're chasing happiness the wrong way"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You keep telling yourself, \"I'll be happy when...\""
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Every goal just gets replaced by another one."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Spending a few minutes appreciating how I actually felt changed my perspective. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Happiness isn't waiting at the finish line."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Don't miss today's life chasing tomorrow's."
+        }
+      ],
+      "caption": "Happiness isn't waiting at the finish line 🤍 I use the Kokoro app to help me enjoy the present.",
+      "hashtags": [
+        "happiness",
+        "mentalhealth",
+        "wellness",
+        "mindfulness"
+      ],
+      "song": "Self Aware"
+    },
+    {
+      "id": 31,
+      "topic": "Overthinking",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 steps to stop overthinking everything"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Stop trying to solve every future problem today."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Ask yourself: \"Can I control this right now?\""
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "A 2-minute evening brain dump became my reset. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Most thoughts don't need solutions. They need space."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Peace begins when you stop arguing with every thought."
+        }
+      ],
+      "caption": "Peace starts with one small step 🤍 I use the Kokoro app to help me take that first step.",
+      "hashtags": [
+        "overthinking",
+        "mentalhealth",
+        "mindfulness",
+        "focus"
+      ],
+      "song": "EX7STENCE"
+    },
+    {
+      "id": 32,
+      "topic": "Nervous system",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "I wish someone had explained my nervous system like this"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Imagine your brain has an alarm system."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Stress keeps pressing the alarm—even when you're safe."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Daily guided check-ins helped me turn the volume down. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Your body isn't broken. It's trying to protect you."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Safety is something your brain can relearn."
+        }
+      ],
+      "caption": "Understanding your mind changes everything 🤍 I use the Kokoro app to help me understand myself better.",
+      "hashtags": [
+        "nervoussystem",
+        "mentalhealth",
+        "wellness",
+        "healing"
+      ],
+      "song": "Phantom – ESD"
+    },
+    {
+      "id": 33,
+      "topic": "Rest",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "Everyone tells you to \"take a break\"... but no one tells you this"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Rest isn't just lying in bed."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "If your mind keeps racing, you're not really resting."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "I finally created a bedtime routine that calmed my mind too. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Your brain deserves recovery just as much as your body."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Real rest feels like peace—not just sleep."
+        }
+      ],
+      "caption": "Real rest begins when your mind feels safe 🤍 I use the Kokoro app to help me wind down each night.",
+      "hashtags": [
+        "rest",
+        "mentalhealth",
+        "mindfulness",
+        "wellness"
+      ],
+      "song": "Lost the Spark"
+    },
+    {
+      "id": 34,
+      "topic": "Anxiety",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "This can be why your anxiety never seems to disappear"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You're trying to silence every anxious thought."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Fighting your thoughts often gives them more power."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Learning to notice my emotions changed everything. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Acceptance is different from giving up."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "You don't have to win every battle in your mind."
+        }
+      ],
+      "caption": "You don't have to fight every thought 🤍 I use the Kokoro app to help me let them pass.",
+      "hashtags": [
+        "anxiety",
+        "mindfulness",
+        "mentalhealth",
+        "healing"
+      ],
+      "song": "Agreement Song"
+    },
+    {
+      "id": 35,
+      "topic": "Burnout",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "People are beginning to realize burnout isn't just about work"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Constant emotional pressure is exhausting too."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Even happy moments become harder to enjoy."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Emotional check-ins helped me notice what was draining me. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Burnout affects your whole life—not just your job."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Recovery starts when you stop pretending you're fine."
+        }
+      ],
+      "caption": "Burnout is about more than work 🤍 I use the Kokoro app to help me take care of my mental health.",
+      "hashtags": [
+        "burnout",
+        "mentalhealth",
+        "stress",
+        "wellness"
+      ],
+      "song": "Cool for the Summer (Slowed)"
+    },
+    {
+      "id": 36,
+      "topic": "Therapist",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "The weirdest trick my therapist taught me"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Instead of asking \"What's wrong with me?\"..."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Ask \"What happened to me today?\""
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "That one question became part of my evening routine. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Curiosity is kinder than self-judgment."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "The questions you ask yourself matter."
+        }
+      ],
+      "caption": "Sometimes one question changes everything 🤍 I use the Kokoro app to help me ask it every day.",
+      "hashtags": [
+        "therapy",
+        "mentalhealth",
+        "selfawareness",
+        "healing"
+      ],
+      "song": "Dracula (JENNIE Remix)"
+    },
+    {
+      "id": 37,
+      "topic": "Healing",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "How to get your life back after burnout"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Don't try to fix everything this week."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Start with one tiny habit you can actually keep."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Mine was checking in with myself every evening. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Small habits rebuild broken routines."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Healing happens one ordinary day at a time."
+        }
+      ],
+      "caption": "Healing starts with one habit you can actually keep 🤍 I use the Kokoro app to help me stay consistent.",
+      "hashtags": [
+        "burnout",
+        "healing",
+        "mentalhealth",
+        "wellness"
+      ],
+      "song": "Babydoll – Ari Abdul"
+    },
+    {
+      "id": 38,
+      "topic": "Self-compassion",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "Things I wish I knew before I started healing"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Some days you'll feel like you're making no progress."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "That's completely normal."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Looking back at my daily reflections reminded me I'd come further than I thought. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Growth is usually invisible while it's happening."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Be patient with the version of you that's still healing."
+        }
+      ],
+      "caption": "Growth is usually invisible while it's happening 🤍 I use the Kokoro app to help me see the little wins.",
+      "hashtags": [
+        "healing",
+        "mentalhealth",
+        "mindfulness",
+        "wellness"
+      ],
+      "song": "Daisies – Justin Bieber"
+    },
+    {
+      "id": 39,
+      "topic": "Brain fog",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "A Harvard psychologist explained why my brain felt broken"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Your brain isn't designed for constant stimulation."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "It needs quiet moments to recover and process."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Giving myself two quiet minutes each evening made a bigger difference than I expected. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Focus grows when your mind gets space to breathe."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Your brain isn't lazy. It's overloaded."
+        }
+      ],
+      "caption": "Your brain isn't broken. It's overloaded 🤍 I use the Kokoro app to help me slow down.",
+      "hashtags": [
+        "focus",
+        "mentalhealth",
+        "stress",
+        "wellness"
+      ],
+      "song": "Chanel (Slowed)"
+    },
+    {
+      "id": 40,
+      "topic": "Happiness",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "How to get back to feeling like yourself again"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Stop chasing the version of yourself from before burnout."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Focus on becoming someone even stronger."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "A few minutes of reflection every day helped me reconnect with myself. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Healing isn't about going backward."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "It's about moving forward with more compassion than before."
+        }
+      ],
+      "caption": "You can always find your way back to yourself 🤍 I use the Kokoro app to help me reconnect.",
+      "hashtags": [
+        "healing",
+        "mentalhealth",
+        "selfcare",
+        "wellness"
+      ],
+      "song": "Self Aware"
+    },
+    {
+      "id": 41,
+      "topic": "Emotional intelligence",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 emotional skills I had to learn the hard way"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Knowing what you feel is a skill—not a personality trait."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Ignoring emotions doesn't make them disappear."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "I began spending two minutes identifying how I actually felt. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Self-awareness makes every other habit easier."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "The better you understand yourself, the easier life becomes."
+        }
+      ],
+      "caption": "Self-awareness is a skill anyone can build 🤍 I use the Kokoro app to help me practice it daily.",
+      "hashtags": [
+        "selfawareness",
+        "mentalhealth",
+        "mindfulness",
+        "wellness"
+      ],
+      "song": "EX7STENCE"
+    },
+    {
+      "id": 42,
+      "topic": "Inner critic",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "Nobody talks about how exhausting your inner critic can be"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You criticize yourself for things you'd forgive in anyone else."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Every mistake feels bigger than it really is."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Writing down my thoughts helped me notice how harsh I was being. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "You don't have to believe every thought you have."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Speak to yourself like someone you love."
+        }
+      ],
+      "caption": "Be kinder to yourself today 🤍 I use the Kokoro app to help me build that habit.",
+      "hashtags": [
+        "selflove",
+        "mentalhealth",
+        "healing",
+        "wellness"
+      ],
+      "song": "Phantom – ESD"
+    },
+    {
+      "id": 43,
+      "topic": "Feeling behind",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "If you feel like you're falling behind in life, read this"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Social media makes everyone else's timeline look perfect."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "You're comparing your reality to someone's highlight reel."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Daily reflection helped me focus on my own progress instead. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Life isn't a race with one finish line."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "You're not behind. You're on your own timeline."
+        }
+      ],
+      "caption": "You're not behind. You're on your own path 🤍 I use the Kokoro app to help me focus on my own journey.",
+      "hashtags": [
+        "mentalhealth",
+        "selfgrowth",
+        "mindfulness",
+        "wellness"
+      ],
+      "song": "Lost the Spark"
+    },
+    {
+      "id": 44,
+      "topic": "Morning anxiety",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "This could be why you wake up anxious every morning"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Your stress didn't disappear overnight."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Your brain wakes up carrying yesterday's emotions."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "A short morning emotional check-in completely changed my mornings. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "How you start your day shapes everything that follows."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Don't let yesterday decide how today feels."
+        }
+      ],
+      "caption": "Mornings become easier when your mind feels lighter 🤍 I use the Kokoro app to help me start my day intentionally.",
+      "hashtags": [
+        "anxiety",
+        "mentalhealth",
+        "wellness",
+        "mindfulness"
+      ],
+      "song": "Agreement Song"
+    },
+    {
+      "id": 45,
+      "topic": "Overwhelm",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 things to do when everything feels overwhelming"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Stop trying to solve all your problems today."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Pick one thing that's actually within your control."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Spend two quiet minutes checking in with yourself first. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Clarity usually comes after you slow down."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "One small step is enough for today."
+        }
+      ],
+      "caption": "One small step is enough today 🤍 I use the Kokoro app to help me slow down.",
+      "hashtags": [
+        "mentalhealth",
+        "selfcare",
+        "wellness",
+        "healing"
+      ],
+      "song": "Cool for the Summer (Slowed)"
+    },
+    {
+      "id": 46,
+      "topic": "Burnout",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "I finally understood what burnout was doing to me"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Imagine your phone never got charged."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Eventually it would stop working—even if nothing was broken."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Your brain needs to recharge too. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Rest isn't a reward. It's maintenance."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "You can't keep giving from an empty battery."
+        }
+      ],
+      "caption": "Your brain needs recharging too 🤍 I use the Kokoro app to help me recharge mentally.",
+      "hashtags": [
+        "burnout",
+        "mentalhealth",
+        "wellness",
+        "selfcare"
+      ],
+      "song": "Dracula (JENNIE Remix)"
+    },
+    {
+      "id": 47,
+      "topic": "Therapy",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "The therapy lesson that completely changed my mindset"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Healing isn't about never struggling again."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "It's about recovering faster when life gets hard."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Reflecting every evening helped me notice my progress. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Strength isn't avoiding hard days."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "It's knowing you'll get through them."
+        }
+      ],
+      "caption": "Strength isn't never struggling—it's getting back up 🤍 I use the Kokoro app to help me keep going.",
+      "hashtags": [
+        "therapy",
+        "mentalhealth",
+        "healing",
+        "resilience"
+      ],
+      "song": "Babydoll – Ari Abdul"
+    },
+    {
+      "id": 48,
+      "topic": "Overstimulation",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "I didn't realize my brain was crying for help"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Silence makes you reach for your phone."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "You can't focus on one thing for more than a few minutes."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Replacing endless scrolling with a daily reset made a huge difference. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Your brain needs boredom sometimes."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Constant stimulation steals your peace."
+        }
+      ],
+      "caption": "Your brain needs quiet more than constant stimulation 🤍 I use the Kokoro app to help me create that quiet.",
+      "hashtags": [
+        "focus",
+        "mentalhealth",
+        "mindfulness",
+        "wellness"
+      ],
+      "song": "Daisies – Justin Bieber"
+    },
+    {
+      "id": 49,
+      "topic": "Self-care",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "Everyone talks about self-care... but almost everyone gets it wrong"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Self-care isn't buying more things."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Sometimes it's setting boundaries or going to bed earlier."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Emotional check-ins became my favorite form of self-care. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Self-care should leave you feeling lighter—not guilty."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "The best self-care is the one you actually practice."
+        }
+      ],
+      "caption": "Self-care should actually make you feel better 🤍 I use the Kokoro app to help me take care of myself every day.",
+      "hashtags": [
+        "selfcare",
+        "mentalhealth",
+        "wellness",
+        "mindfulness"
+      ],
+      "song": "Chanel (Slowed)"
+    },
+    {
+      "id": 50,
+      "topic": "Happiness",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "People are beginning to realize happiness isn't a destination"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You don't suddenly become happy after one promotion or vacation."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Life keeps moving the goalposts."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Looking back at how I felt each day helped me appreciate the present. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Joy grows in ordinary moments."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Don't spend your whole life waiting to finally live."
+        }
+      ],
+      "caption": "Joy grows in ordinary moments 🤍 I use the Kokoro app to help me notice them.",
+      "hashtags": [
+        "happiness",
+        "mentalhealth",
+        "mindfulness",
+        "wellness"
+      ],
+      "song": "Self Aware"
+    },
+    {
+      "id": 51,
+      "topic": "High-functioning anxiety",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 signs you have high-functioning anxiety"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Everyone thinks you're doing great."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Inside, you feel like you're one bad day away from falling apart."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "A daily emotional check-in helped me notice what I was hiding from myself. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Looking okay doesn't mean feeling okay."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "You deserve support before you reach your breaking point."
+        }
+      ],
+      "caption": "High-functioning anxiety is still anxiety 🤍 I use the Kokoro app to help me slow down and reflect.",
+      "hashtags": [
+        "anxiety",
+        "mentalhealth",
+        "burnout",
+        "wellness"
+      ],
+      "song": "EX7STENCE"
+    },
+    {
+      "id": 52,
+      "topic": "Stress",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "The biggest mistake almost everyone makes when they're stressed"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "We try to ignore it and hope it goes away."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Stress that's ignored usually gets louder."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Spending two minutes with my thoughts worked better than running from them. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Your emotions always find a way to be heard."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Listen before they start shouting."
+        }
+      ],
+      "caption": "Listen to your emotions before they start shouting 🤍 I use the Kokoro app to help me hear them sooner.",
+      "hashtags": [
+        "stress",
+        "mentalhealth",
+        "healing",
+        "mindfulness"
+      ],
+      "song": "Phantom – ESD"
+    },
+    {
+      "id": 53,
+      "topic": "Healing",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 things nobody tells you about healing"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Some days you'll feel like you've made no progress."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Old habits will occasionally come back."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Looking back at my daily reflections reminded me I'd still grown. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Healing isn't about never struggling again."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "It's about getting back up a little faster each time."
+        }
+      ],
+      "caption": "Healing isn't about never struggling again 🤍 I use the Kokoro app to help me stay consistent through it all.",
+      "hashtags": [
+        "healing",
+        "mentalhealth",
+        "wellness",
+        "mindfulness"
+      ],
+      "song": "Lost the Spark"
+    },
+    {
+      "id": 54,
+      "topic": "Boundaries",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "Things I wish I knew before I learned to set boundaries"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Not everyone will like the new version of you."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "That's okay. Boundaries aren't rejection."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "I started asking myself what I actually needed before saying yes. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Every \"no\" to others can become a \"yes\" to yourself."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Protecting your peace isn't selfish."
+        }
+      ],
+      "caption": "Boundaries protect your peace 🤍 I use the Kokoro app to help me check in with my needs.",
+      "hashtags": [
+        "boundaries",
+        "mentalhealth",
+        "selfcare",
+        "wellness"
+      ],
+      "song": "Agreement Song"
+    },
+    {
+      "id": 55,
+      "topic": "Brain",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "How to stop your brain from racing at night"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Don't try to force yourself to stop thinking."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Give those thoughts somewhere to go instead."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "A 2-minute evening reflection became part of my bedtime routine. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Your brain relaxes when it knows it won't forget."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Sleep starts with a calmer mind."
+        }
+      ],
+      "caption": "A calmer mind creates better sleep 🤍 I use the Kokoro app to help me unwind before bed.",
+      "hashtags": [
+        "sleep",
+        "mentalhealth",
+        "mindfulness",
+        "wellness"
+      ],
+      "song": "Cool for the Summer (Slowed)"
+    },
+    {
+      "id": 56,
+      "topic": "Burnout",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "This can be why weekends never feel long enough"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You're spending them recovering instead of living."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Two days can't undo five days of constant stress."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "I began taking care of my mental health every day—not just on weekends. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Recovery works better when it's consistent."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Don't save your well-being for Saturday."
+        }
+      ],
+      "caption": "Your weekends shouldn't be spent recovering from your weekdays 🤍 I use the Kokoro app to help me take care of myself every day.",
+      "hashtags": [
+        "burnout",
+        "wellness",
+        "mentalhealth",
+        "selfcare"
+      ],
+      "song": "Dracula (JENNIE Remix)"
+    },
+    {
+      "id": 57,
+      "topic": "Emotional regulation",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "My psychologist explained why I couldn't control my emotions"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You can't control your first emotion."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "You can choose what you do with it next."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Learning to pause before reacting changed my relationships. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Responding beats reacting every time."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Emotional strength is built one moment at a time."
+        }
+      ],
+      "caption": "Emotional strength is something you build 🤍 I use the Kokoro app to help me build it one day at a time.",
+      "hashtags": [
+        "emotions",
+        "mentalhealth",
+        "mindfulness",
+        "healing"
+      ],
+      "song": "Babydoll – Ari Abdul"
+    },
+    {
+      "id": 58,
+      "topic": "Burnout",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "Everyone tells you burnout comes from working too much... but that's not always true"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Sometimes it's carrying stress that never gets processed."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Sometimes it's constantly putting yourself last."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "My daily emotional check-ins helped me notice what was really draining me. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Burnout has more than one cause."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Healing starts when you understand yours."
+        }
+      ],
+      "caption": "Burnout has more than one cause 🤍 I use the Kokoro app to help me understand what's draining me.",
+      "hashtags": [
+        "burnout",
+        "mentalhealth",
+        "stress",
+        "wellness"
+      ],
+      "song": "Daisies – Justin Bieber"
+    },
+    {
+      "id": 59,
+      "topic": "Emotional habits",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "5 habits that quietly improve your mental health"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "Putting your phone down for ten minutes."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Going outside without headphones."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Spending two minutes reflecting on your emotions. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Speaking to yourself with more kindness."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "Tiny habits shape your mind more than you think."
+        }
+      ],
+      "caption": "Tiny habits shape your mind every day 🤍 I use the Kokoro app to help me build healthier ones.",
+      "hashtags": [
+        "mentalhealth",
+        "habits",
+        "wellness",
+        "mindfulness"
+      ],
+      "song": "Chanel (Slowed)"
+    },
+    {
+      "id": 60,
+      "topic": "Self-discovery",
+      "slides": [
+        {
+          "n": 1,
+          "role": "hook",
+          "text": "People are beginning to realize that self-awareness changes everything"
+        },
+        {
+          "n": 2,
+          "role": "trust",
+          "text": "Trust me, I know."
+        },
+        {
+          "n": 3,
+          "role": "body",
+          "text": "You can't change patterns you don't notice."
+        },
+        {
+          "n": 4,
+          "role": "body",
+          "text": "Most of us spend more time understanding other people than ourselves."
+        },
+        {
+          "n": 5,
+          "role": "product",
+          "text": "Daily reflection became the habit that connected everything else. (I use the Kokoro app.)"
+        },
+        {
+          "n": 6,
+          "role": "body",
+          "text": "Self-awareness is the foundation of every lasting change."
+        },
+        {
+          "n": 7,
+          "role": "closer",
+          "text": "The relationship you have with yourself shapes every other relationship."
+        }
+      ],
+      "caption": "The relationship you have with yourself changes everything 🤍 I use the Kokoro app to help me strengthen it every day.",
+      "hashtags": [
+        "selfawareness",
+        "mentalhealth",
+        "healing",
+        "wellness"
+      ],
+      "song": "Self Aware"
+    }
+  ]
+}

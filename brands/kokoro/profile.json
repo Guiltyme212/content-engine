@@ -1,0 +1,49 @@
+{
+  "status": "confirmed",
+  "_note": "Seeded by hand from the tenant brief in CLAUDE.md plus the finished campaign sheet, so Home onboarding never has to re-scrape the site to work on this tenant. Field-for-field the shape normalizeCompanyOutput() returns in server/hook-engine.js's sibling server/company-engine.js, so briefBlock() and every existing generator consume it unchanged.",
+  "_confirm": [
+    "account is empty on purpose: the campaign sheet lists \"alice_kokoro or alice_kokoroapp\" and the handle has not been picked yet. Fill it in as \"@handle\" once it is."
+  ],
+  "name": "Kokoro",
+  "domain": "kokoromind.com",
+  "logo": "/assets/kokoro-logo.png",
+  "product": "You vent out loud after a hard day and Kokoro listens like a supportive friend instead of trying to fix you, then turns what you just said into a personalised 3-7 minute guided meditation built from your own words.",
+  "oneLiner": "You vent out loud after a hard day and Kokoro listens like a supportive friend instead of trying to fix you, then turns what you just said into a personalised 3-7 minute guided meditation built from your own words.",
+  "whatItIs": "You vent out loud after a hard day and Kokoro listens like a supportive friend instead of trying to fix you, then turns what you just said into a personalised 3-7 minute guided meditation built from your own words.",
+  "audience": "Mostly women - \"quiet humans\" who hold everything in all day, reach the evening drained or numb, and want to be heard before they are advised. Burnt out, overthinking at night, guilty about resting, and sceptical that meditation apps are for someone with a mind as busy as theirs.",
+  "voice": [
+    "lowercase",
+    "intimate, one person to one person",
+    "gentle and unhurried",
+    "plain words, no wellness jargon",
+    "never toxic positivity"
+  ],
+  "voiceTags": [
+    "lowercase",
+    "intimate, one person to one person",
+    "gentle and unhurried",
+    "plain words, no wellness jargon",
+    "never toxic positivity"
+  ],
+  "look": [
+    "japanese minimalism",
+    "sakura",
+    "paper lanterns",
+    "dusk and low indoor light",
+    "generous negative space"
+  ],
+  "lookTags": [
+    "japanese minimalism",
+    "sakura",
+    "paper lanterns",
+    "dusk and low indoor light",
+    "generous negative space"
+  ],
+  "aesthetic": "japanese minimalism, sakura, paper lanterns, dusk and low indoor light, generous negative space",
+  "account": "",
+  "niche": "mental wellness / guided meditation app",
+  "do": "validate before advising; name the exact evening moment the reader is standing in; let a feeling sit without resolving it; keep the app to one small truthful cameo on a middle slide; lowercase throughout",
+  "dont": "toxic positivity, hustle or discipline framing, clinical or diagnostic claims, promising to fix anyone, exclamation marks, title case, naming the app on slide one or in a call to action",
+  "context": "Posts run as one first-person narrator: a woman who burned out and is slowly recovering. The line \"I use the Kokoro app\" appears once mid-carousel and never on slide one. A finished month of 60 posts lives in brands/kokoro/campaign.json, with all 60 pre-approved hooks and their recurring shapes in brands/kokoro/hooks-whitelist.json. Each post is 7 slides: hook, the constant refrain \"Trust me, I know.\", two validation slides, the mid-carousel app cameo, one more validation slide, then a quiet closer. Captions close on a white-heart emoji and four lowercase hashtags. 4.9 stars on the App Store.",
+  "sourceUrl": "https://kokoromind.com/"
+}

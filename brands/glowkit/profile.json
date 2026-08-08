@@ -1,0 +1,51 @@
+{
+  "status": "confirmed",
+  "_note": "Seeded 2026-08-08 from the live App Store listing (apps.apple.com/es id6777513964, fetched via the iTunes lookup API) on Dan's instruction to add GlowKit as the third tenant. Positioning is the listing's own: cosmetic skin reading, never medical. Same shape normalizeCompanyOutput() returns, so briefBlock() and every generator consume it unchanged.",
+  "_confirm": [
+    "No campaign.json yet: the Carousels workspace stays empty for GlowKit until a sheet is ingested or generated.",
+    "The listing is Spanish-first but the app ships 11 languages; content language assumed English until Dan says otherwise.",
+    "No first-person narrator persona defined yet (Kokoro has Alice). No persona = no first-person story hooks for this tenant."
+  ],
+  "name": "GlowKit",
+  "domain": "apps.apple.com/es/app/glowkit-analizador-piel/id6777513964",
+  "logo": "/assets/glowkit-logo.jpg",
+  "product": "GlowKit turns a guided selfie into a private skin reading. GlowScore plus five visible signals - clarity, hydration, texture, even tone, luminosity - and a routine where every step has a reason, so you stop switching products on guesses and start following a trend instead of reacting to one bad-light photo.",
+  "oneLiner": "GlowKit turns a guided selfie into a private skin reading. GlowScore plus five visible signals - clarity, hydration, texture, even tone, luminosity - and a routine where every step has a reason, so you stop switching products on guesses and start following a trend instead of reacting to one bad-light photo.",
+  "whatItIs": "GlowKit turns a guided selfie into a private skin reading. GlowScore plus five visible signals - clarity, hydration, texture, even tone, luminosity - and a routine where every step has a reason, so you stop switching products on guesses and start following a trend instead of reacting to one bad-light photo.",
+  "audience": "People - skewing women - whose skin looks different in every mirror and every light, who cycle through products without knowing which one actually helps, whose routine grew complicated without getting better. They photograph their skin on bad days, compare themselves to filtered faces, and want private progress they can trust - not a public score, not another brand pushing product.",
+  "voice": [
+    "calm and unhurried",
+    "clear, plain words",
+    "non-judgmental - never shames skin",
+    "cosmetic framing only, no medical promises",
+    "practical: every step has a reason"
+  ],
+  "voiceTags": [
+    "calm and unhurried",
+    "clear, plain words",
+    "non-judgmental - never shames skin",
+    "cosmetic framing only, no medical promises",
+    "practical: every step has a reason"
+  ],
+  "look": [
+    "clean bathroom light",
+    "skincare minimalism",
+    "soft neutrals and warm whites",
+    "honest unfiltered skin close-ups",
+    "shelves with few, chosen products"
+  ],
+  "lookTags": [
+    "clean bathroom light",
+    "skincare minimalism",
+    "soft neutrals and warm whites",
+    "honest unfiltered skin close-ups",
+    "shelves with few, chosen products"
+  ],
+  "aesthetic": "clean bathroom light, skincare minimalism, soft neutrals and warm whites, honest unfiltered skin close-ups, shelves with few chosen products",
+  "account": "",
+  "niche": "skincare / beauty tech app",
+  "do": "validate the confusion of not knowing what works; name the exact mirror-and-bathroom-light moment; keep claims cosmetic and visible-signal only; frame progress as a trend over weeks, not an overnight fix; let the app appear once as a quiet habit on a middle slide",
+  "dont": "medical or dermatological claims, promising to cure acne or any condition, before/after miracle framing, shaming skin, brand-pushing or affiliate energy, public score comparisons, exclamation marks",
+  "context": "Positioning from the App Store listing: skincare quickly becomes a chain of guesses - mirror, bathroom light, a drawer full of products that do not show what is actually changing. GlowKit is the calmer way to read the skin's visible signals, understand the next priority, and keep the routine alive without judgment, face-ranking, or brand pressure. Private by design: analysis quality is checked so progress photos compare fairly across light and angle. Sold as GlowKit Pro subscription. New app, no public ratings yet - content carries all the trust, so hooks should lean on symptom-of-confusion recognition (product cycling, light-dependent skin, routine overwhelm) rather than authority.",
+  "sourceUrl": "https://apps.apple.com/es/app/glowkit-analizador-piel/id6777513964"
+}

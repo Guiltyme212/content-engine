@@ -1,0 +1,545 @@
+{
+  "_note": "Pre-approved slide-1 hooks lifted from a finished, human-written campaign sheet. Two jobs: the user never re-approves hooks that are already good, and the hook generator can be seeded with them to write MORE in the same proven shapes. recurringShapes is the reusable asset - the structures, not the copy.",
+  "brand": "kokoro",
+  "recurringShapes": [
+    {
+      "shape": "bounded-count-signs",
+      "template": "N signs you're ___",
+      "count": 9,
+      "examples": [
+        "5 signs you're emotionally exhausted",
+        "5 signs you're stuck in overthinking"
+      ]
+    },
+    {
+      "shape": "bounded-count-list",
+      "template": "N ___ that ___ (things, mistakes, steps, habits, skills)",
+      "count": 7,
+      "examples": [
+        "5 mistakes that quietly lead to burnout",
+        "5 things I do when my brain feels overwhelmed"
+      ]
+    },
+    {
+      "shape": "i-wish-someone-had-told-me",
+      "template": "I wish someone had told me ___ / things I wish I knew before ___",
+      "count": 6,
+      "examples": [
+        "I wish someone had told me this before I burned out",
+        "Things I wish I knew before perfectionism burned me out"
+      ]
+    },
+    {
+      "shape": "everyone-says-but",
+      "template": "everyone tells you ___ ... but ___",
+      "count": 5,
+      "examples": [
+        "Everyone tells you to rest... but nobody explains this",
+        "Everyone tells you healing takes time... but nobody tells you this"
+      ]
+    },
+    {
+      "shape": "expert-explained",
+      "template": "my <expert> explained why ___",
+      "count": 5,
+      "examples": [
+        "The therapist advice I didn't want to hear... but needed",
+        "The weirdest trick my therapist taught me"
+      ]
+    },
+    {
+      "shape": "i-thought-but-i-was-wrong",
+      "template": "I thought ___ ... but I was wrong",
+      "count": 5,
+      "examples": [
+        "I thought I needed a vacation... but I was wrong",
+        "I thought meditation would never work for me"
+      ]
+    },
+    {
+      "shape": "the-singular-reveal",
+      "template": "the biggest ___ / the real reason ___",
+      "count": 4,
+      "examples": [
+        "The real reason I was always tired",
+        "The biggest lie burnout made me believe"
+      ]
+    },
+    {
+      "shape": "this-could-be-why",
+      "template": "this could be why ___",
+      "count": 4,
+      "examples": [
+        "This could be why nothing feels exciting anymore",
+        "This can be why your anxiety never seems to disappear"
+      ]
+    },
+    {
+      "shape": "how-to",
+      "template": "how to ___",
+      "count": 3,
+      "examples": [
+        "How to get your life back after burnout",
+        "How to get back to feeling like yourself again"
+      ]
+    },
+    {
+      "shape": "nobody-warned-me",
+      "template": "the ___ nobody warned me about / nobody tells you ___",
+      "count": 3,
+      "examples": [
+        "The burnout symptom nobody warned me about",
+        "Nobody tells you this about your nervous system"
+      ]
+    },
+    {
+      "shape": "people-are-realizing",
+      "template": "people are beginning to realize ___",
+      "count": 3,
+      "examples": [
+        "People are beginning to realize burnout isn't just about work",
+        "People are beginning to realize happiness isn't a destination"
+      ]
+    },
+    {
+      "shape": "how-i-story",
+      "template": "how I ___ after ___",
+      "count": 2,
+      "examples": [
+        "How I slowly became myself again after depression",
+        "How I slowly recovered from burnout"
+      ]
+    },
+    {
+      "shape": "if-you-read-this",
+      "template": "if you're ___, read this",
+      "count": 2,
+      "examples": [
+        "If you're always tired, read this",
+        "If you feel like you're falling behind in life, read this"
+      ]
+    }
+  ],
+  "hooks": [
+    {
+      "id": 1,
+      "text": "The burnout symptom nobody warned me about",
+      "topic": "Burnout symptom",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 2,
+      "text": "I wish someone had told me this before I burned out",
+      "topic": "Before burnout",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 3,
+      "text": "I thought I needed a vacation... but I was wrong",
+      "topic": "Vacation",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 4,
+      "text": "5 mistakes that quietly lead to burnout",
+      "topic": "Burnout mistakes",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 5,
+      "text": "I thought meditation would never work for me",
+      "topic": "Meditation",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 6,
+      "text": "The real reason I was always tired",
+      "topic": "Always tired",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 7,
+      "text": "5 signs you're emotionally exhausted",
+      "topic": "Emotional exhaustion",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 8,
+      "text": "How I slowly became myself again after depression",
+      "topic": "Depression recovery",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 9,
+      "text": "Rating everything that helped me recover from burnout",
+      "topic": "Recovery rating",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 10,
+      "text": "The biggest lie burnout made me believe",
+      "topic": "Biggest lie",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 11,
+      "text": "5 signs you're stuck in overthinking",
+      "topic": "Overthinking",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 12,
+      "text": "5 signs you're living in survival mode",
+      "topic": "Survival mode",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 13,
+      "text": "This could be why nothing feels exciting anymore",
+      "topic": "Emotional numbness",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 14,
+      "text": "The therapist advice I didn't want to hear... but needed",
+      "topic": "Therapist advice",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 15,
+      "text": "I used to think meditation wasn't for me",
+      "topic": "Meditation",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 16,
+      "text": "If you're always tired, read this",
+      "topic": "Always tired",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 17,
+      "text": "How I slowly recovered from burnout",
+      "topic": "Burnout recovery",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 18,
+      "text": "Everyone tells you to rest... but nobody explains this",
+      "topic": "Rest",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 19,
+      "text": "5 signs your brain is overwhelmed",
+      "topic": "Brain fog",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 20,
+      "text": "You can look completely fine... and still be burning out",
+      "topic": "High-functioning stress",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 21,
+      "text": "5 signs you're a people pleaser (and it's exhausting you)",
+      "topic": "People-pleasing",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 22,
+      "text": "Things I wish I knew before perfectionism burned me out",
+      "topic": "Perfectionism",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 23,
+      "text": "5 signs your anxiety is pretending to be productivity",
+      "topic": "Productivity anxiety",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 24,
+      "text": "Nobody tells you this about your nervous system",
+      "topic": "Nervous system",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 25,
+      "text": "5 signs doomscrolling is changing your brain",
+      "topic": "Doomscrolling",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 26,
+      "text": "The emotional skill I wish I'd learned years earlier",
+      "topic": "Emotional awareness",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 27,
+      "text": "Everyone tells you healing takes time... but nobody tells you this",
+      "topic": "Healing",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 28,
+      "text": "5 things I do when my brain feels overwhelmed",
+      "topic": "Brain reset",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 29,
+      "text": "The biggest lie I believed about self-worth",
+      "topic": "Self-worth",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 30,
+      "text": "5 signs you're chasing happiness the wrong way",
+      "topic": "Happiness",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 31,
+      "text": "5 steps to stop overthinking everything",
+      "topic": "Overthinking",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 32,
+      "text": "I wish someone had explained my nervous system like this",
+      "topic": "Nervous system",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 33,
+      "text": "Everyone tells you to \"take a break\"... but no one tells you this",
+      "topic": "Rest",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 34,
+      "text": "This can be why your anxiety never seems to disappear",
+      "topic": "Anxiety",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 35,
+      "text": "People are beginning to realize burnout isn't just about work",
+      "topic": "Burnout",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 36,
+      "text": "The weirdest trick my therapist taught me",
+      "topic": "Therapist",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 37,
+      "text": "How to get your life back after burnout",
+      "topic": "Healing",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 38,
+      "text": "Things I wish I knew before I started healing",
+      "topic": "Self-compassion",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 39,
+      "text": "A Harvard psychologist explained why my brain felt broken",
+      "topic": "Brain fog",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 40,
+      "text": "How to get back to feeling like yourself again",
+      "topic": "Happiness",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 41,
+      "text": "5 emotional skills I had to learn the hard way",
+      "topic": "Emotional intelligence",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 42,
+      "text": "Nobody talks about how exhausting your inner critic can be",
+      "topic": "Inner critic",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 43,
+      "text": "If you feel like you're falling behind in life, read this",
+      "topic": "Feeling behind",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 44,
+      "text": "This could be why you wake up anxious every morning",
+      "topic": "Morning anxiety",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 45,
+      "text": "5 things to do when everything feels overwhelming",
+      "topic": "Overwhelm",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 46,
+      "text": "I finally understood what burnout was doing to me",
+      "topic": "Burnout",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 47,
+      "text": "The therapy lesson that completely changed my mindset",
+      "topic": "Therapy",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 48,
+      "text": "I didn't realize my brain was crying for help",
+      "topic": "Overstimulation",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 49,
+      "text": "Everyone talks about self-care... but almost everyone gets it wrong",
+      "topic": "Self-care",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 50,
+      "text": "People are beginning to realize happiness isn't a destination",
+      "topic": "Happiness",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 51,
+      "text": "5 signs you have high-functioning anxiety",
+      "topic": "High-functioning anxiety",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 52,
+      "text": "The biggest mistake almost everyone makes when they're stressed",
+      "topic": "Stress",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 53,
+      "text": "5 things nobody tells you about healing",
+      "topic": "Healing",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 54,
+      "text": "Things I wish I knew before I learned to set boundaries",
+      "topic": "Boundaries",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 55,
+      "text": "How to stop your brain from racing at night",
+      "topic": "Brain",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 56,
+      "text": "This can be why weekends never feel long enough",
+      "topic": "Burnout",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 57,
+      "text": "My psychologist explained why I couldn't control my emotions",
+      "topic": "Emotional regulation",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 58,
+      "text": "Everyone tells you burnout comes from working too much... but that's not always true",
+      "topic": "Burnout",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 59,
+      "text": "5 habits that quietly improve your mental health",
+      "topic": "Emotional habits",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    },
+    {
+      "id": 60,
+      "text": "People are beginning to realize that self-awareness changes everything",
+      "topic": "Self-discovery",
+      "source": "nazar-sheet-2026-07",
+      "status": "approved"
+    }
+  ]
+}

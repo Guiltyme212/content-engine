@@ -1,0 +1,87 @@
+{
+  "pool": "alice-crying",
+  "slideSlot": 2,
+  "brand": "kokoro",
+  "images": [
+    {
+      "file": "alice-crying/01.jpg",
+      "original": "_originals/alice-crying/01.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-crying/02.jpg",
+      "original": "_originals/alice-crying/02.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-crying/03.jpg",
+      "original": "_originals/alice-crying/03.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-crying/04.jpg",
+      "original": "_originals/alice-crying/04.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-crying/05.jpg",
+      "original": "_originals/alice-crying/05.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-crying/06.jpg",
+      "original": "_originals/alice-crying/06.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-crying/07.jpg",
+      "original": "_originals/alice-crying/07.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-crying/08.jpg",
+      "original": "_originals/alice-crying/08.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-crying/09.jpg",
+      "original": "_originals/alice-crying/09.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    },
+    {
+      "file": "alice-crying/10.jpg",
+      "original": "_originals/alice-crying/10.png",
+      "w": 1080,
+      "h": 1920,
+      "aspect": "9:16",
+      "analysis": null
+    }
+  ]
+}

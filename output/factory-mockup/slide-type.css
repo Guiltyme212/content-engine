@@ -1,0 +1,105 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   SLIDE OVERLAY TYPE — the single source of truth for TikTok-native slide text.
+   Loaded by index.html and tools.html AFTER fonts/tiktok-sans.css.
+
+   Every rule that draws text onto a slide must appear in the selector list below
+   and must NOT re-declare font-family / weight / tracking / leading / stroke
+   locally, or it will silently drift out of sync again. Per-element rules keep
+   POSITION and FONT-SIZE only.
+
+   ── How these numbers were derived ───────────────────────────────────────────
+   Not by eye. Every value below was measured against a native-resolution crop of
+   the real reference cover (examples/example1/1.jpg -> assets/ref-example1-text.png)
+   by rendering candidates in headless Chrome and comparing ink masks.
+
+   The reference line "waist this summer:" measures 321px wide, split by its two
+   word spaces into 91 / 60 / 147px. The settings below reproduce that as
+   91 / 61 / 147px at a total of 320px — within 1px on every word.
+
+   wght 550 + letter-spacing .022em  ← THE ONE THAT MATTERED
+     Measured on the REAL .post-hook component (not a test page) via Playwright at
+     deviceScaleFactor 38.12/20, so the capture lands at the reference's own em.
+     STEM WIDTH is what identifies weight, and it is measurable: the mode of white
+     run widths across the x-height. Reference 3px (.079em). wght 700 gave 5px.
+     Ladder: wght 400 -> 2px | 450-550 -> 3px | 600 -> 4px | 700 -> 5px.
+     Dropping to 550 costs 14px of line width, which positive tracking restores:
+       wght 550 track .025  stem 3  line 323  words 90/60/146   <- best
+       wght 550 track .020  stem 3  line 320  words 89/60/145
+       wght 700 track 0     stem 5  line 319  words 89/61/147   <- old, right width
+                                                                   but far too heavy
+     So the reference is a MODERATE weight set open, not a bold weight set tight.
+     Both earlier revisions got this backwards, which is why the total line width
+     matched while the text still looked obviously wrong: at wght 700 the thick stems
+     crowd the letters, and the reference's letters are visibly separated.
+
+   opsz 36 pinned
+     Ink-mask IoU against the reference, each candidate scaled to the same 321px
+     line width:  opsz36 .651 | opsz24 .622 | opsz20 .608 | opsz16 .519 | opsz12 .443
+     So the reference matches the DISPLAY optical cut.
+     Do NOT use negative tracking. A revision shipped letter-spacing:-.012em from
+     eyeballing a screenshot; it measured worse (IoU .636) and ran 26px narrow.
+
+   font-optical-sizing:none is what makes the pin hold. TikTok Sans is a 2-axis
+   variable font (opsz 12-36 default 36, wght 300-900 default 300) and CSS defaults
+   to font-optical-sizing:auto, which ties opsz to the RENDERED PIXEL SIZE. Our
+   surfaces render at 5-28px, so each one silently picked a different, looser
+   optical cut (opsz 16 scores .519 against the reference's .651). Pinning gives
+   every surface the same letterfit at any size.
+
+   -webkit-text-stroke: .15em
+     Judged on a rendered ladder (.10/.12/.14/.16/.20em) against the reference:
+     .10-.12 read thin, .14-.16 match, .20 is clearly too heavy — outlines start
+     merging between adjacent letters. Note a halo-width measurement on the
+     reference suggests .21em; that is an artefact. The reference is a downscaled
+     JPEG, and blur spreads a thin dark outline over more sub-threshold pixels than
+     it truly occupies. Trust the ladder, not the halo count.
+
+   line-height: 1.23
+     Reference line advance measured 47px top-of-ink to top-of-ink, at the em of
+     38.12px that reproduces its 321px line width. 47/38.12 = 1.233. The previous
+     1.28 added ~1.8px of extra leading per line.
+
+   Measure on the REAL component, at the reference's em, and check STEM WIDTH — not
+   just line width. Two settings can produce the same line width and look nothing
+   alike. Use Playwright (Dan's instruction) and screenshot the actual element with
+   locator.screenshot(), not a synthetic page.
+
+   Re-check any change with output/factory-mockup/font-match.html.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.post-hook,
+.phone-text,
+.final-hook,
+.bslide-text,
+.story-slide-copy,
+.slide-editor,
+.tbox,
+.srail-thumb .im .tt {
+  font-family: 'TikTok Sans', Montserrat, 'Inter', system-ui, sans-serif;
+  font-weight: 550;
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' 36, 'wght' 550;
+  letter-spacing: .022em;
+  line-height: 1.23;
+  color: #fff;
+  -webkit-text-stroke: .15em #000;
+  paint-order: stroke fill;
+  /* no text-shadow: TikTok's editor draws the outline only. A blurred shadow under
+     tightly-set lines smears into a dark slab behind the text on busy photos, which
+     is the single most un-TikTok-looking thing the overlay did. */
+  text-shadow: none;
+}
+
+/* numbered lead-ins inside a body slide ("1." / "2.") sit one step heavier —
+   must go through 'wght', since font-variation-settings beats font-weight */
+.bslide-text .n {
+  font-weight: 650;
+  font-variation-settings: 'opsz' 36, 'wght' 650;
+}
+
+/* NO visual guard here. An earlier version drew a dashed outline when the font
+   looked missing; it fired constantly as a false positive (document.fonts.ready
+   resolves at page load, long before the studio builds slide text, so the
+   unicode-range subset has not been requested yet and check() returns false) and
+   it leaked a debug artefact into the product. The guard is console-only, and it
+   now forces the load before checking — see the script in each page. */
