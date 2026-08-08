@@ -1,14 +1,15 @@
 // server.js — serves the Content Factory site AND the /api/* endpoints the frontend calls.
 // Zero dependencies (Node 18+ built-ins only) so Railway deploy is a one-liner.
 import http from 'node:http';
-import { mkdir, readFile, readdir, rename, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rename, unlink, writeFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { generateHooks, gradeHook, modelInfo, structuredModelOptions } from './hook-engine.js';
 import { extractCompany, regenerateAudience } from './company-engine.js';
 import { carouselModelOptions, generateCarousels } from './carousel-engine.js';
-import { matchLine, matchPost } from './match-engine.js';
+import { invalidateLibrary, matchLine, matchPost } from './match-engine.js';
+import { HIDDEN_SETS } from './library-config.js';
 import { regenerateStorySlide } from './story-engine.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -106,7 +107,8 @@ async function imageLibrary() {
   try {
     directories = (await readdir(IMAGE_LIBRARY, { withFileTypes: true }))
       .filter((entry) => entry.isDirectory())
-      .map((entry) => entry.name);
+      .map((entry) => entry.name)
+      .filter((name) => !HIDDEN_SETS.has(name));
   } catch {
     return [];
   }
@@ -162,6 +164,53 @@ async function serveImageLibrary(req, res) {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('not found');
   }
+}
+
+// Permanently remove one image from the scraped library: the file itself, its
+// sources.json entry, and its records in the analysed index — so the matcher never
+// recommends a ghost and every other image keeps its own description. On Railway the
+// filesystem is ephemeral, so a cloud delete lasts until the next deploy; durable
+// removal happens by deleting locally and committing, which this same code path
+// performs on Dan's machine.
+async function deleteLibraryImage(file) {
+  const clean = String(file || '');
+  if (!/^[a-z0-9-]{1,50}\/[a-z0-9._-]+\.jpe?g$/i.test(clean)) {
+    const error = new Error('bad image path'); error.statusCode = 400; throw error;
+  }
+  const [setId, filename] = clean.split('/');
+  const filePath = path.resolve(IMAGE_LIBRARY, setId, filename);
+  if (!filePath.startsWith(`${IMAGE_LIBRARY}${path.sep}`)) {
+    const error = new Error('forbidden'); error.statusCode = 403; throw error;
+  }
+  if (!existsSync(filePath)) {
+    const error = new Error('image not found'); error.statusCode = 404; throw error;
+  }
+  await unlink(filePath);
+
+  // sources.json keeps a per-file record — drop only this file's entry.
+  const manifestPath = path.join(IMAGE_LIBRARY, setId, 'sources.json');
+  try {
+    const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+    if (Array.isArray(manifest.images)) {
+      manifest.images = manifest.images.filter((entry) => entry?.filename !== filename);
+      await writeFile(manifestPath, JSON.stringify(manifest, null, 2));
+    }
+  } catch { /* a set without a manifest is fine */ }
+
+  // The analysed index + embeddings are keyed by "set/file" — drop matching lines only.
+  for (const dataFile of ['library-index.jsonl', 'library-embeddings.jsonl']) {
+    const dataPath = path.join(ROOT, 'data', dataFile);
+    if (!existsSync(dataPath)) continue;
+    const kept = (await readFile(dataPath, 'utf8')).split('\n').filter((line) => {
+      if (!line.trim()) return false;
+      try { return JSON.parse(line).file !== clean; } catch { return false; }
+    });
+    const tmp = `${dataPath}.tmp`;
+    await writeFile(tmp, `${kept.join('\n')}\n`);
+    await rename(tmp, dataPath);
+  }
+  invalidateLibrary();
+  return { deleted: clean };
 }
 
 function readBody(req) {
@@ -571,6 +620,9 @@ const server = http.createServer(async (req, res) => {
         await writeFile(tmp, JSON.stringify(picks, null, 2));
         await rename(tmp, file);
         return sendJson(res, 200, { ok: true, done: Object.values(picks.posts).filter((p) => p && p.done).length });
+      }
+      if (url === '/api/library/delete') {
+        return sendJson(res, 200, await deleteLibraryImage(body.file));
       }
       if (url === '/api/match/slide') {
         // one line, one deck — used by the editor's theme swap. Ranked inside the theme when the

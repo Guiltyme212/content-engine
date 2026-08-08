@@ -2,21 +2,6 @@
   "set": "Art",
   "images": [
     {
-      "alt": "Art 1",
-      "url": "https://i.pinimg.com/1200x/85/9e/ef/859eefc3cc580ff6cc5c03d2e76bb14a.jpg",
-      "filename": "001.jpg"
-    },
-    {
-      "alt": "Art 2",
-      "url": "https://i.pinimg.com/1200x/8b/45/59/8b4559074c779f90d9ebf72bbf92bbae.jpg",
-      "filename": "002.jpg"
-    },
-    {
-      "alt": "Art 3",
-      "url": "https://i.pinimg.com/1200x/e5/47/1e/e5471e7276213ed0480dd57a403fda3a.jpg",
-      "filename": "003.jpg"
-    },
-    {
       "alt": "Art 4",
       "url": "https://i.pinimg.com/1200x/4d/95/61/4d95610543691457662d5f4d405070d0.jpg",
       "filename": "004.jpg"
@@ -250,11 +235,6 @@
       "alt": "Art 50",
       "url": "https://i.pinimg.com/1200x/07/69/67/07696774d32e0324c636f7b990c409fa.jpg",
       "filename": "050.jpg"
-    },
-    {
-      "alt": "Art 51",
-      "url": "https://i.pinimg.com/1200x/0d/a6/2f/0da62f8540ae5901e6470dc7314725cc.jpg",
-      "filename": "051.jpg"
     }
   ]
 }

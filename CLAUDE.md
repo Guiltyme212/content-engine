@@ -59,6 +59,14 @@ The Content Factory demo is live at **https://content-engine-production-f818.up.
   a regenerate and it aims the next batch. This exists because a freelancer's 60-post sheet
   proved the pain list is the asset and the slide template is cheap — see
   `examples/analysis/example4-fixed-slot-machine.md` and body shape A4 in the playbook.
+- **The scraped-images library is curated** (2026-08-08): `server/library-config.js` holds
+  `HIDDEN_SETS` — folders Dan ruled off-type. They stay on disk/git but are invisible to
+  `/api/image-library` and the matcher (old picks referencing them still render). Deleting is
+  different from hiding: the carousel editor's thumbnail ✕ calls `/api/library/delete`, which
+  removes the file, its `sources.json` entry, and its `data/*.jsonl` records (keyed by
+  `set/file`, so other images' descriptions are untouched). Cloud deletes are ephemeral on
+  Railway — durable removal = delete locally, prune, commit, push. `data/*.jsonl` were
+  restored from skip-worktree on Dan's machine 2026-08-08 and are normal tracked files again.
 - `library/carousel-playbook.md` — **the copy/knowledge layer.** Format skeletons, hook bank,
   slide craft rules, visual rules — brand-agnostic craft that applies to any tenant. Per-brand
   briefs (e.g. Kokoro's) are examples/inputs, not the point. Generators write FROM this file.

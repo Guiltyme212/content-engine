@@ -13,6 +13,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { HIDDEN_SETS } from './library-config.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'data');
@@ -31,6 +32,12 @@ let lib = null;          // [{ record, vector }]
 const slideVecs = new Map();
 const poolCache = new Map();
 
+// Called after an image is deleted from the library so the next match reloads the
+// pruned index instead of recommending a file that is gone.
+export function invalidateLibrary() {
+  lib = null;
+}
+
 const sha1 = (text) => createHash('sha1').update(text).digest('hex');
 
 function loadLibrary() {
@@ -46,6 +53,7 @@ function loadLibrary() {
     const record = JSON.parse(line);
     const vector = byFile.get(record.file);
     if (!vector) continue;
+    if (HIDDEN_SETS.has(record.theme_folder)) continue;             // curated out, not deleted
     if (record.quality?.usable === false) continue;
     if (record.people?.faces_visible) continue;                       // no strangers' faces, ever
     if (!['none', 'incidental-scene'].includes(record.existing_text?.level)) continue;
@@ -134,6 +142,7 @@ function unrankedTheme(theme) {
 
 export async function matchLine({ brand = 'kokoro', text, theme = null }) {
   let entries = loadLibrary();
+  if (theme && HIDDEN_SETS.has(theme)) return { source: 'library', mode: 'hidden', candidates: [] };
   if (theme) {
     // constrained swap: same semantic ranking, one visual world. Fastlane does this step
     // with random picks — the ranking inside the theme is the entire difference.

@@ -27,3 +27,5 @@ Kokoro.zip
 
 # half-written files from an interrupted ingest (the run cleans these up itself)
 *.part
+
+.claude/settings.local.json

@@ -479,11 +479,17 @@ function renderAssetPanel() {
     panel.innerHTML = `<div class="asset-grid">${deck.candidates.map((item, index) => `
       <button class="asset${index === slideState.candidate ? " active" : ""}" data-candidate="${index}">
         <img src="${item.url}" alt="Suggested image ${index + 1}">
+        ${item.url?.startsWith("/library-images/") ? `<span class="asset-delete" data-delete="${index}" role="button" tabindex="0" title="Delete from the whole library" aria-label="Delete this image from the whole library">×</span>` : ""}
       </button>`).join("")}</div>`;
-    $$("[data-candidate]", panel).forEach((button) => button.addEventListener("click", () => {
+    $$("[data-candidate]", panel).forEach((button) => button.addEventListener("click", (event) => {
+      if (event.target.closest("[data-delete]")) return;
       slideState.candidate = Number(button.dataset.candidate);
       renderEverything();
       scheduleSave();
+    }));
+    $$("[data-delete]", panel).forEach((badge) => badge.addEventListener("click", (event) => {
+      event.stopPropagation();
+      deleteLibraryImage(Number(badge.dataset.delete));
     }));
     return;
   }
@@ -520,6 +526,36 @@ function renderAssetPanel() {
     <div class="asset-note">Prepare a textless portrait image from this slide's meaning. Alice identity references are attached only when the slide belongs to her.</div>
     <button class="btn primary" id="prepareGeneration" style="width:100%;margin-top:8px">Prepare image prompt</button>`;
   $("#prepareGeneration").addEventListener("click", openGenerateModal);
+}
+
+// Deleting is library-wide on purpose: an irrelevant scraped image should never be
+// offered again — on any slide, for any brand. Pool/generated images are exempt.
+async function deleteLibraryImage(index) {
+  const deck = currentDeck();
+  const target = deck.candidates[index];
+  if (!target?.url?.startsWith("/library-images/")) return;
+  if (!window.confirm("Delete this image from the whole library? It disappears from every slide and every brand.")) return;
+  try {
+    await api("/api/library/delete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ file: target.file }),
+    });
+    state.decks.forEach((item) => {
+      const slideState = state.slides[item.n];
+      const at = item.candidates.findIndex((candidate) => candidate.file === target.file && candidate.url === target.url);
+      if (at === -1) return;
+      item.candidates.splice(at, 1);
+      if (slideState.candidate > at) slideState.candidate -= 1;
+      slideState.candidate = Math.max(0, Math.min(slideState.candidate, Math.max(0, item.candidates.length - 1)));
+    });
+    state.themeSets = null;
+    toast("Image deleted from the library");
+    renderEverything();
+    scheduleSave();
+  } catch (error) {
+    toast(error.message);
+  }
 }
 
 async function openThemeModal() {
@@ -695,6 +731,8 @@ function bindTextResize() {
   });
 }
 
+const SHARED_STYLE_PROPS = ["fs", "fw", "sw", "font", "color", "sc", "bg", "bgColor"];
+
 function updateTextStyle(property, value) {
   if ($("#applyAllText").checked) {
     Object.values(state.slides).forEach((slide) => { slide.text[property] = value; });
@@ -703,6 +741,20 @@ function updateTextStyle(property, value) {
   }
   renderEditor();
   scheduleSave();
+}
+
+// Ticking the box is itself the action: the current slide's style is pushed to every
+// slide right away — not only the properties touched afterwards. Text content and
+// position stay per-slide (lines differ in length and placement).
+function syncStyleToAllSlides() {
+  const source = currentSlideState()?.text;
+  if (!source) return;
+  Object.values(state.slides).forEach((slide) => {
+    SHARED_STYLE_PROPS.forEach((property) => { slide.text[property] = source[property]; });
+  });
+  renderEditor();
+  scheduleSave();
+  toast("This slide's text style now applies to every slide");
 }
 
 function resetReviewCard() {
@@ -816,6 +868,9 @@ $("#textSize").addEventListener("input", (event) => {
   updateTextStyle("fs", size);
 });
 
+$("#applyAllText").addEventListener("change", (event) => {
+  if (event.target.checked) syncStyleToAllSlides();
+});
 $("#fontFamily").addEventListener("change", (event) => updateTextStyle("font", event.target.value));
 $("#textWeight").addEventListener("input", (event) => updateTextStyle("fw", Number(event.target.value)));
 $("#textColor").addEventListener("input", (event) => updateTextStyle("color", event.target.value));
