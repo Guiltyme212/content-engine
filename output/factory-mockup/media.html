@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Brand media | Content Factory</title>
+  <link rel="stylesheet" href="./workspace.css">
+  <style>
+    .media-page {
+      width: min(1120px, calc(100% - 44px));
+      margin: 0 auto;
+      padding: 32px 0 90px;
+    }
+
+    .account-card {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+      box-shadow: 0 8px 26px rgba(34, 43, 37, 0.05);
+    }
+
+    .account-logo {
+      width: 62px;
+      height: 62px;
+      flex: 0 0 62px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #eceae4;
+      font-size: 26px;
+      font-weight: 800;
+      color: #4d4a42;
+    }
+
+    .account-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .account-card h1 { margin: 0 0 3px; font-size: 22px; letter-spacing: -0.03em; }
+    .account-card p { margin: 0; color: var(--muted); font-size: 12.5px; max-width: 560px; }
+    .account-meta { margin-left: auto; text-align: right; color: var(--muted); font-size: 11px; }
+    .account-meta b { display: block; color: var(--ink); font-size: 20px; }
+
+    .media-head {
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      margin: 34px 0 6px;
+    }
+
+    .media-head h2 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
+    .media-head p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    .media-head .btn-upload { margin-left: auto; }
+
+    .btn-upload {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 18px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--accent, #e2634d);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 750;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(226, 99, 77, 0.3);
+      transition: transform .13s, box-shadow .13s;
+    }
+    .btn-upload:hover { transform: translateY(-1px); box-shadow: 0 9px 24px rgba(226, 99, 77, 0.36); }
+    .btn-upload:disabled { opacity: .6; cursor: wait; transform: none; }
+
+    .drop-zone {
+      margin-top: 14px;
+      padding: 26px;
+      border: 2px dashed var(--line-2, #d8d5cc);
+      border-radius: 16px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12.5px;
+      transition: border-color .15s, background .15s;
+    }
+    .drop-zone.dragging { border-color: #e2634d; background: rgba(226, 99, 77, 0.05); }
+    .drop-zone b { color: var(--ink); }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(218px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .media-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--paper);
+      box-shadow: 0 5px 18px rgba(34, 43, 37, 0.05);
+    }
+
+    .media-thumb {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      background: #e6e4de;
+    }
+    .media-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .media-remove {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(20, 24, 21, 0.72);
+      color: #fff;
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity .15s, background .15s;
+    }
+    .media-card:hover .media-remove { opacity: 1; }
+    .media-remove:hover { background: rgba(166, 55, 47, 0.92); }
+    @media (hover: none) { .media-remove { opacity: .85; } }
+
+    .media-body { display: grid; gap: 9px; padding: 11px 12px 13px; }
+
+    .media-label {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      background: #f2f0ea;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .media-label:focus { border-color: #e2634d; background: #fff; outline: 0; }
+    .media-label::placeholder { color: var(--muted); font-weight: 500; }
+
+    .slide-targets { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+    .slide-targets .hint { width: 100%; color: var(--muted); font-size: 9.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+    .slide-chip {
+      min-width: 26px;
+      height: 26px;
+      padding: 0 6px;
+      border: 1px solid var(--line-2, #d8d5cc);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: .12s;
+    }
+    .slide-chip:hover { border-color: #e2634d; color: #e2634d; }
+    .slide-chip.on { border-color: #e2634d; background: rgba(226, 99, 77, 0.1); color: #b44a37; }
+
+    .empty-media {
+      margin-top: 18px;
+      padding: 44px 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .empty-media b { display: block; margin-bottom: 5px; color: var(--ink); font-size: 15px; }
+
+    .toast-stack { position: fixed; bottom: 76px; left: 50%; transform: translateX(-50%); z-index: 300; display: grid; gap: 7px; }
+    .toast { padding: 10px 16px; border-radius: 11px; background: rgba(23, 23, 21, 0.92); color: #fff; font-size: 12.5px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="side" id="side">
+      <a class="wordmark" href="./index.html">
+        <span class="wordmark-mark">CF</span>
+        <span class="wordmark-copy"><strong>Content Factory</strong><span>production workspace</span></span>
+      </a>
+      <div class="nav-label">Workspace</div>
+      <nav class="side-nav" aria-label="Primary">
+        <a href="./index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V8l8-5 8 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M9 21v-7h6v7"/></svg>Studio</a>
+        <a href="./influencers.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>Influencers</a>
+        <a href="./story-lab.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 6.5v7a5.5 5.5 0 0 1-11 0v-2"/><path d="m3 14 2.5-2.5L8 14"/><circle cx="16.5" cy="4.5" r="1.6"/></svg>Story Lab</a>
+        <a href="./carousels-new.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M4 7v10M20 7v10"/></svg>Carousels</a>
+        <a class="active" href="./media.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m4.5 17 4.5-4 3.5 3 3-2.5 4 3.5"/></svg>Brand media</a>
+        <a href="./tools.html#ugc"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3Z"/></svg>UGC content</a>
+        <a href="./tools.html#calendar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg>Calendar</a>
+        <a href="./tools.html#analytics"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg>Analytics</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
+        <div class="page-identity"><strong>Brand media</strong><span class="crumb">/ your own images</span></div>
+        <div class="topbar-spacer"></div>
+        <span class="status" id="mediaStatus">Saved to this workspace</span>
+      </header>
+
+      <div class="media-page">
+        <section class="account-card" aria-label="Workspace account">
+          <span class="account-logo" id="accountLogo"></span>
+          <div>
+            <h1 id="accountName">Loading…</h1>
+            <p id="accountAbout"></p>
+          </div>
+          <div class="account-meta"><b id="mediaCount">0</b>uploads in this workspace</div>
+        </section>
+
+        <div class="media-head">
+          <div>
+            <h2>Your media, aimed at slides</h2>
+            <p>Upload product shots, before/afters, screenshots — then tap the slide numbers each image should lead. The carousel matcher puts it first on those slides.</p>
+          </div>
+          <button class="btn-upload" id="uploadButton" type="button">＋ Upload images</button>
+          <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+        </div>
+
+        <div class="drop-zone" id="dropZone"><b>Drop images here</b> or use the upload button — JPEG, PNG, or WEBP up to 8MB. Tag the target slides after each upload.</div>
+
+        <div class="media-grid" id="mediaGrid"></div>
+        <div class="empty-media" id="emptyMedia" hidden>
+          <b>No uploads yet for this workspace</b>
+          The library covers moods and scenery, but only you have the product and the real results. Upload them once, aim them at slides, and every new carousel uses them.
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-stack" id="toastStack"></div>
+
+  <script>
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const brand = new URLSearchParams(location.search).get("brand")
+      || (() => { try { return localStorage.getItem("cf:brand") || "kokoro"; } catch { return "kokoro"; } })();
+    const MAX_SLIDE = 8;
+    let items = [];
+
+    function toast(message) {
+      const el = document.createElement("div");
+      el.className = "toast";
+      el.textContent = message;
+      $("#toastStack").append(el);
+      setTimeout(() => el.remove(), 2600);
+    }
+
+    async function api(url, options = {}) {
+      const response = await fetch(url, options);
+      const json = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(json.error || `Request failed (${response.status})`);
+      return json;
+    }
+
+    async function loadAccount() {
+      try {
+        const { company } = await api(`/api/brand?brand=${encodeURIComponent(brand)}`);
+        $("#accountName").textContent = company.name || brand;
+        $("#accountAbout").textContent = company.oneLiner || company.product || "";
+        const logo = $("#accountLogo");
+        if (company.logo) logo.innerHTML = `<img src="${company.logo}" alt="">`;
+        else logo.textContent = (company.name || brand).slice(0, 1).toUpperCase();
+      } catch {
+        $("#accountName").textContent = brand;
+      }
+    }
+
+    function slideChips(item) {
+      const wrap = document.createElement("div");
+      wrap.className = "slide-targets";
+      wrap.innerHTML = `<span class="hint">Leads these slides</span>`;
+      for (let n = 1; n <= MAX_SLIDE; n += 1) {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = `slide-chip${(item.slides || []).includes(n) ? " on" : ""}`;
+        chip.textContent = n;
+        chip.title = `Use this image on slide ${n}`;
+        chip.addEventListener("click", async () => {
+          const next = new Set(item.slides || []);
+          next.has(n) ? next.delete(n) : next.add(n);
+          try {
+            const result = await api("/api/media/update", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ brand, file: item.file, slides: [...next] }),
+            });
+            item.slides = result.item.slides;
+            chip.classList.toggle("on", item.slides.includes(n));
+          } catch (error) { toast(error.message); }
+        });
+        wrap.append(chip);
+      }
+      return wrap;
+    }
+
+    function mediaCard(item) {
+      const card = document.createElement("article");
+      card.className = "media-card";
+      const thumb = document.createElement("div");
+      thumb.className = "media-thumb";
+      thumb.innerHTML = `<img src="${item.url}" alt="">`;
+      const remove = document.createElement("button");
+      remove.className = "media-remove";
+      remove.type = "button";
+      remove.title = "Delete this upload";
+      remove.setAttribute("aria-label", "Delete this upload");
+      remove.textContent = "×";
+      remove.addEventListener("click", async () => {
+        if (!window.confirm("Delete this upload? Slides using it keep their saved copy until re-matched.")) return;
+        try {
+          await api("/api/media/delete", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ brand, file: item.file }),
+          });
+          items = items.filter((entry) => entry.file !== item.file);
+          render();
+          toast("Upload deleted");
+        } catch (error) { toast(error.message); }
+      });
+      thumb.append(remove);
+
+      const body = document.createElement("div");
+      body.className = "media-body";
+      const label = document.createElement("input");
+      label.className = "media-label";
+      label.placeholder = "Name it — e.g. bad skin day, the app";
+      label.maxLength = 120;
+      label.value = item.label || "";
+      let labelTimer = null;
+      label.addEventListener("input", () => {
+        clearTimeout(labelTimer);
+        labelTimer = setTimeout(async () => {
+          try {
+            await api("/api/media/update", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ brand, file: item.file, label: label.value }),
+            });
+            item.label = label.value;
+          } catch (error) { toast(error.message); }
+        }, 600);
+      });
+      body.append(label, slideChips(item));
+      card.append(thumb, body);
+      return card;
+    }
+
+    function render() {
+      const grid = $("#mediaGrid");
+      grid.innerHTML = "";
+      items.forEach((item) => grid.append(mediaCard(item)));
+      $("#emptyMedia").hidden = items.length > 0;
+      $("#mediaCount").textContent = items.length;
+    }
+
+    async function uploadFiles(files) {
+      const button = $("#uploadButton");
+      button.disabled = true;
+      let done = 0;
+      for (const file of files) {
+        if (!/^image\/(jpeg|png|webp)$/.test(file.type)) { toast(`${file.name}: JPEG, PNG, or WEBP only`); continue; }
+        if (file.size > 8 * 1024 * 1024) { toast(`${file.name}: over the 8MB limit`); continue; }
+        try {
+          const result = await api(`/api/media/upload?brand=${encodeURIComponent(brand)}`, {
+            method: "POST",
+            headers: { "Content-Type": file.type },
+            body: file,
+          });
+          items.push(result.item);
+          done += 1;
+        } catch (error) { toast(`${file.name}: ${error.message}`); }
+      }
+      button.disabled = false;
+      if (done) {
+        render();
+        toast(`${done} image${done > 1 ? "s" : ""} uploaded — now tap the slides each one should lead`);
+      }
+    }
+
+    $("#uploadButton").addEventListener("click", () => $("#fileInput").click());
+    $("#fileInput").addEventListener("change", (event) => {
+      uploadFiles([...event.target.files]);
+      event.target.value = "";
+    });
+    const zone = $("#dropZone");
+    ["dragenter", "dragover"].forEach((name) => zone.addEventListener(name, (event) => {
+      event.preventDefault();
+      zone.classList.add("dragging");
+    }));
+    ["dragleave", "drop"].forEach((name) => zone.addEventListener(name, (event) => {
+      event.preventDefault();
+      zone.classList.remove("dragging");
+    }));
+    zone.addEventListener("drop", (event) => uploadFiles([...event.dataTransfer.files]));
+    $("#mobileMenu")?.addEventListener("click", () => $("#side").classList.toggle("open"));
+
+    (async () => {
+      loadAccount();
+      try {
+        items = (await api(`/api/media?brand=${encodeURIComponent(brand)}`)).items || [];
+      } catch (error) {
+        toast(error.message);
+      }
+      render();
+    })();
+  </script>
+  <script src="./account-switcher.js" defer></script>
+</body>
+</html>

@@ -38,6 +38,39 @@ export function invalidateLibrary() {
   lib = null;
 }
 
+// ── operator uploads (brands/<brand>/media.json) ──────────────────────────────────────────
+// Media an operator uploaded and aimed at specific slides ("bad skin → slide 2, product →
+// slide 5"). On those slides the upload leads the deck — it is the one image the scraped
+// library can never supply, so it outranks every match.
+const mediaCache = new Map();
+
+export function invalidateBrandMedia(brand) {
+  mediaCache.delete(brand);
+}
+
+function brandMedia(brand) {
+  if (!mediaCache.has(brand)) {
+    let items = [];
+    try {
+      const manifest = JSON.parse(readFileSync(path.join(ROOT, 'brands', brand, 'media.json'), 'utf8'));
+      if (Array.isArray(manifest.items)) items = manifest.items;
+    } catch { /* brand has no uploads */ }
+    mediaCache.set(brand, items);
+  }
+  return mediaCache.get(brand);
+}
+
+function mediaCandidatesFor(brand, slideNumber) {
+  return brandMedia(brand)
+    .filter((item) => Array.isArray(item.slides) && item.slides.includes(slideNumber))
+    .map((item) => ({
+      file: `media/${item.file}`,
+      url: `/media-images/${encodeURIComponent(brand)}/${encodeURIComponent(item.file)}`,
+      why: item.label ? `your upload: ${item.label}` : 'your upload, aimed at this slide',
+      uploaded: true,
+    }));
+}
+
 const sha1 = (text) => createHash('sha1').update(text).digest('hex');
 
 function loadLibrary() {
@@ -210,25 +243,28 @@ export async function matchPost({ brand = 'kokoro', post }) {
   const seenTopPicks = new Set();
   const leadFolders = new Map();      // folder → how many earlier slides it already fronts
   for (const slide of post.slides) {
+    const uploads = mediaCandidatesFor(brand, slide.n);
     const pool = ROLE_POOLS[slide.role];
     if (pool) {
       const deck = poolDeck(brand, pool, (post.id || 1) - 1);
+      deck.candidates = [...uploads, ...deck.candidates];
       slides.push({ n: slide.n, role: slide.role, text: slide.text, ...deck });
       continue;
     }
     const deck = await matchLine({ brand, text: slide.text });
+    deck.candidates = [...uploads, ...deck.candidates];
     deck.candidates = deck.candidates.filter((c) => !seenTopPicks.has(c.file));
     // Variety is part of the format: example1 runs girl → cup → treadmill → bed, never four
     // shots from one world. If this deck's leader comes from a folder that already fronts an
     // earlier slide, promote the best candidate from a fresh folder instead (deck keeps both).
-    if (deck.candidates.length > 1 && leadFolders.has(deck.candidates[0].folder)) {
-      const fresh = deck.candidates.findIndex((c) => !leadFolders.has(c.folder));
+    if (deck.candidates.length > 1 && !deck.candidates[0].uploaded && leadFolders.has(deck.candidates[0].folder)) {
+      const fresh = deck.candidates.findIndex((c) => !c.uploaded && !leadFolders.has(c.folder));
       if (fresh > 0) deck.candidates.unshift(deck.candidates.splice(fresh, 1)[0]);
     }
     const top = deck.candidates[0];
     if (top) {
       seenTopPicks.add(top.file);
-      leadFolders.set(top.folder, (leadFolders.get(top.folder) || 0) + 1);
+      if (top.folder) leadFolders.set(top.folder, (leadFolders.get(top.folder) || 0) + 1);
     }
     slides.push({ n: slide.n, role: slide.role, text: slide.text, ...deck });
   }

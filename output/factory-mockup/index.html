@@ -471,6 +471,7 @@
       <a class='studio-nav-item' href='./influencers.html'><svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='8' r='4'/><path d='M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7'/></svg>Influencers</a>
       <a class='studio-nav-item' href='./story-lab.html'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M16.5 6.5v7a5.5 5.5 0 0 1-11 0v-2'/><path d='m3 14 2.5-2.5L8 14'/><circle cx='16.5' cy='4.5' r='1.6'/></svg>Story Lab</a>
       <a class='studio-nav-item' href='./carousels-new.html'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x='7' y='4' width='10' height='16' rx='2'/><path d='M4 7v10M20 7v10'/></svg>Carousels</a>
+      <a class='studio-nav-item' href='./media.html'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x='3' y='5' width='18' height='14' rx='2'/><circle cx='9' cy='10' r='1.6'/><path d='m4.5 17 4.5-4 3.5 3 3-2.5 4 3.5'/></svg>Brand media</a>
       <a class='studio-nav-item' href='./tools.html#ugc'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='m10 9 5 3-5 3Z'/></svg>UGC content</a>
       <a class='studio-nav-item' href='./tools.html#calendar'><svg viewBox='0 0 24 24' aria-hidden='true'><rect x='3' y='4.5' width='18' height='16' rx='2'/><path d='M3 9h18M8 3v3M16 3v3'/></svg>Calendar</a>
       <a class='studio-nav-item' href='./tools.html#analytics'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M4 20V10M10 20V4M16 20v-6M22 20H2'/></svg>Analytics</a>
@@ -538,8 +539,6 @@
                 <p class="brand-help">We read the public website on the server, then turn its actual positioning and copy into an editable creative brief.</p>
                 <div class="preset-row" id="presetRow">
                   <span>Your brands, ready to go:</span>
-                  <button type="button" class="preset-chip" data-preset="kokoro">Kokoro</button>
-                  <button type="button" class="preset-chip" data-preset="mangoway">Mangoway</button>
                 </div>
                 <style>
                   .preset-row{display:flex;align-items:center;gap:9px;margin-top:14px;flex-wrap:wrap}
@@ -611,6 +610,8 @@
                 </div>
 
                 <button class="primary" id="toDiscover" type="button">Show ready carousels <span aria-hidden="true">→</span></button>
+                <button class="save-workspace" id="saveWorkspace" type="button">Save as a workspace — appears in the switcher on every page</button>
+                <style>.save-workspace{width:100%;margin-top:10px;padding:12px 14px;border:1.5px dashed var(--line-2);border-radius:13px;background:transparent;font-size:12.5px;font-weight:750;color:var(--ink-2);cursor:pointer;transition:.13s}.save-workspace:hover{border-color:var(--coral);color:var(--coral)}.save-workspace:disabled{opacity:.55;cursor:wait}</style>
                 <p class="intel-note">Click any line to edit it. Saved on this device and used by every generator.</p>
               </div>
             </aside>
@@ -1728,7 +1729,7 @@
           const res=await fetch('/api/brand?brand='+encodeURIComponent(slug));
           const json=await res.json();
           if(!res.ok||!json.company||!json.company.name) throw new Error(json.error||'no profile for '+slug);
-          state.company={...json.company,url:json.company.sourceUrl||json.company.domain||'',context:json.company.context||''};
+          state.company={...json.company,brandKey:slug,url:json.company.sourceUrl||json.company.domain||'',context:json.company.context||''};
           renderBrandResult();
           unlockAppShell(true);
           persist();
@@ -1738,9 +1739,50 @@
           if(!quiet) toast('Preset failed: '+(error.message||'server offline?'));
         }
       }
-      qsa('.preset-chip').forEach(chip=>chip.addEventListener('click',()=>usePreset(chip.dataset.preset)));
+      // Preset chips come from the tenant roster, never a hardcoded list — a saved workspace
+      // appears here (and in the bottom-left switcher) without touching UI code.
+      async function renderPresets(){
+        try{
+          const res=await fetch('/api/brands');
+          const brands=(await res.json()).brands||[];
+          if(!brands.length) return;
+          const row=qs('#presetRow');
+          row.querySelectorAll('.preset-chip').forEach(chip=>chip.remove());
+          brands.forEach(brand=>{
+            const chip=document.createElement('button');
+            chip.type='button';
+            chip.className='preset-chip'+(state.company?.brandKey===brand.key?' on':'');
+            chip.dataset.preset=brand.key;
+            chip.textContent=brand.name+(brand.status==='draft'?' · draft':'');
+            chip.addEventListener('click',()=>usePreset(brand.key));
+            row.append(chip);
+          });
+        }catch{/* offline studio keeps working without presets */}
+      }
+      renderPresets();
+      // The bottom-left switcher navigates with ?brand= — honor it (or the remembered
+      // workspace) before the local default, so the pill and the brief never disagree.
+      const urlBrand=new URLSearchParams(location.search).get('brand')
+        ||(()=>{try{return localStorage.getItem('cf:brand')}catch{return null}})();
+      if(urlBrand&&state.company?.brandKey!==urlBrand) usePreset(urlBrand,{quiet:true});
       // Default tenant: if the studio opens empty, Kokoro loads itself.
-      if(!state.company) usePreset('kokoro',{quiet:true});
+      else if(!state.company) usePreset('kokoro',{quiet:true});
+      qs('#saveWorkspace').addEventListener('click',async()=>{
+        if(!state.company||!String(state.company.name||'').trim()){toast('Read a company first — nothing to save yet');return}
+        const button=qs('#saveWorkspace');
+        button.disabled=true;
+        try{
+          const result=await api('/api/brands/create',{company:state.company});
+          state.company.brandKey=result.key;
+          persist();
+          renderPresets();
+          toast(result.name+' is now a workspace — find it bottom-left on every page');
+        }catch(error){
+          toast(error.message||'Could not save this workspace');
+        }finally{
+          button.disabled=false;
+        }
+      });
       qs('#toDiscover').addEventListener('click',()=>startDiscovery());
       qs('#passPost').addEventListener('click',()=>swipe('pass'));
       qs('#keepPost').addEventListener('click',()=>swipe('keep'));
@@ -1819,5 +1861,6 @@
       setStage('brand');
     })();
   </script>
+  <script src="./account-switcher.js" defer></script>
 </body>
 </html>

@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { generateHooks, gradeHook, modelInfo, structuredModelOptions } from './hook-engine.js';
 import { extractCompany, regenerateAudience } from './company-engine.js';
 import { carouselModelOptions, generateCarousels } from './carousel-engine.js';
-import { invalidateLibrary, matchLine, matchPost } from './match-engine.js';
+import { invalidateBrandMedia, invalidateLibrary, matchLine, matchPost } from './match-engine.js';
 import { HIDDEN_SETS } from './library-config.js';
 import { regenerateStorySlide } from './story-engine.js';
 
@@ -291,6 +291,108 @@ async function servePoolImage(req, res) {
   }
 }
 
+// ── brand media: operator-uploaded images (product shots, before/afters) with slide targets ──
+// Stored in brands/<brand>/media/ + media.json manifest. These are the images the scraped
+// library can never provide — "bad skin on slide 2, the product on slide 5" — so the matcher
+// fronts them on their target slides and the editor offers them on every slide.
+const MEDIA_EXT = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp' };
+const MEDIA_MAX_BYTES = 8 * 1024 * 1024;
+
+function readRawBody(req, maxBytes) {
+  return new Promise((resolve, reject) => {
+    const declared = Number(req.headers['content-length']) || 0;
+    if (declared > maxBytes) {
+      const error = new Error('file too large (8MB max)'); error.statusCode = 413;
+      req.resume(); reject(error); return;
+    }
+    const chunks = [];
+    let size = 0;
+    let failed = false;
+    req.on('data', (chunk) => {
+      if (failed) return;
+      size += chunk.length;
+      if (size > maxBytes) {
+        failed = true;
+        const error = new Error('file too large (8MB max)'); error.statusCode = 413;
+        reject(error); return;
+      }
+      chunks.push(chunk);
+    });
+    req.on('end', () => { if (!failed) resolve(Buffer.concat(chunks)); });
+    req.on('error', reject);
+  });
+}
+
+function cleanSlideTargets(value) {
+  const list = Array.isArray(value) ? value : String(value || '').split(',');
+  const slides = [...new Set(list.map((n) => Number(n)).filter((n) => Number.isInteger(n) && n >= 1 && n <= 12))];
+  return slides.sort((a, b) => a - b).slice(0, 12);
+}
+
+async function readMediaManifest(dir) {
+  try {
+    const manifest = JSON.parse(await readFile(path.join(dir, 'media.json'), 'utf8'));
+    return Array.isArray(manifest.items) ? manifest.items : [];
+  } catch { return []; }
+}
+
+async function writeMediaManifest(dir, items) {
+  const file = path.join(dir, 'media.json');
+  const tmp = `${file}.tmp`;
+  await writeFile(tmp, JSON.stringify({ items }, null, 2));
+  await rename(tmp, file);
+}
+
+function mediaResponse(brand, items) {
+  return items.map((item) => ({
+    ...item,
+    url: `/media-images/${encodeURIComponent(brand)}/${encodeURIComponent(item.file)}`,
+  }));
+}
+
+async function serveMediaImage(req, res) {
+  let raw;
+  try { raw = decodeURIComponent(req.url.split('?')[0].replace(/^\/media-images\//, '')); }
+  catch { res.writeHead(400); return res.end('bad request'); }
+  const [brand, file, ...extra] = raw.split('/');
+  const dir = brandDir(brand);
+  if (!dir || !file || extra.length || !/^[a-z0-9._-]+\.(jpe?g|png|webp)$/i.test(file)) {
+    res.writeHead(404); return res.end('not found');
+  }
+  try {
+    const buf = await readFile(path.resolve(dir, 'media', file));
+    const ext = path.extname(file).toLowerCase();
+    res.writeHead(200, { 'Content-Type': MIME[ext] || 'image/jpeg', 'Cache-Control': 'public, max-age=86400' });
+    res.end(buf);
+  } catch {
+    res.writeHead(404); res.end('not found');
+  }
+}
+
+async function uploadMedia(req, res) {
+  const params = new URLSearchParams(req.url.split('?')[1] || '');
+  const brand = params.get('brand') || 'kokoro';
+  const dir = brandDir(brand);
+  if (!dir) return sendJson(res, 404, { error: 'unknown brand' });
+  const type = String(req.headers['content-type'] || '').split(';')[0].trim();
+  const ext = MEDIA_EXT[type];
+  if (!ext) return sendJson(res, 415, { error: 'Upload a JPEG, PNG, or WEBP image.' });
+  let body;
+  try { body = await readRawBody(req, MEDIA_MAX_BYTES); }
+  catch (e) { return sendJson(res, e.statusCode || 400, { error: e.message }); }
+  if (!body.length) return sendJson(res, 400, { error: 'empty upload' });
+  const label = String(params.get('label') || '').slice(0, 120);
+  const slides = cleanSlideTargets(params.get('slides'));
+  const file = `${new Date().toISOString().replace(/\D/g, '').slice(0, 14)}-${crypto.randomUUID().slice(0, 8)}${ext}`;
+  await mkdir(path.join(dir, 'media'), { recursive: true });
+  await writeFile(path.join(dir, 'media', file), body);
+  const items = await readMediaManifest(dir);
+  items.push({ file, label, slides, addedAt: new Date().toISOString() });
+  await writeMediaManifest(dir, items);
+  invalidateBrandMedia(brand);
+  return sendJson(res, 200, { item: mediaResponse(brand, items).at(-1) });
+}
+
 function safeSlug(value, fallback = 'draft') {
   const slug = String(value || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
   return slug || fallback;
@@ -409,6 +511,24 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { sets: await imageLibrary() });
   }
 
+  if (url === '/api/media') {
+    if (req.method !== 'GET') return sendJson(res, 405, { error: 'GET only' });
+    const params = new URLSearchParams(req.url.split('?')[1] || '');
+    const brand = params.get('brand') || 'kokoro';
+    const dir = brandDir(brand);
+    if (!dir) return sendJson(res, 404, { error: 'unknown brand' });
+    return sendJson(res, 200, { items: mediaResponse(brand, await readMediaManifest(dir)) });
+  }
+
+  if (url === '/api/media/upload') {
+    if (req.method !== 'POST') return sendJson(res, 405, { error: 'POST only' });
+    try { return await uploadMedia(req, res); }
+    catch (e) {
+      console.error('[api]', url, e.message);
+      return sendJson(res, e.statusCode || 500, { error: e.message || 'upload failed' });
+    }
+  }
+
   if (url === '/api/influencers') {
     if (req.method !== 'GET') return sendJson(res, 405, { error: 'GET only' });
     const params = new URLSearchParams(req.url.split('?')[1] || '');
@@ -450,6 +570,9 @@ const server = http.createServer(async (req, res) => {
         });
       } catch { /* a brand dir without a profile is not a tenant yet */ }
     }
+    // Working tenants first (campaign live), then the rest alphabetically — never a
+    // hardcoded brand order.
+    brands.sort((a, b) => Number(b.hasCampaign) - Number(a.hasCampaign) || a.name.localeCompare(b.name));
     return sendJson(res, 200, { brands });
   }
 
@@ -624,6 +747,48 @@ const server = http.createServer(async (req, res) => {
       if (url === '/api/library/delete') {
         return sendJson(res, 200, await deleteLibraryImage(body.file));
       }
+      if (url === '/api/media/update') {
+        const brand = body.brand || 'kokoro';
+        const dir = brandDir(brand);
+        if (!dir) return sendJson(res, 404, { error: 'unknown brand' });
+        const items = await readMediaManifest(dir);
+        const item = items.find((entry) => entry.file === String(body.file || ''));
+        if (!item) return sendJson(res, 404, { error: 'media not found' });
+        if ('label' in body) item.label = String(body.label || '').slice(0, 120);
+        if ('slides' in body) item.slides = cleanSlideTargets(body.slides);
+        await writeMediaManifest(dir, items);
+        invalidateBrandMedia(brand);
+        return sendJson(res, 200, { item: mediaResponse(brand, [item])[0] });
+      }
+      if (url === '/api/media/delete') {
+        const brand = body.brand || 'kokoro';
+        const dir = brandDir(brand);
+        if (!dir) return sendJson(res, 404, { error: 'unknown brand' });
+        const file = String(body.file || '');
+        if (!/^[a-z0-9._-]+\.(jpe?g|png|webp)$/i.test(file)) return sendJson(res, 400, { error: 'bad file' });
+        const items = await readMediaManifest(dir);
+        if (!items.some((entry) => entry.file === file)) return sendJson(res, 404, { error: 'media not found' });
+        await writeMediaManifest(dir, items.filter((entry) => entry.file !== file));
+        try { await unlink(path.resolve(dir, 'media', file)); } catch { /* manifest already pruned */ }
+        invalidateBrandMedia(brand);
+        return sendJson(res, 200, { deleted: file });
+      }
+      if (url === '/api/brands/create') {
+        // the Home search becomes a tenant: whatever the operator extracted and edited is
+        // saved as brands/<slug>/profile.json and appears in every switcher on next load.
+        const company = body.company;
+        if (!company || typeof company !== 'object' || !String(company.name || '').trim()) {
+          return sendJson(res, 400, { error: 'Run the company search first — there is nothing to save yet.' });
+        }
+        const key = safeSlug(body.key || company.name, '');
+        if (!key) return sendJson(res, 400, { error: 'This company name cannot become a workspace id.' });
+        if (brandDir(key)) return sendJson(res, 409, { error: `Workspace "${key}" already exists.` });
+        const dir = path.join(ROOT, 'brands', key);
+        const profile = { ...company, status: 'draft' };
+        await mkdir(dir, { recursive: true });
+        await writeFile(path.join(dir, 'profile.json'), JSON.stringify(profile, null, 2));
+        return sendJson(res, 200, { key, name: company.name });
+      }
       if (url === '/api/match/slide') {
         // one line, one deck — used by the editor's theme swap. Ranked inside the theme when the
         // index covers it; honest set-order fallback when it doesn't.
@@ -668,6 +833,7 @@ const server = http.createServer(async (req, res) => {
   // ── static site ──
   if (url.startsWith('/library-images/')) return serveImageLibrary(req, res);
   if (url.startsWith('/pool-images/')) return servePoolImage(req, res);
+  if (url.startsWith('/media-images/')) return serveMediaImage(req, res);
 
   return serveStatic(req, res);
 });

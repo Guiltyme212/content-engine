@@ -67,6 +67,17 @@ The Content Factory demo is live at **https://content-engine-production-f818.up.
   `set/file`, so other images' descriptions are untouched). Cloud deletes are ephemeral on
   Railway — durable removal = delete locally, prune, commit, push. `data/*.jsonl` were
   restored from skip-worktree on Dan's machine 2026-08-08 and are normal tracked files again.
+- **Workspaces & brand media** (2026-08-08): three tenants live under `brands/` — kokoro,
+  glowkit (seeded from its App Store listing, logo in `assets/glowkit-logo.jpg`), mangoway.
+  A shared bottom-left switcher (`output/factory-mockup/account-switcher.js`, localStorage
+  `cf:brand` + `?brand=`) sits on every page. `POST /api/brands/create` saves the Studio's
+  extracted company as a new workspace ("Save as a workspace" button under the brief).
+  Per-brand uploads live in `brands/<brand>/media/` + `media.json` (untracked runtime state,
+  like `picks.json`): the `media.html` page uploads and aims each image at slide numbers, and
+  `matchPost` fronts a targeted upload on those slides ahead of every library match. The
+  carousel editor also grew a "Yours" tab and a paste-full-script control (one line per
+  slide). Railway's filesystem is ephemeral — cloud uploads/workspaces last until the next
+  deploy; local ones become durable when committed.
 - `library/carousel-playbook.md` — **the copy/knowledge layer.** Format skeletons, hook bank,
   slide craft rules, visual rules — brand-agnostic craft that applies to any tenant. Per-brand
   briefs (e.g. Kokoro's) are examples/inputs, not the point. Generators write FROM this file.

@@ -494,6 +494,15 @@ function renderAssetPanel() {
     return;
   }
 
+  if (state.assetTab === "uploads") {
+    panel.innerHTML = `
+      <div class="asset-note">Your uploaded media. Images tagged to a slide on the <a href="./media.html?brand=${encodeURIComponent(state.brand)}">Brand media page</a> lead that slide automatically — this list lets you place any upload anywhere.</div>
+      <div class="asset-grid" id="uploadsGrid" style="margin-top:8px"></div>
+      <div class="asset-note" id="uploadsEmpty" hidden>No uploads yet. Add product shots or before/afters on the <a href="./media.html?brand=${encodeURIComponent(state.brand)}">Brand media page</a>.</div>`;
+    renderUploadsGrid(panel);
+    return;
+  }
+
   if (state.assetTab === "alice") {
     const aliceAssets = ["alice-lifestyle", "alice-crying"].flatMap((pool) => Array.from({ length: 10 }, (_, index) => ({
       pool,
@@ -526,6 +535,39 @@ function renderAssetPanel() {
     <div class="asset-note">Prepare a textless portrait image from this slide's meaning. Alice identity references are attached only when the slide belongs to her.</div>
     <button class="btn primary" id="prepareGeneration" style="width:100%;margin-top:8px">Prepare image prompt</button>`;
   $("#prepareGeneration").addEventListener("click", openGenerateModal);
+}
+
+async function renderUploadsGrid(panel) {
+  if (!state.mediaItems) {
+    try {
+      const data = await api(`/api/media?brand=${encodeURIComponent(state.brand)}`);
+      state.mediaItems = Array.isArray(data.items) ? data.items : [];
+    } catch (error) {
+      toast(error.message);
+      state.mediaItems = [];
+    }
+  }
+  if (state.assetTab !== "uploads") return;               // the operator moved on mid-fetch
+  const grid = $("#uploadsGrid", panel);
+  const empty = $("#uploadsEmpty", panel);
+  if (!grid) return;
+  empty.hidden = state.mediaItems.length > 0;
+  grid.innerHTML = state.mediaItems.map((item, index) => `
+    <button class="asset" data-upload="${index}" title="${escapeHtml(item.label || "your upload")}">
+      <img src="${item.url}" alt="${escapeHtml(item.label || `Upload ${index + 1}`)}">
+      ${item.slides?.length ? `<span class="asset-slides">→ ${item.slides.join(", ")}</span>` : ""}
+    </button>`).join("");
+  $$("[data-upload]", grid).forEach((button) => button.addEventListener("click", () => {
+    const item = state.mediaItems[Number(button.dataset.upload)];
+    if (!item) return;
+    const deck = currentDeck();
+    deck.candidates.unshift({ file: `media/${item.file}`, url: item.url, uploaded: true });
+    currentSlideState().candidate = 0;
+    state.assetTab = "suggested";
+    renderEverything();
+    scheduleSave();
+    toast("Your upload is now on this slide");
+  }));
 }
 
 // Deleting is library-wide on purpose: an irrelevant scraped image should never be
@@ -912,8 +954,32 @@ $("#copyPrompt").addEventListener("click", async () => {
 });
 $("#generateCarousel").addEventListener("click", generateCarouselImage);
 
+// ── whole-script paste: hook, bodies, CTA in one box, one line per slide ──
+$("#openScript").addEventListener("click", () => {
+  if (!state.decks.length) return;
+  $("#scriptText").value = state.decks.map((deck) => state.slides[deck.n].text.t).join("\n");
+  $("#scriptHint").textContent = `This post has ${state.decks.length} slides — line 1 is the hook, the last line is the closer/CTA.`;
+  $("#scriptModal").hidden = false;
+  $("#scriptText").focus();
+});
+$("#applyScript").addEventListener("click", () => {
+  const lines = $("#scriptText").value.split("\n").map((line) => line.trim()).filter(Boolean);
+  if (!lines.length) { toast("The script is empty"); return; }
+  state.decks.forEach((deck, index) => {
+    if (index >= lines.length) return;
+    deck.text = lines[index];
+    state.slides[deck.n].text.t = lines[index];
+  });
+  $("#scriptModal").hidden = true;
+  renderEverything();
+  scheduleSave();
+  if (lines.length < state.decks.length) toast(`Applied to the first ${lines.length} slides — the rest kept their text`);
+  else if (lines.length > state.decks.length) toast(`Applied — ${lines.length - state.decks.length} extra line${lines.length - state.decks.length > 1 ? "s" : ""} ignored`);
+  else toast("Script applied to all slides");
+});
+
 document.addEventListener("keydown", (event) => {
-  if (!$("#themeModal").hidden || !$("#generateModal").hidden) {
+  if (!$("#themeModal").hidden || !$("#generateModal").hidden || !$("#scriptModal").hidden) {
     if (event.key === "Escape") $$(".modal").forEach((modal) => { modal.hidden = true; });
     return;
   }
